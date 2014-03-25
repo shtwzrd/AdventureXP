@@ -1,0 +1,42 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.github.jengelman.gradle.plugins:shadow:0.8'
+  }
+}
+
+apply plugin: 'shadow'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+jar {
+  manifest {
+    attributes 'adventureXP': 'AdventureXP', 'Implementation-Version': 0.1
+//      attributes 'Main-Class' : 'edu.kea.tsp.Run' 
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+  systemProperties 'property': 'value'
+}
+
+uploadArchives {
+  repositories {
+    flatDir {
+      dirs 'repos'
+    }
+  }
+}
