@@ -1,8 +1,19 @@
 package edu.kea.adventureXP.view;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import org.jdesktop.xswingx.PromptSupport;
 
 import edu.kea.adventureXP.model.Activity;
 
@@ -14,6 +25,12 @@ import edu.kea.adventureXP.model.Activity;
  * @see Activity
  */
 public class ManageActivityUI extends JFrame {
+  
+  private JTextField nameField;
+  private JTextField priceField;
+  private JTextArea  descriptionArea;
+  private JButton    saveButton;
+  private JButton    discardButton;
   
   /**
    * Constructor for building the User Interface. It calls the buildUI method
@@ -28,10 +45,116 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildUI() {
     setTitle("Manage Activity");
-    setSize(400, 400);
+    setSize(400, 200);
     setLayout(new BorderLayout());
     
+    buildNorthPanel();
+    buildCenterPanel();
+    buildSouthPanel();
+    
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
-    set
   }
+  
+  /**
+   * Builds the north panel with fields for name and price
+   */
+  public void buildNorthPanel() {
+    JPanel northPanel = new JPanel();
+    northPanel.setBackground(UIColors.DARKBLUE);
+    
+    JLabel name = new JLabel("Name:");
+    name.setForeground(UIColors.WHITE);
+    
+    nameField = new JTextField(10);
+    PromptSupport.setPrompt("Name (required)", nameField);
+    
+    JLabel price = new JLabel("Price:");
+    price.setForeground(UIColors.WHITE);
+    
+    priceField = new JTextField(10);
+    PromptSupport.setPrompt("Price", priceField);
+    
+    northPanel.add(name);
+    northPanel.add(nameField);
+    
+    northPanel.add(price);
+    northPanel.add(priceField);
+    
+    add(northPanel, BorderLayout.NORTH);
+  }
+  
+  /**
+   * Builds the center panel with a description
+   */
+  public void buildCenterPanel() {
+    descriptionArea = new JTextArea();
+    descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    descriptionArea.setWrapStyleWord(true);
+    descriptionArea.setLineWrap(true);
+    PromptSupport.setPrompt("Description", descriptionArea);
+    
+    add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
+  }
+  
+  /**
+   * Builds the south panel containing a discard button and saving button
+   */
+  public void buildSouthPanel() {
+    JPanel southPanel = new JPanel();
+    southPanel.setBackground(UIColors.DARKBLUE);
+    
+    saveButton = new JButton("Save");
+    discardButton = new JButton("Discard");
+    
+    southPanel.add(discardButton);
+    southPanel.add(saveButton);
+    
+    add(southPanel, BorderLayout.SOUTH);
+  }
+  
+  /**
+   * Adds an ActionListener to the discard button
+   * 
+   * @param listener The ActionListener to be added
+   */
+  public void setDiscardListener(ActionListener listener) {
+    discardButton.addActionListener(listener);
+  }
+  
+  /**
+   * Adds an ActionListener to the save button
+   * 
+   * @param listener The ActionListener to be added
+   */
+  public void setSaveListener(ActionListener listener) {
+    saveButton.addActionListener(listener);
+  }
+  
+  public String getNameField() {
+    return nameField.getText();
+  }
+  
+  public double getPriceField() {
+    String priceText = priceField.getText();
+    if (priceText.equals(""))
+      return 0;
+    return Double.parseDouble(priceText);
+  }
+  
+  public String getDescriptionField() {
+    return descriptionArea.getText();
+  }
+  
+  /**
+   * Displays an error in a JOptionPane
+   * 
+   * @param error The error message to display
+   */
+  public void displayError(String error) {
+    JOptionPane
+        .showMessageDialog(null, error, "Error Message", JOptionPane.ERROR_MESSAGE);
+  }
+  
 }
