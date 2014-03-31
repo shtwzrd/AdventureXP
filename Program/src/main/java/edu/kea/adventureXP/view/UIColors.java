@@ -13,10 +13,10 @@ import java.awt.Color;
 
 public class UIColors {
   
-  public static final Color lightBlue  = new Color(186, 202, 218);
-  public static final Color darkBlue   = new Color(54, 96, 139);
-  public static final Color white      = new Color(255, 255, 255);
-  public static final Color lightBrown = new Color(230, 225, 217);
-  public static final Color darkBrown  = new Color(175, 170, 157);
+  public static final Color LIGHTBLUE  = new Color(186, 202, 218);
+  public static final Color DARKBLUE   = new Color(54, 96, 139);
+  public static final Color WHITE      = new Color(255, 255, 255);
+  public static final Color LIGHTBROWN = new Color(230, 225, 217);
+  public static final Color DARKBROWN  = new Color(175, 170, 157);
   
 }
