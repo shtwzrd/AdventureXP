@@ -29,9 +29,9 @@ public class Instructor {
 		return id;
 	}
 	
-	public void setID(int id){
-		this.id = id;
-	}
+//	public void setID(int id){
+//		this.id = id;
+//	}
 	public String getFName() {
 		return fName;
 	}

@@ -11,15 +11,15 @@ public class ManageInstructorPresenterTest {
 	public void validateFirstNameTest() {
 		assertTrue(mip.validateFirstName("Stoyan"));
 	}
-	
+	@Test
 	public void validateLastNameTest(){
 		assertTrue(mip.validateLastName("Smith"));
 	}
-	
+	@Test
 	public void validateStreetFieldTest(){
 		assertTrue(mip.validateStreetField("Rebeak Sopark"));
 	}
-	
+	@Test
 	public void validateStreetNumFieldTest() {
 		assertTrue(mip.validateStreetNumField(5));
 	}

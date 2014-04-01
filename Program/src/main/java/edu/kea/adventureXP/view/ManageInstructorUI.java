@@ -113,8 +113,8 @@ public class ManageInstructorUI extends JFrame {
 		return cityTF.getText();
 	}
 	
-	public int getZipField() {
-		return Integer.parseInt(zipTF.getText());
+	public String getZipField() {
+		return zipTF.getText();
 	}
 	
 	public int getPhoneField() {
