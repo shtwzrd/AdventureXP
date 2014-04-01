@@ -39,7 +39,7 @@ public class ManageInstructorUI extends JFrame {
 	public void createUI() {
 		setTitle("Add Instructor");
 		setSize(400, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		setResizable(false);
@@ -82,6 +82,7 @@ public class ManageInstructorUI extends JFrame {
 		add(center, BorderLayout.CENTER);
 		
 		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		south.setBackground(UIColors.DARKBLUE);
 		discardButton = new JButton("Discard");
 		discardButton.setSize(15, 15);
 		
