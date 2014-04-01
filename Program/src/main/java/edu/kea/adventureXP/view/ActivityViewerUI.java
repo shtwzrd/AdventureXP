@@ -1,0 +1,201 @@
+package edu.kea.adventureXP.view;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
+import org.jdesktop.xswingx.PromptSupport;
+
+import edu.kea.adventureXP.model.Activity;
+
+/**
+ * User Interface class used for displaying all Activities in the database. It
+ * has a search bar for finding activities, a list of all activities as well as
+ * buttons.
+ */
+public class ActivityViewerUI extends JFrame {
+  
+  private JComboBox  dropDown;
+  private JTextField searchField;
+  private JButton    searchButton;
+  private JTextArea  descriptionArea;
+  private JTable     activityTable;
+  private JButton    deleteButton;
+  private JButton    addButton;
+  private JButton    editButton;
+  
+  public ActivityViewerUI() {
+    buildUI();
+  }
+  
+  /**
+   * Method for building the various panels within the frame as well as set the
+   * various properties of said frame.
+   */
+  public void buildUI() {
+    setTitle("Activity Viewer");
+    setSize(600, 600);
+    setLayout(new BorderLayout());
+    
+    buildNorthPanel();
+    buildCenterPanel();
+    buildSouthPanel();
+    
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setVisible(true);
+  }
+  
+  /**
+   * Builds the north panel with a dropdown menu, a search field and a search
+   * button.
+   */
+  public void buildNorthPanel() {
+    JPanel northPanel = new JPanel();
+    northPanel.setBackground(UIColors.DARKBLUE);
+    
+    dropDown = new JComboBox();
+    searchField = new JTextField(15);
+    PromptSupport.setPrompt("Type in search...", searchField);
+    
+    searchButton = new JButton("Search");
+    
+    northPanel.add(dropDown);
+    northPanel.add(searchField);
+    northPanel.add(searchButton);
+    
+    add(northPanel, BorderLayout.NORTH);
+  }
+  
+  /**
+   * @param words The options to display in the drop down menu
+   */
+  public void setDropDownOptions(String[] words) {
+    for (String s : words)
+      dropDown.addItem(s);
+  }
+  
+  /**
+   * Builds the center panel consisting of a JTable showing all activities and a
+   * description box showing the description of the selected activity.
+   */
+  public void buildCenterPanel() {
+    JPanel southPanel = new JPanel(new BorderLayout());
+    
+    activityTable = new JTable();
+    southPanel.add(new JScrollPane(activityTable), BorderLayout.CENTER);
+    
+    descriptionArea = new JTextArea(10, 20);
+    descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    descriptionArea.setWrapStyleWord(true);
+    descriptionArea.setLineWrap(true);
+    descriptionArea.setEditable(false);
+    PromptSupport.setPrompt("Description", descriptionArea);
+    
+    southPanel.add(descriptionArea, BorderLayout.SOUTH);
+    
+    add(southPanel, BorderLayout.CENTER);
+  }
+  
+  /**
+   * Adds a list of activities to the JTable.
+   * 
+   * @param activityList The list of activities to add
+   */
+  public void setTable(List<Activity> activityList) {
+    String[] heads = { "ID", "Name", "Price" };
+    
+    DefaultTableModel model = new DefaultTableModel();
+    
+    model.setRowCount(activityList.size());
+    model.setColumnIdentifiers(heads);
+    
+    int row = 0;
+    
+    for (Activity a : activityList) {
+      model.setValueAt(a.getId(), row, 0);
+      model.isCellEditable(row, 0);
+      model.setValueAt(a.getName(), row, 1);
+      model.isCellEditable(row, 1);
+      model.setValueAt(a.getPrice(), row, 2);
+      model.isCellEditable(row, 2);
+      row++;
+    }
+    
+    activityTable.setModel(model);
+    
+    activityTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    TableColumnModel columnModel = activityTable.getColumnModel();
+    columnModel.getColumn(0).setPreferredWidth(30);
+    columnModel.getColumn(1).setPreferredWidth(400);
+    columnModel.getColumn(2).setPreferredWidth(40);
+    activityTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+    
+    model.fireTableDataChanged();
+  }
+  
+  /**
+   * Builds the south panel having buttons for deleting, editing and adding
+   * activities.
+   */
+  public void buildSouthPanel() {
+    JPanel southPanel = new JPanel();
+    southPanel.setBackground(UIColors.DARKBLUE);
+    
+    deleteButton = new JButton("Delete");
+    editButton = new JButton("Edit");
+    addButton = new JButton("Add New");
+    
+    southPanel.add(deleteButton);
+    southPanel.add(editButton);
+    southPanel.add(addButton);
+    
+    add(southPanel, BorderLayout.SOUTH);
+  }
+  
+  public JTable getTable() {
+    return activityTable;
+  }
+  
+  public void setTableListener(MouseListener listener) {
+    activityTable.addMouseListener(listener);
+  }
+  
+  public void setDeleteButtonListener(ActionListener listener) {
+    deleteButton.addActionListener(listener);
+  }
+  
+  public void setEditButtonListener(ActionListener listener) {
+    editButton.addActionListener(listener);
+  }
+  
+  public void setAddButtonListener(ActionListener listener) {
+    addButton.addActionListener(listener);
+  }
+  
+  public void setDescriptionArea(String description) {
+    descriptionArea.setText(description);
+  }
+  
+  public String getSelectedDropDown() {
+    return (String) dropDown.getSelectedItem();
+  }
+  
+  public String getSearchField() {
+    return searchField.getText();
+  }
+  
+}
