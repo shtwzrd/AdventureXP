@@ -23,4 +23,22 @@ public class ManageInstructorPresenterTest {
 	public void validateStreetNumFieldTest() {
 		assertTrue(mip.validateStreetNumField(5));
 	}
+	@Test
+	public void validateCityFieldTest(){
+		assertTrue(mip.validateCityField("Copenhagen"));
+	}
+	@Test
+	public void validateZipFieldTest(){
+		assertTrue(mip.validateZipField("2720"));
+	}
+	
+	@Test
+	public void validatePhoneFieldTest(){
+		assertTrue(mip.validatePhoneField(53811118));
+	}
+	
+	@Test
+	public void validateEmailFieldTest(){
+		assertTrue(mip.validateEmailField("stoyan.bonchev@yahoo.com"));
+	}
 }

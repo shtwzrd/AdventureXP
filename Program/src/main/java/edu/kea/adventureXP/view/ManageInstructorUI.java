@@ -8,8 +8,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+/**
+ *  Class which is responsible for creating a frame for
+ *  adding an instructor in the system.
+ *
+ */
 
 public class ManageInstructorUI extends JFrame {
 	
@@ -25,6 +32,10 @@ public class ManageInstructorUI extends JFrame {
 		createUI();
 	}
 	
+	/**
+	 * Method which is called in the constructor to put
+	 * everything in the extended JFrame.
+	 */
 	public void createUI() {
 		setTitle("Add Instructor");
 		setSize(400, 400);
@@ -93,6 +104,10 @@ public class ManageInstructorUI extends JFrame {
 		discardButton.addActionListener(listener);
 	}
 	
+	/**
+	 * 
+	 * @return The information from the fields in the frame.
+	 */
 	public String getFNameField() {
 		return fNameTF.getText();
 	}
@@ -123,5 +138,9 @@ public class ManageInstructorUI extends JFrame {
 	
 	public String getEmailField() {
 		return emailTF.getText();
+	}
+	
+	public void displayError(String error) {
+		JOptionPane.showMessageDialog(null, error, "Error Message!", JOptionPane.ERROR_MESSAGE);
 	}
 }
