@@ -10,10 +10,11 @@ import org.hibernate.service.ServiceRegistry;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.ArrayList;
 
-import edu.kea.adventureXP.model.Activity;
+import edu.kea.adventureXP.model.Instructor;
 
-public class ActivityTest {
+public class InstructorTest {
 	private SessionFactory sessionFactory;
 	private ServiceRegistry serviceRegistry;
 
@@ -36,21 +37,32 @@ public class ActivityTest {
 
 	@Test
 	public void basicActivityUsageTest() {
-		// create an activity...
+		// create an instructor...
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
-		session.save( new Activity( "Dwarf Tossing",
-				"Throw Dwarves whole across the shire!",
-				400.0) );
+    List<String> phones = new ArrayList<>();
+    phones.add("+45 55 55 55 55"); 
+		session.save( new Instructor(
+          "Bob",
+          "Bobsen",
+          "42",
+          "Kartoffel Vej",
+          "2200",
+          "Copenhagen",
+          "Denmark",
+          phones,
+          "bob@kartoffel.dk")
+          );
 		session.getTransaction().commit();
 		session.close();
 
 		// retrieve it 
 		session = this.sessionFactory.openSession();
 		session.beginTransaction();
-		List<Activity> result = session.createQuery( "from Activity" ).list();
-		for ( Activity event : result ) {
-			System.out.println( event.getName() + ": " + event.getDescription() + ": " + event.getPrice() );
+		List<Instructor> result = session.createQuery( "from Instructor" ).list();
+		for ( Instructor instructor : result ) {
+			System.out.println( instructor.getFirstName() + " " + instructor.getLastName() +
+          ", " + instructor.getEmail() );
 		}
 		session.getTransaction().commit();
 		session.close();

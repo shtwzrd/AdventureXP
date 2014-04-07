@@ -1,6 +1,117 @@
 package edu.kea.adventureXP.model;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.HibernateException;
 
-public class ActivityController {
-  
+import java.util.List;
+
+
+public final class ActivityController {
+
+  public static void addActivity(Activity activity) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      session.save(activity); 
+      session.getTransaction().commit();
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public static void removeActivity(Activity activity) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      session.delete(activity);
+      session.getTransaction().commit();
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    } 
+  }
+
+  public static void updateActivity(Activity activity) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      Activity retrieved = (Activity) session.load(Activity.class, activity.getId());
+      retrieved.setName(activity.getName());
+      retrieved.setDescription(activity.getDescription());
+      retrieved.setPrice(activity.getPrice());
+      session.save(retrieved); 
+      session.getTransaction().commit();
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public static Activity selectFromActivity(String name) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      Activity result = (Activity) session.createQuery(
+          "select new Activity(name, description, price) " +
+          "from Activity " +
+          "where name = " + "'" + name + "'").list().get(0);
+      session.getTransaction().commit();
+      return result;
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+    return new Activity();
+  }
+
+  public static List<Activity> selectAllFromActivity() {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      List<Activity> result = session.createQuery("from Activity").list();
+      session.getTransaction().commit();
+      return result;
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+    return null;
+  }
+
+  //  public static List<Activity> selectAllFromActivity(String query) {
+
+  //  }
+
 }
