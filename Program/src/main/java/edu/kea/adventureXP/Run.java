@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import edu.kea.adventureXP.model.Activity;
 import edu.kea.adventureXP.presenter.ActivityViewerPresenter;
 import edu.kea.adventureXP.view.ActivityViewerUI;
+import edu.kea.adventureXP.view.AdministratorUI;
 
 public class Run {
   
   public static void main(String[] args) {
+    new AdministratorUI();
+    
+    new ActivityViewerUI();
     // ManageActivityUI maUI = new ManageActivityUI();
     // ManageActivityPresenter maPresenter = new ManageActivityPresenter(maUI);
     ActivityViewerUI avUI = new ActivityViewerUI();

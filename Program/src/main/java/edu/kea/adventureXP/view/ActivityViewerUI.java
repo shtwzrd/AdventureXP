@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,37 +25,31 @@ import edu.kea.adventureXP.model.Activity;
  * has a search bar for finding activities, a list of all activities as well as
  * buttons.
  */
-public class ActivityViewerUI extends JFrame {
+public class ActivityViewerUI extends JPanel {
   
-  private JComboBox  dropDown;
-  private JTextField searchField;
-  private JButton    searchButton;
-  private JTextArea  descriptionArea;
-  private JTable     activityTable;
-  private JButton    deleteButton;
-  private JButton    addButton;
-  private JButton    editButton;
+  private JComboBox<String> dropDown;
+  private JTextField        searchField;
+  private JButton           searchButton;
+  private JTextArea         descriptionArea;
+  private JTable            activityTable;
+  private JButton           deleteButton;
+  private JButton           addButton;
+  private JButton           editButton;
   
   public ActivityViewerUI() {
     buildUI();
   }
   
   /**
-   * Method for building the various panels within the frame as well as set the
-   * various properties of said frame.
+   * Method for building the various panels within the ActivityViewerUI's panel
+   * as well as set the various properties of said panel.
    */
   public void buildUI() {
-    setTitle("Activity Viewer");
-    setSize(600, 600);
     setLayout(new BorderLayout());
     
     buildNorthPanel();
     buildCenterPanel();
     buildSouthPanel();
-    
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    setVisible(true);
   }
   
   /**
@@ -67,7 +60,7 @@ public class ActivityViewerUI extends JFrame {
     JPanel northPanel = new JPanel();
     northPanel.setBackground(UIColors.DARKBLUE);
     
-    dropDown = new JComboBox();
+    dropDown = new JComboBox<String>();
     searchField = new JTextField(15);
     PromptSupport.setPrompt("Type in search...", searchField);
     

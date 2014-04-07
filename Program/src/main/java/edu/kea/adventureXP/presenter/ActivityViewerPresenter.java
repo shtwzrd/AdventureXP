@@ -30,7 +30,14 @@ public class ActivityViewerPresenter {
     ui.setDeleteButtonListener(new DeleteListener());
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
+    
+    String[] dropDownChoices = { "ID", "Name", "Price" };
+    ui.setDropDownOptions(dropDownChoices);
     updateUI();
+  }
+  
+  public ActivityViewerUI getUI() {
+    return ui;
   }
   
   public void setActivityList(ArrayList<Activity> list) {
@@ -117,7 +124,6 @@ public class ActivityViewerPresenter {
       if (selectedRow != -1)
         new ManageActivityPresenter(new ManageActivityUI(),
             sortedActivityList.get(selectedRow));
-      
     }
     
   }
@@ -138,7 +144,6 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       String choice = ui.getSelectedDropDown();
-      System.out.println(choice);
       
       if (choice.equals("ID"))
         sortByID(ui.getSearchField());
