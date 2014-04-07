@@ -3,23 +3,43 @@ package edu.kea.adventureXP.presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import edu.kea.adventureXP.model.Activity;
 import edu.kea.adventureXP.view.ManageActivityUI;
 
 public class ManageActivityPresenter {
   
   ManageActivityUI ui;
   
-  public ManageActivityPresenter() {
-    // HGEHEH
+  /**
+   * Constructor when wanting to open 'Manage Activity' with pre-filled fields.
+   * 
+   * @param ui UI for 'Manage Activity'.
+   * @param activity Object of Activity, which delivers information to the
+   *          fields.
+   */
+  public ManageActivityPresenter(ManageActivityUI ui, Activity activity) {
+    this(ui);
+    ui.setNameField(activity.getName());
+    ui.setPriceField(activity.getPrice());
+    ui.setDescriptionArea(activity.getDescription());
   }
   
+  /**
+   * Constructor for 'Manage Activity', which adds listeners to the buttons.
+   * 
+   * @param ui UI for 'Manage Activity'.
+   */
   public ManageActivityPresenter(ManageActivityUI ui) {
     this.ui = ui;
     ui.setSaveListener(new SaveButtonListener());
     ui.setDiscardListener(new DiscardButtonListener());
   }
   
-  // METHODS >> VALIDATE THE INPUT FROM THE USER INTERFACE
+  /**
+   * Default constructor
+   */
+  public ManageActivityPresenter() {
+  }
   
   public boolean validateName(String name) {
     return !name.isEmpty();
