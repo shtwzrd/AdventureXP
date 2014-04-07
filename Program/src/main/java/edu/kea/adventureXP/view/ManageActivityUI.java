@@ -45,7 +45,7 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildUI() {
     setTitle("Manage Activity");
-    setSize(400, 200);
+    setSize(500, 500);
     setLayout(new BorderLayout());
     
     buildNorthPanel();
@@ -53,7 +53,7 @@ public class ManageActivityUI extends JFrame {
     buildSouthPanel();
     
     setLocationRelativeTo(null);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setVisible(true);
   }
   
@@ -136,15 +136,33 @@ public class ManageActivityUI extends JFrame {
     return nameField.getText();
   }
   
+  public void setNameField(String name) {
+    nameField.setText(name);
+  }
+  
   public double getPriceField() {
     String priceText = priceField.getText();
     if (priceText.equals(""))
-      return 0;
-    return Double.parseDouble(priceText);
+      return 0; // Nothing was added
+    else
+      try {
+        return Double.parseDouble(priceText);
+      }
+      catch (Exception e) {
+        return 0; // Illegal characters were added
+      }
+  }
+  
+  public void setPriceField(double price) {
+    priceField.setText(price + "");
   }
   
   public String getDescriptionField() {
     return descriptionArea.getText();
+  }
+  
+  public void setDescriptionArea(String desc) {
+    descriptionArea.setText(desc);
   }
   
   /**
