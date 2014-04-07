@@ -23,6 +23,7 @@ public class Instructor {
   @Column
   private String zipCode;
 
+  @Column
   private String country;
 
   @Column
@@ -58,11 +59,11 @@ public class Instructor {
 
   }
 
-  public int getID(){
+  public int getId(){
     return this.id;
   }
 
-  private void setID(int id){
+  private void setId(int id){
     this.id = id;
   }
 
@@ -78,7 +79,7 @@ public class Instructor {
     return this.lastName;
   }
 
-  public void setLName(String lName) {
+  public void setLastName(String lName) {
     this.lastName = lName;
   }
 

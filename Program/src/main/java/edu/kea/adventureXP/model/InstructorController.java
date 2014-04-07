@@ -7,14 +7,14 @@ import org.hibernate.HibernateException;
 import java.util.List;
 
 
-public final class ActivityController {
+public final class InstructorController {
 
-  public static void addActivity(Activity activity) {
+  public static void addInstructor(Instructor instructor) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.save(activity); 
+      session.save(instructor); 
       session.getTransaction().commit();
     } catch (HibernateException e) {
       e.printStackTrace();
@@ -27,12 +27,12 @@ public final class ActivityController {
     }
   }
 
-  public static void removeActivity(Activity activity) {
+  public static void removeInstructor(Instructor instructor) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.delete(activity);
+      session.delete(instructor);
       session.getTransaction().commit();
     } catch (HibernateException e) {
       e.printStackTrace();
@@ -45,15 +45,21 @@ public final class ActivityController {
     } 
   }
 
-  public static void updateActivity(Activity activity) {
+  public static void updateInstructor(Instructor instructor) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      Activity retrieved = (Activity) session.load(Activity.class, activity.getId());
-      retrieved.setName(activity.getName());
-      retrieved.setDescription(activity.getDescription());
-      retrieved.setPrice(activity.getPrice());
+      Instructor retrieved = (Instructor) session.load(Instructor.class, instructor.getId());
+      retrieved.setFirstName(instructor.getFirstName());
+      retrieved.setLastName(instructor.getLastName());
+      retrieved.setStreet(instructor.getStreet());
+      retrieved.setStreetNum(instructor.getStreetNum());
+      retrieved.setZipCode(instructor.getZipCode());
+      retrieved.setCity(instructor.getCity());
+      retrieved.setTelephone(instructor.getTelephone());
+      retrieved.setEmail(instructor.getEmail());
+      retrieved.setCountry(instructor.getCountry());
       session.save(retrieved); 
       session.getTransaction().commit();
     } catch (HibernateException e) {
@@ -67,35 +73,12 @@ public final class ActivityController {
     }
   }
 
-  public static Activity selectFromActivity(String name) {
+  public static List<Instructor> selectAllFromInstructor() {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      Activity result = (Activity) session.createQuery(
-          "select new Activity(name, description, price) " +
-          "from Activity " +
-          "where name = " + "'" + name + "'").list().get(0);
-      session.getTransaction().commit();
-      return result;
-    } catch (HibernateException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        session.close();
-      } catch (HibernateException e) {
-        e.printStackTrace();
-      }
-    }
-    return new Activity();
-  }
-
-  public static List<Activity> selectAllFromActivity() {
-    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-    Session session = sessionFactory.openSession();
-    try {
-      session.beginTransaction();
-      List<Activity> result = session.createQuery("from Activity").list();
+      List<Instructor> result = session.createQuery("from Instructor").list();
       session.getTransaction().commit();
       return result;
     } catch (HibernateException e) {
@@ -110,12 +93,12 @@ public final class ActivityController {
     return null;
   }
 
-  public static List<Activity> selectAllFromActivity(String query) {
+  public static List<Instructor> selectAllFromInstructor(String query) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      List<Activity> result = session.createQuery(query).list();
+      List<Instructor> result = session.createQuery(query).list();
       session.getTransaction().commit();
       return result;
     } catch (HibernateException e) {
