@@ -1,4 +1,4 @@
-package edu.kea.adventureXP.model.aux;
+package edu.kea.adventureXP.model.misc;
 
 public class Zip {
 
