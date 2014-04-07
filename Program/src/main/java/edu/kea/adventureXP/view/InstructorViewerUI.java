@@ -87,9 +87,9 @@ public class InstructorViewerUI extends JFrame {
 	    int row = 0;
 	   
 	    for (Instructor instr : instructorList) {
-	      model.setValueAt(instr.getID(), row, 0);
-	      model.setValueAt(instr.getFName(), row, 1);
-	      model.setValueAt(instr.getLName(), row, 2);
+	      model.setValueAt(instr.getId(), row, 0);
+	      model.setValueAt(instr.getFirstName(), row, 1);
+	      model.setValueAt(instr.getLastName(), row, 2);
 	      model.setValueAt(instr.getStreet(), row, 3);
 	      model.setValueAt(instr.getStreetNum(), row, 4);
 	      model.setValueAt(instr.getZipCode(), row, 5);

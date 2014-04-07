@@ -21,7 +21,7 @@ public class ManageInstructorPresenterTest {
 	}
 	@Test
 	public void validateStreetNumFieldTest() {
-		assertTrue(mip.validateStreetNumField(5));
+		assertTrue(mip.validateStreetNumField("5"));
 	}
 	@Test
 	public void validateCityFieldTest(){
@@ -34,7 +34,7 @@ public class ManageInstructorPresenterTest {
 	
 	@Test
 	public void validatePhoneFieldTest(){
-		assertTrue(mip.validatePhoneField(53811118));
+		assertTrue(mip.validatePhoneField("53811118"));
 	}
 	
 	@Test
