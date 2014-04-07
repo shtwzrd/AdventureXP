@@ -186,6 +186,10 @@ public class ActivityViewerUI extends JFrame {
     addButton.addActionListener(listener);
   }
   
+  public void setSearchButtonListener(ActionListener listener) {
+    searchButton.addActionListener(listener);
+  }
+  
   public void setDescriptionArea(String description) {
     descriptionArea.setText(description);
   }
