@@ -6,9 +6,16 @@ import org.hibernate.HibernateException;
 
 import java.util.List;
 
-
+/** Controller class for saving, retrieving, updating and deleting Activity objects. 
+ * @see ManageActivityPresenter
+ * @see Activity
+ * */
 public final class ActivityController {
 
+  /**
+   * Adds activity entity in the database.	
+   * @param activity The Activity to save.
+   */
   public static void addActivity(Activity activity) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
@@ -27,6 +34,10 @@ public final class ActivityController {
     }
   }
 
+  /**
+   * Removes an Activity from the database
+   * @param activity The activity to remove.
+   */
   public static void removeActivity(Activity activity) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
@@ -45,6 +56,10 @@ public final class ActivityController {
     } 
   }
 
+  /**
+   * Updates an Activity in the database
+   * @param activity The Activity with altered fields.
+   */
   public static void updateActivity(Activity activity) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
@@ -67,6 +82,11 @@ public final class ActivityController {
     }
   }
 
+  /**
+   * Gets an Activity from the database
+   * @param name The name on the Activity to get.
+   * @return the Activity with that name.
+   */
   public static Activity selectFromActivity(String name) {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
@@ -90,6 +110,10 @@ public final class ActivityController {
     return new Activity();
   }
 
+  /**
+   * Gets all Activities saved in the database
+   * @return a list containing all Activity objects.
+   */
   public static List<Activity> selectAllFromActivity() {
     SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
     Session session = sessionFactory.openSession();
