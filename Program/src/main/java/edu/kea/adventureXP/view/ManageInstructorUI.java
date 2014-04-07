@@ -121,8 +121,8 @@ public class ManageInstructorUI extends JFrame {
 		return streetTF.getText();
 	}
 	
-	public int getStreetNumField() {
-		return Integer.parseInt(streetNumTF.getText());
+	public String getStreetNumField() {
+		return streetNumTF.getText();
 	}
 	
 	public String getCityField() {
@@ -133,8 +133,8 @@ public class ManageInstructorUI extends JFrame {
 		return zipTF.getText();
 	}
 	
-	public int getPhoneField() {
-		return Integer.parseInt(fNameTF.getText());
+	public String getPhoneField() {
+		return phoneTF.getText();
 	}
 	
 	public String getEmailField() {

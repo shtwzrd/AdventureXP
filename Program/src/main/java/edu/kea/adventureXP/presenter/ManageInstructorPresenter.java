@@ -2,8 +2,12 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.ArrayList;
 
 import edu.kea.adventureXP.view.ManageInstructorUI;
+import edu.kea.adventureXP.model.InstructorController;
+import edu.kea.adventureXP.model.Instructor;
 
 public class ManageInstructorPresenter {
 	
@@ -32,8 +36,8 @@ public class ManageInstructorPresenter {
 		return !street.isEmpty();
 	}
 	
-	public boolean validateStreetNumField(int streetNum) {
-		return streetNum > 0;
+	public boolean validateStreetNumField(String string) {
+		return Integer.parseInt(string) > 0;
 	}
 	public boolean validateCityField(String cityName){
 		return !cityName.isEmpty();
@@ -43,8 +47,8 @@ public class ManageInstructorPresenter {
 		return !zipCode.isEmpty();
 	}
 	
-	public boolean validatePhoneField(int phone) {
-		return phone >= 7;
+	public boolean validatePhoneField(String string) {
+		return string.length() >= 7;
 	}
 	
 	public boolean validateEmailField(String email) {
@@ -98,7 +102,7 @@ public class ManageInstructorPresenter {
 		      }
 		      
 		      if(!validatePhoneField(iui.getPhoneField())){
-		    	  errorMessage += "Phone number should contain 7 digets. \n";
+		    	  errorMessage += "Phone number should contain 7 or more digits. \n";
 		    	  flag = false;
 		      }
 		      
@@ -108,7 +112,20 @@ public class ManageInstructorPresenter {
 		    	  
 		      }
 		      if (flag) {
-		        // Call the Controller
+            List<String> phones = new ArrayList<>();
+            phones.add(iui.getPhoneField() + "");
+            Instructor instructor = new Instructor(
+                iui.getFNameField(),
+                iui.getLNameField(),
+                iui.getStreetNumField() + "",
+                iui.getStreetField(),
+                iui.getZipField(),
+                iui.getCityField(),
+                "Denmark",
+                phones,
+                iui.getEmailField());
+
+		        InstructorController.addInstructor(instructor);  
 		      }
 		      else
 		        iui.displayError(errorMessage);
