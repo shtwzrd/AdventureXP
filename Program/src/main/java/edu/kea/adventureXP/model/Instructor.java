@@ -1,5 +1,11 @@
 package edu.kea.adventureXP.model;
 
+/**
+ * 
+ * Class representing an instructor with names, address and possible contact ways.
+ *
+ */
+
 public class Instructor {
 
 	private String fName;
@@ -11,6 +17,19 @@ public class Instructor {
 	private int telephone;
 	private String email;
 	private int id;
+	
+	/**
+	 * 
+	 * @param fName represents the first name.
+	 * @param lName represents the last name.
+	 * @param street represents the street name.
+	 * @param streetNum represents the street number.
+	 * @param zipCode represents the postal code.
+	 * @param city represents the city name.
+	 * @param telephone represents the telephone number.
+	 * @param email represents the email address.
+	 * @param id represents the unique id, which is auto incremented from the database.
+	 */
 	
 	public Instructor(String fName, String lName, String street, int streetNum, int zipCode,
 						String city, int telephone, String email, int id)	 {
@@ -29,9 +48,9 @@ public class Instructor {
 		return id;
 	}
 	
-	public void setID(int id){
-		this.id = id;
-	}
+//	public void setID(int id){
+//		this.id = id;
+//	}
 	public String getFName() {
 		return fName;
 	}
