@@ -138,6 +138,7 @@ public class ManageInstructorPresenter {
               iui.getCityField(), "Denmark", iui.getPhoneField(), iui.getEmailField());
           
           InstructorController.addInstructor(instructor);
+          
         }
         ivp.updateTable();
         iui.dispose();
@@ -158,6 +159,5 @@ public class ManageInstructorPresenter {
     public void actionPerformed(ActionEvent e) {
       iui.dispose();
     }
-    
   }
 }
