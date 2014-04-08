@@ -24,9 +24,10 @@ public class ManageInstructorPresenter {
     this.iui = new ManageInstructorUI();
   }
 
-  public ManageInstructorPresenter(ManageInstructorUI iui) {
+  public ManageInstructorPresenter(ManageInstructorUI iui, InstructorViewerPresenter ivp) {
     this.iui = iui;
     this.isEdit = false;
+    this.ivp = ivp;
     iui.setSaveListener(new SaveButtonListener());
     iui.setDiscardListener(new DiscardButtonListener());
   }
@@ -86,71 +87,71 @@ public class ManageInstructorPresenter {
       String errorMessage = "";
       boolean flag = true;
 
-      if (!validateFirstName(iui.getFNameField())) {
+      if (!validateFirstName(ManageInstructorPresenter.this.iui.getFNameField())) {
         errorMessage += "- First name field cannot be empty.\n";
         flag = false;
       }
 
-      if (!validateLastName(iui.getLNameField())) {
+      if (!validateLastName(ManageInstructorPresenter.this.iui.getLNameField())) {
         errorMessage += "- Last name field cannot be empty.\n";
         flag = false;
       }
 
-      if(!validateStreetField(iui.getStreetField())) {
+      if(!validateStreetField(ManageInstructorPresenter.this.iui.getStreetField())) {
         errorMessage += "Street cannot be empty.\n";
         flag = false;
       }
 
-      if(!validateStreetNumField(iui.getStreetNumField())){
+      if(!validateStreetNumField(ManageInstructorPresenter.this.iui.getStreetNumField())){
         errorMessage += "Street number cannot be empty.\n";
         flag = false;
       }
 
-      if(!validateCityField(iui.getCityField())){
+      if(!validateCityField(ManageInstructorPresenter.this.iui.getCityField())){
         errorMessage += "City field cannot be empty. \n";
         flag = false;
       }
 
-      if(!validateZipField(iui.getZipField())){
+      if(!validateZipField(ManageInstructorPresenter.this.iui.getZipField())){
         errorMessage += "Zip field cannot be empty. \n";
         flag = false;
       }
 
-      if(!validatePhoneField(iui.getPhoneField())){
+      if(!validatePhoneField(ManageInstructorPresenter.this.iui.getPhoneField())){
         errorMessage += "Phone number should contain 7 or more digits. \n";
         flag = false;
       }
 
-      if(!validateEmailField(iui.getEmailField())){
+      if(!validateEmailField(ManageInstructorPresenter.this.iui.getEmailField())){
         errorMessage += "Email should contain . and @ . And it should not be empty. \n";
         flag = false;
 
       }
       if (flag) {
-        if(isEdit) {
-          InstructorController.updateInstructor(instructorToEdit);
-          ivp.updateUI();
-          iui.dispose();
+        if(ManageInstructorPresenter.this.isEdit) {
+          InstructorController.updateInstructor(ManageInstructorPresenter.this.instructorToEdit);
+          ManageInstructorPresenter.this.ivp.updateUI();
+          ManageInstructorPresenter.this.iui.dispose();
         } else {
           List<String> phones = new ArrayList<>();
-          phones.add(iui.getPhoneField() + "");
+          phones.add(ManageInstructorPresenter.this.iui.getPhoneField() + "");
           Instructor instructor = new Instructor(
-              iui.getFNameField(),
-              iui.getLNameField(),
-              iui.getStreetNumField() + "",
-              iui.getStreetField(),
-              iui.getZipField(),
-              iui.getCityField(),
+              ManageInstructorPresenter.this.iui.getFNameField(),
+              ManageInstructorPresenter.this.iui.getLNameField(),
+              ManageInstructorPresenter.this.iui.getStreetNumField() + "",
+              ManageInstructorPresenter.this.iui.getStreetField(),
+              ManageInstructorPresenter.this.iui.getZipField(),
+              ManageInstructorPresenter.this.iui.getCityField(),
               "Denmark",
               phones,
-              iui.getEmailField());
+              ManageInstructorPresenter.this.iui.getEmailField());
 
           InstructorController.addInstructor(instructor);  
-          ivp.updateUI();
-          iui.dispose();
+          ManageInstructorPresenter.this.ivp.updateUI();
+          ManageInstructorPresenter.this.iui.dispose();
         }
       } else {
-        iui.displayError(errorMessage);
+        ManageInstructorPresenter.this.iui.displayError(errorMessage);
       }
     }
   }
@@ -163,7 +164,7 @@ public class ManageInstructorPresenter {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      iui.dispose();
+      ManageInstructorPresenter.this.iui.dispose();
     }
 
   }

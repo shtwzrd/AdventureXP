@@ -109,6 +109,14 @@ public class InstructorViewerPresenter {
     }
   }
   
+  private class UpdateListener implements ActionListener {
+	  
+	  @Override
+	  public void actionPerformed(ActionEvent e) {
+		  updateUI();
+	  }
+  }
+  
   /**
    * Listens to the edit button within the UI.
    */
@@ -117,10 +125,9 @@ public class InstructorViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1)
-        new ManageInstructorPresenter(new ManageInstructorUI(),
+        new ManageInstructorPresenter(new ManageInstructorUI(),  InstructorViewerPresenter.this,
             sortedInstructorList.get(selectedRow));
     }
-    
   }
   
   /**
@@ -130,7 +137,7 @@ public class InstructorViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      new ManageInstructorPresenter(new ManageInstructorUI());
+      new ManageInstructorPresenter(new ManageInstructorUI(), InstructorViewerPresenter.this);
     }
   }
   
