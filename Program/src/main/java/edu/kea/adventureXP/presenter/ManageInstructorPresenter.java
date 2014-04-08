@@ -2,8 +2,6 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.kea.adventureXP.model.Instructor;
 import edu.kea.adventureXP.model.InstructorController;
@@ -124,32 +122,25 @@ public class ManageInstructorPresenter {
         
       }
       if (flag) {
-        if(ManageInstructorPresenter.this.isEdit) {
-        	ManageInstructorPresenter.this.iui.setFNameField(instructorToEdit.getFirstName());
-        	ManageInstructorPresenter.this.iui.setLNameField(instructorToEdit.getLastName());
-        	ManageInstructorPresenter.this.iui.setStreetField(instructorToEdit.getStreet());
-        	ManageInstructorPresenter.this.iui.setCityField(instructorToEdit.getCity());
-        	ManageInstructorPresenter.this.iui.setZipField(instructorToEdit.getZipCode());
-        	ManageInstructorPresenter.this.iui.setPhoneField(instructorToEdit.getTelephone());
-        	ManageInstructorPresenter.this.iui.setEmailField(instructorToEdit.getEmail());
-          InstructorController.updateInstructor(ManageInstructorPresenter.this.instructorToEdit);
-          ManageInstructorPresenter.this.ivp.updateUI();
-          ManageInstructorPresenter.this.iui.dispose();
-        } else {
-          Instructor instructor = new Instructor(
-              ManageInstructorPresenter.this.iui.getFNameField(),
-              ManageInstructorPresenter.this.iui.getLNameField(),
-              ManageInstructorPresenter.this.iui.getStreetField(),
-              ManageInstructorPresenter.this.iui.getZipField(),
-              ManageInstructorPresenter.this.iui.getCityField(),
-              "Denmark",
-              ManageInstructorPresenter.this.iui.getPhoneField(), 
-              ManageInstructorPresenter.this.iui.getEmailField());
-
-          InstructorController.addInstructor(instructor);  
-          ManageInstructorPresenter.this.ivp.updateUI();
-          ManageInstructorPresenter.this.iui.dispose();
+        if (isEdit) {
+          iui.setFNameField(instructorToEdit.getFirstName());
+          iui.setLNameField(instructorToEdit.getLastName());
+          iui.setStreetField(instructorToEdit.getStreet());
+          iui.setCityField(instructorToEdit.getCity());
+          iui.setZipField(instructorToEdit.getZipCode());
+          iui.setPhoneField(instructorToEdit.getTelephone());
+          iui.setEmailField(instructorToEdit.getEmail());
+          InstructorController.updateInstructor(instructorToEdit);
         }
+        else {
+          Instructor instructor = new Instructor(iui.getFNameField(),
+              iui.getLNameField(), iui.getStreetField(), iui.getZipField(),
+              iui.getCityField(), "Denmark", iui.getPhoneField(), iui.getEmailField());
+          
+          InstructorController.addInstructor(instructor);
+        }
+        ivp.updateTable();
+        iui.dispose();
       }
       else
         iui.displayError(errorMessage);
