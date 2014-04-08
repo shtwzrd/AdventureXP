@@ -6,24 +6,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import edu.kea.adventureXP.model.Activity;
-import edu.kea.adventureXP.view.ActivityViewerUI;
+import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.view.InstructorViewerUI;
 import edu.kea.adventureXP.view.ManageActivityUI;
+import edu.kea.adventureXP.view.ManageInstructorUI;
 
-public class ActivityViewerPresenter {
+public class InstructorViewerPresenter {
   
-  ActivityViewerUI    ui;
-  ArrayList<Activity> activityList       = new ArrayList<Activity>();
-  ArrayList<Activity> sortedActivityList = new ArrayList<Activity>();
-  int                 selectedRow        = -1;
+  InstructorViewerUI    ui;
+  ArrayList<Instructor> instructorList       = new ArrayList<>();
+  ArrayList<Instructor> sortedInstructorList = new ArrayList<>();
+  int                   selectedRow          = -1;
   
-  /**
-   * Constructor associating the ui with the presenter and setting listeners on
-   * all needed components within the UI.
-   * 
-   * @param ui The UI to listen to input from.
-   */
-  public ActivityViewerPresenter(ActivityViewerUI ui) {
+  public InstructorViewerPresenter(InstructorViewerUI ui) {
     this.ui = ui;
     ui.setTableListener(new TableListener());
     ui.setAddButtonListener(new AddListener());
@@ -31,43 +26,37 @@ public class ActivityViewerPresenter {
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
     
-    String[] dropDownChoices = { "ID", "Name", "Price" };
+    String[] dropDownChoices = { "Name" };
     ui.setDropDownOptions(dropDownChoices);
     updateUI();
   }
   
-  public ActivityViewerUI getUI() {
+  public InstructorViewerUI getUI() {
     return ui;
   }
   
-  public void setActivityList(ArrayList<Activity> list) {
-    activityList = list;
-    sortedActivityList = new ArrayList<Activity>(list);
+  public void setInstructorList(ArrayList<Instructor> list) {
+    instructorList = list;
+    sortedInstructorList = new ArrayList<Instructor>(list);
   }
   
   /**
    * Updates the UI
    */
   public void updateUI() {
-    ui.setTable(sortedActivityList);
+    ui.setTable(sortedInstructorList);
     ui.revalidate();
   }
   
   public void sortByName(String name) {
-    ArrayList<Activity> temp = new ArrayList<>();
+    ArrayList<Instructor> temp = new ArrayList<>();
     
-    for (Activity a : activityList)
-      if (a.getName().contains(name))
-        temp.add(a);
-    sortedActivityList = new ArrayList<Activity>(temp);
-  }
-  
-  public void sortByID(String ID) {
-    
-  }
-  
-  public void sortByPrice(String Price) {
-    
+    for (Instructor i : instructorList) {
+      String iName = i.getFName() + " " + i.getLName();
+      if (iName.contains(name))
+        temp.add(i);
+    }
+    sortedInstructorList = new ArrayList<Instructor>(temp);
   }
   
   /**
@@ -78,7 +67,10 @@ public class ActivityViewerPresenter {
     @Override
     public void mousePressed(MouseEvent e) {
       selectedRow = ui.getTable().rowAtPoint(e.getPoint());
-      ui.setDescriptionArea(activityList.get(selectedRow).getDescription());
+      Instructor i = instructorList.get(selectedRow);
+      String description = i.getStreet() + " " + i.getStreetNum() + ", " + i.getZipCode()
+          + " " + i.getCity() + "\nPhone: " + i.getTelephone();
+      ui.setDescriptionArea(description);
     }
     
     @Override
@@ -107,7 +99,7 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
-        activityList.remove(selectedRow);
+        instructorList.remove(selectedRow);
         ui.setDescriptionArea("");
         updateUI();
       }
@@ -122,8 +114,8 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1)
-        new ManageActivityPresenter(new ManageActivityUI(),
-            sortedActivityList.get(selectedRow));
+        new ManageInstructorPresenter(new ManageInstructorUI(),
+            sortedInstructorList.get(selectedRow));
     }
     
   }
@@ -145,12 +137,8 @@ public class ActivityViewerPresenter {
     public void actionPerformed(ActionEvent e) {
       String choice = ui.getSelectedDropDown();
       
-      if (choice.equals("ID"))
-        sortByID(ui.getSearchField());
-      else if (choice.equals("Name"))
+      if (choice.equals("Name"))
         sortByName(ui.getSearchField());
-      else if (choice.equals("Price"))
-        sortByPrice(ui.getSearchField());
       updateUI();
     }
   }
