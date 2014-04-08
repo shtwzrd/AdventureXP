@@ -15,56 +15,82 @@ import java.util.ArrayList;
 import edu.kea.adventureXP.model.Instructor;
 
 public class InstructorTest {
-	private SessionFactory sessionFactory;
-	private ServiceRegistry serviceRegistry;
+  private SessionFactory sessionFactory;
+  private ServiceRegistry serviceRegistry;
 
-	@Before
-	public void setUp() throws Exception {
-		Configuration configuration = new Configuration();
-		configuration.configure();  // configures settings from hibernate.cfg.xml
-		this.serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-				configuration.getProperties()).build();
-		// A SessionFactory is set up once for an application
-		this.sessionFactory = configuration.buildSessionFactory(this.serviceRegistry); 
-	}
+  @Before
+  public void setUp() throws Exception {
+    Configuration configuration = new Configuration();
+    configuration.configure();  // configures settings from hibernate.cfg.xml
+    this.serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+        configuration.getProperties()).build();
+    // A SessionFactory is set up once for an application
+    this.sessionFactory = configuration.buildSessionFactory(this.serviceRegistry); 
+  }
 
-	@After
-	public void tearDown() throws Exception {
-		if ( this.sessionFactory != null ) {
-			this.sessionFactory.close();
-		}
-	}
+  @After
+  public void tearDown() throws Exception {
+    if ( this.sessionFactory != null ) {
+      this.sessionFactory.close();
+    }
+  }
 
-	@Test
-	public void basicActivityUsageTest() {
-		// create an instructor...
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-    List<String> phones = new ArrayList<>();
-    phones.add("+45 55 55 55 55"); 
-		session.save( new Instructor(
+  @Test
+  public void basicActivityUsageTest() {
+    // create an instructor...
+    Session session = this.sessionFactory.openSession();
+    session.beginTransaction();
+    session.save( new Instructor(
           "Bob",
           "Bobsen",
-          "42",
           "Kartoffel Vej",
           "2200",
           "Copenhagen",
           "Denmark",
-          phones,
+          "2222222",
           "bob@kartoffel.dk")
-          );
-		session.getTransaction().commit();
-		session.close();
+        );
+    session.getTransaction().commit();
+    session.close();
 
-		// retrieve it 
-		session = this.sessionFactory.openSession();
-		session.beginTransaction();
-		List<Instructor> result = session.createQuery( "from Instructor" ).list();
-		for ( Instructor instructor : result ) {
-			System.out.println( instructor.getFirstName() + " " + instructor.getLastName() +
+    // retrieve it 
+    session = this.sessionFactory.openSession();
+    session.beginTransaction();
+    List<Instructor> result = session.createQuery( "from Instructor" ).list();
+    for ( Instructor instructor : result ) {
+      System.out.println( instructor.getFirstName() + " " + instructor.getLastName() +
           ", " + instructor.getEmail() );
-		}
-		session.getTransaction().commit();
-		session.close();
-	}
+    }
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Test
+  public void populateInstructorTableTest() {
+    Session session = this.sessionFactory.openSession();
+    session.beginTransaction();
+    session.save( new Instructor(
+          "Bob",
+          "Bobsen",
+          "Kartoffel Vej",
+          "2200",
+          "Copenhagen",
+          "Denmark",
+          "45454545",
+          "bob@kartoffel.dk")
+        );
+    session.save( new Instructor(
+          "Karin",
+          "L",
+          "Blomkål Vej",
+          "2200",
+          "Copenhagen",
+          "Denmark",
+          "45474352",
+          "karin@kartoffel.dk")
+        ); 
+    session.getTransaction().commit();
+    session.close(); 
+
+  }
 }

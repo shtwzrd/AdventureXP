@@ -1,11 +1,15 @@
 package edu.kea.adventureXP.model;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="INSTRUCTOR")
+@Table(name = "INSTRUCTOR")
 public class Instructor {
 
 	@Column
@@ -18,9 +22,6 @@ public class Instructor {
 	private String street;
 
 	@Column
-	private String streetNum;
-
-	@Column
 	private String zipCode;
 
 	@Column
@@ -29,10 +30,8 @@ public class Instructor {
 	@Column
 	private String city;
 
-	@ElementCollection
-	@JoinTable(name="PHONE",
-	joinColumns = {@JoinColumn(name="id")})
-	private List<String> telephone;
+	@Column
+	private String telephone;
 
 	@Column
 	private String email;
@@ -54,12 +53,11 @@ public class Instructor {
 	 * @param email represents the email address.
 	 * @param id represents the unique id, which is auto incremented from the database.
 	 */
-	public Instructor(String fName, String lName, String streetNum, String street,
-			String zipCode, String city,	String country, List<String> telephone, String email)	 {
+	public Instructor(String fName, String lName, String street,
+			String zipCode, String city, String country, String telephone, String email)	 {
 		this.firstName = fName;
 		this.lastName = lName;
 		this.street = street;
-		this.streetNum = streetNum;
 		this.zipCode = zipCode;
 		this.city = city;
 		this.telephone = telephone;
@@ -103,14 +101,6 @@ public class Instructor {
 		this.street = street;
 	}
 
-	public String getStreetNum(){
-		return this.streetNum;
-	}
-
-	public void setStreetNum(String streetNum){
-		this.streetNum = streetNum;
-	}
-
 	public String getZipCode(){
 		return this.zipCode;
 	}
@@ -127,20 +117,12 @@ public class Instructor {
 		this.city = city;
 	}
 
-	public List<String> getTelephone(){
+	public String getTelephone(){
 		return this.telephone;
 	}
 
-	public void setTelephone(List<String> telephone){
+	public void setTelephone(String telephone){
 		this.telephone = telephone;
-	}
-
-	public void addPhone(String phone) {
-		this.telephone.add(phone);
-	}
-
-	public void removePhone(String phone) {
-		this.telephone.remove(phone);
 	}
 
 	public String getEmail(){

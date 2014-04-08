@@ -13,8 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.jdesktop.xswingx.PromptSupport;
-
 import edu.kea.adventureXP.model.Activity;
 
 /**
@@ -62,19 +60,19 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildNorthPanel() {
     JPanel northPanel = new JPanel();
-    northPanel.setBackground(UIColors.DARKBLUE);
+    northPanel.setBackground(UIColors.DARKGREEN);
     
     JLabel name = new JLabel("Name:");
     name.setForeground(UIColors.WHITE);
     
     nameField = new JTextField(10);
-    PromptSupport.setPrompt("Name (required)", nameField);
+    // PromptSupport.setPrompt("Name (required)", nameField);
     
     JLabel price = new JLabel("Price:");
     price.setForeground(UIColors.WHITE);
     
     priceField = new JTextField(10);
-    PromptSupport.setPrompt("Price", priceField);
+    // PromptSupport.setPrompt("Price", priceField);
     
     northPanel.add(name);
     northPanel.add(nameField);
@@ -93,7 +91,7 @@ public class ManageActivityUI extends JFrame {
     descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     descriptionArea.setWrapStyleWord(true);
     descriptionArea.setLineWrap(true);
-    PromptSupport.setPrompt("Description", descriptionArea);
+    // PromptSupport.setPrompt("Description", descriptionArea);
     
     add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
   }
@@ -103,7 +101,7 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildSouthPanel() {
     JPanel southPanel = new JPanel();
-    southPanel.setBackground(UIColors.DARKBLUE);
+    southPanel.setBackground(UIColors.DARKGREEN);
     
     saveButton = new JButton("Save");
     discardButton = new JButton("Discard");

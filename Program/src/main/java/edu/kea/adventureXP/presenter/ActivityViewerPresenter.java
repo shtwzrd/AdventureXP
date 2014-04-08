@@ -36,8 +36,18 @@ public class ActivityViewerPresenter {
     ui.setDeleteButtonListener(new DeleteListener());
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
+<<<<<<< HEAD
     setActivityList();
+=======
+    
+    String[] dropDownChoices = { "ID", "Name", "Price" };
+    ui.setDropDownOptions(dropDownChoices);
+>>>>>>> f830af1dacec891af88cc70e30a3e8ae0df1c062
     updateUI();
+  }
+  
+  public ActivityViewerUI getUI() {
+    return ui;
   }
   
   public void setActivityList(ArrayList<Activity> list) {
@@ -126,11 +136,17 @@ public class ActivityViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
       if (selectedRow != -1){
     	  Activity toEdit = ActivityController.selectFromActivity((long)ui.getTable().getValueAt(selectedRow, 0));
           new ManageActivityPresenter(new ManageActivityUI(),toEdit);
       }
       
+=======
+      if (selectedRow != -1)
+        new ManageActivityPresenter(new ManageActivityUI(),
+            sortedActivityList.get(selectedRow));
+>>>>>>> f830af1dacec891af88cc70e30a3e8ae0df1c062
     }
     
   }
@@ -151,7 +167,6 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       String choice = ui.getSelectedDropDown();
-      System.out.println(choice);
       
       if (choice.equals("ID"))
         sortByID(ui.getSearchField());

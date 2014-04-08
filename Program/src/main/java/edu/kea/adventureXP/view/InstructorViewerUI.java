@@ -1,124 +1,184 @@
 package edu.kea.adventureXP.view;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdesktop.xswingx.PromptSupport;
-
 import edu.kea.adventureXP.model.Instructor;
 
-public class InstructorViewerUI extends JFrame {
+public class InstructorViewerUI extends JPanel {
+  
+  private JComboBox<String> dropDown;
+  private JTextField        searchField;
+  private JButton           searchButton;
+  private JTextArea         descriptionArea;
+  private JTable            instructorTable;
+  private JButton           deleteButton;
+  private JButton           addButton;
+  private JButton           editButton;
+  
+  public InstructorViewerUI() {
+    buildUI();
+  }
+  
+  /**
+   * Method for building the various panels within the InstructorViewerUI's
+   * panel as well as set the various properties of said panel.
+   */
+  public void buildUI() {
+    setLayout(new BorderLayout());
+    
+    buildNorthPanel();
+    buildCenterPanel();
+    buildSouthPanel();
+  }
+  
+  /**
+   * Builds the north panel with a dropdown menu, a search field and a search
+   * button.
+   */
+  public void buildNorthPanel() {
+    JPanel northPanel = new JPanel();
+    northPanel.setBackground(UIColors.DARKGREEN);
+    
+    dropDown = new JComboBox<String>();
+    searchField = new JTextField(15);
+    // PromptSupport.setPrompt("Type in search...", searchField);
+    
+    searchButton = new JButton("Search");
+    
+    northPanel.add(dropDown);
+    northPanel.add(searchField);
+    northPanel.add(searchButton);
+    
+    add(northPanel, BorderLayout.NORTH);
+  }
+  
+  /**
+   * @param words The options to display in the drop down menu
+   */
+  public void setDropDownOptions(String[] words) {
+    for (String s : words)
+      dropDown.addItem(s);
+  }
+  
+  /**
+   * Builds the center panel consisting of a JTable showing all instructors and
+   * a description box showing the description of the selected instructor.
+   */
+  public void buildCenterPanel() {
+    JPanel southPanel = new JPanel(new BorderLayout());
+    
+    instructorTable = new JTable();
+    southPanel.add(new JScrollPane(instructorTable), BorderLayout.CENTER);
+    
+    descriptionArea = new JTextArea(10, 20);
+    descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    descriptionArea.setWrapStyleWord(true);
+    descriptionArea.setLineWrap(true);
+    descriptionArea.setEditable(false);
+    // PromptSupport.setPrompt("Information", descriptionArea);
+    
+    southPanel.add(descriptionArea, BorderLayout.SOUTH);
+    
+    add(southPanel, BorderLayout.CENTER);
+  }
+  
+  /**
+   * Adds a list of activities to the JTable.
+   * 
+   * @param activityList The list of activities to add
+   */
+  public void setTable(List<Instructor> instructorList) {
+    String[] heads = { "ID", "First name", "Last name", "Email" };
+    
+    DefaultTableModel model = new DefaultTableModel();
+    
+    model.setRowCount(instructorList.size());
+    model.setColumnIdentifiers(heads);
+    
+    int row = 0;
+    
+    for (Instructor i : instructorList) {
+      model.setValueAt(i.getId(), row, 0);
+      model.isCellEditable(row, 0);
+      model.setValueAt(i.getFirstName(), row, 1);
+      model.isCellEditable(row, 1);
+      model.setValueAt(i.getLastName(), row, 2);
+      model.isCellEditable(row, 2);
+      model.setValueAt(i.getEmail(), row, 3);
+      model.isCellEditable(row, 3);
+      row++;
+    }
+    
+    instructorTable.setModel(model);
+  }
+  
+  /**
+   * Builds the south panel having buttons for deleting, editing and adding
+   * activities.
+   */
+  public void buildSouthPanel() {
+    JPanel southPanel = new JPanel();
+    southPanel.setBackground(UIColors.DARKGREEN);
+    
+    deleteButton = new JButton("Delete");
+    editButton = new JButton("Edit");
+    addButton = new JButton("Add New");
+    
+    southPanel.add(deleteButton);
+    southPanel.add(editButton);
+    southPanel.add(addButton);
+    
+    add(southPanel, BorderLayout.SOUTH);
+  }
+  
+  public JTable getTable() {
+    return instructorTable;
+  }
+  
+  public void setTableListener(MouseListener listener) {
+    instructorTable.addMouseListener(listener);
+  }
+  
+  public void setDeleteButtonListener(ActionListener listener) {
+    deleteButton.addActionListener(listener);
+  }
+  
+  public void setEditButtonListener(ActionListener listener) {
+    editButton.addActionListener(listener);
+  }
+  
+  public void setAddButtonListener(ActionListener listener) {
+    addButton.addActionListener(listener);
+  }
+  
+  public void setSearchButtonListener(ActionListener listener) {
+    searchButton.addActionListener(listener);
+  }
+  
+  public void setDescriptionArea(String description) {
+    descriptionArea.setText(description);
+  }
+  
+  public String getSelectedDropDown() {
+    return (String) dropDown.getSelectedItem();
+  }
+  
+  public String getSearchField() {
+    return searchField.getText();
+  }
 
-	private JComboBox seeOption;
-	private JButton addButton, deleteButton, editButton, searchButton;
-	private JTextField searchF;
-	private JTable instructorTable;
-	
-	public InstructorViewerUI() {
-		createUI();
-	}
-	
-	public void createUI() {
-		setTitle("Instructor Overview");
-		setSize(500, 500);
-		setLayout(new BorderLayout());
-		
-		createNorth();
-		createCenter();
-		createSouth();
-		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
-	}
-	
-	public void createNorth() {
-		JPanel north = new JPanel(new FlowLayout());
-		north.setBackground(UIColors.DARKBLUE);
-		
-		seeOption = new JComboBox();
-		searchF = new JTextField(25);
-		PromptSupport.setPrompt("Type in to search...", searchF);
-		searchButton = new JButton("Search");
-		searchButton.setSize(10, 10);
-		
-		north.add(seeOption);
-		north.add(searchF);
-		north.add(searchButton);
-		
-		add(north, BorderLayout.NORTH);
-	}
-	
-	public void setDropMenuItems(String[] names) {
-		for(String n : names) {
-			seeOption.addItem(n);
-		}
-	}
-	
-	public void createCenter() {
-		JPanel southCenter = new JPanel(new FlowLayout());
-		instructorTable = new JTable();
-		
-		southCenter.add(new JScrollPane(instructorTable), BorderLayout.CENTER);
-		
-		add(southCenter, BorderLayout.CENTER);
-	}
-	
-	public void setInstructorTable(List<Instructor> instructorList) {
-	    String[] columnNames = { "ID", "First Name", "Last Name", "Street",
-	    		"Street #", "Post Code", "City", "Phone", "Email"};
-	    
-	    DefaultTableModel model = new DefaultTableModel();
-	   
-	    model.setRowCount(instructorList.size());
-	    model.setColumnIdentifiers(columnNames);
-	   
-	    int row = 0;
-	   
-	    for (Instructor instr : instructorList) {
-	      model.setValueAt(instr.getID(), row, 0);
-	      model.setValueAt(instr.getFName(), row, 1);
-	      model.setValueAt(instr.getLName(), row, 2);
-	      model.setValueAt(instr.getStreet(), row, 3);
-	      model.setValueAt(instr.getStreetNum(), row, 4);
-	      model.setValueAt(instr.getZipCode(), row, 5);
-	      model.setValueAt(instr.getCity(), row, 6);
-	      model.setValueAt(instr.getTelephone(), row, 7);
-	      model.setValueAt(instr.getEmail(), row, 8);
-	      row++;
-	    }
-	   
-	    instructorTable.setModel(model);
-	    model.fireTableDataChanged();
-	}
-	
-	public void createSouth() {
-	    JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	    southPanel.setBackground(UIColors.DARKBLUE);
-	   
-	    deleteButton = new JButton("Delete");
-	    editButton = new JButton("Edit");
-	    addButton = new JButton("Add New");
-	   
-	    southPanel.add(deleteButton);
-	    southPanel.add(editButton);
-	    southPanel.add(addButton);
-	   
-	    add(southPanel, BorderLayout.SOUTH);
-	}
-	
-	public void setAddButtonListener(ActionListener listener) {
-		addButton.addActionListener(listener);
-	}
 }
