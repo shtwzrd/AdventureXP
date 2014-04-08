@@ -133,6 +133,7 @@ public class ManageInstructorPresenter {
         	ManageInstructorPresenter.this.iui.setPhoneField(instructorToEdit.getTelephone());
         	ManageInstructorPresenter.this.iui.setEmailField(instructorToEdit.getEmail());
           InstructorController.updateInstructor(ManageInstructorPresenter.this.instructorToEdit);
+          ManageInstructorPresenter.this.ivp.updateTable();
           ManageInstructorPresenter.this.ivp.updateUI();
           ManageInstructorPresenter.this.iui.dispose();
         } else {
@@ -147,6 +148,7 @@ public class ManageInstructorPresenter {
               ManageInstructorPresenter.this.iui.getEmailField());
 
           InstructorController.addInstructor(instructor);  
+          ManageInstructorPresenter.this.ivp.updateTable();
           ManageInstructorPresenter.this.ivp.updateUI();
           ManageInstructorPresenter.this.iui.dispose();
         }
@@ -167,6 +169,5 @@ public class ManageInstructorPresenter {
     public void actionPerformed(ActionEvent e) {
       iui.dispose();
     }
-    
   }
 }
