@@ -34,7 +34,7 @@ public class ManageInstructorPresenter {
 
   public ManageInstructorPresenter(ManageInstructorUI iui, InstructorViewerPresenter ivp,
       Instructor instructorToEdit) {
-    this.iui = new ManageInstructorUI();
+    this.iui = iui;
     this.ivp = ivp;
     this.instructorToEdit = instructorToEdit;
     this.isEdit = true;
@@ -102,11 +102,6 @@ public class ManageInstructorPresenter {
         flag = false;
       }
 
-      if(!validateStreetNumField(ManageInstructorPresenter.this.iui.getStreetNumField())){
-        errorMessage += "Street number cannot be empty.\n";
-        flag = false;
-      }
-
       if(!validateCityField(ManageInstructorPresenter.this.iui.getCityField())){
         errorMessage += "City field cannot be empty. \n";
         flag = false;
@@ -129,21 +124,25 @@ public class ManageInstructorPresenter {
       }
       if (flag) {
         if(ManageInstructorPresenter.this.isEdit) {
+        	ManageInstructorPresenter.this.iui.setFNameField(instructorToEdit.getFirstName());
+        	ManageInstructorPresenter.this.iui.setLNameField(instructorToEdit.getLastName());
+        	ManageInstructorPresenter.this.iui.setStreetField(instructorToEdit.getStreet());
+        	ManageInstructorPresenter.this.iui.setCityField(instructorToEdit.getCity());
+        	ManageInstructorPresenter.this.iui.setZipField(instructorToEdit.getZipCode());
+        	ManageInstructorPresenter.this.iui.setPhoneField(instructorToEdit.getTelephone());
+        	ManageInstructorPresenter.this.iui.setEmailField(instructorToEdit.getEmail());
           InstructorController.updateInstructor(ManageInstructorPresenter.this.instructorToEdit);
           ManageInstructorPresenter.this.ivp.updateUI();
           ManageInstructorPresenter.this.iui.dispose();
         } else {
-          List<String> phones = new ArrayList<>();
-          phones.add(ManageInstructorPresenter.this.iui.getPhoneField() + "");
           Instructor instructor = new Instructor(
               ManageInstructorPresenter.this.iui.getFNameField(),
               ManageInstructorPresenter.this.iui.getLNameField(),
-              ManageInstructorPresenter.this.iui.getStreetNumField() + "",
               ManageInstructorPresenter.this.iui.getStreetField(),
               ManageInstructorPresenter.this.iui.getZipField(),
               ManageInstructorPresenter.this.iui.getCityField(),
               "Denmark",
-              phones,
+              ManageInstructorPresenter.this.iui.getPhoneField(), 
               ManageInstructorPresenter.this.iui.getEmailField());
 
           InstructorController.addInstructor(instructor);  

@@ -12,10 +12,8 @@ public class InstructorControllerTest {
 
   @Test
   public void instructorControllerBasicUsageTest() {
-    List<String> phones = new ArrayList<>();
-    phones.add("12 34 56 78");
-    Instructor instructor = new Instructor("John", "Jacob", "123", "Sesame Street",
-        "12345-3456", "City", "Country", phones, "bigbird43@s.se");  
+    Instructor instructor = new Instructor("John", "Jacob", "Sesame Street",
+        "12345-3456", "City", "Country", "2222222", "bigbird43@s.se");  
     InstructorController.addInstructor(instructor);
 
      List<Instructor> list = InstructorController.selectAllFromInstructor();

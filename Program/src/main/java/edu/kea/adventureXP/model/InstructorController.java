@@ -4,6 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
+import edu.kea.adventureXP.model.misc.Phone;
+
 import java.util.List;
 
 
@@ -54,7 +56,6 @@ public final class InstructorController {
       retrieved.setFirstName(instructor.getFirstName());
       retrieved.setLastName(instructor.getLastName());
       retrieved.setStreet(instructor.getStreet());
-      retrieved.setStreetNum(instructor.getStreetNum());
       retrieved.setZipCode(instructor.getZipCode());
       retrieved.setCity(instructor.getCity());
       retrieved.setTelephone(instructor.getTelephone());

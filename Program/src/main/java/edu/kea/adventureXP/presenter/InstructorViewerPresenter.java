@@ -48,8 +48,7 @@ public class InstructorViewerPresenter {
   public void updateUI() {
 	setInstructorList(InstructorController.selectAllFromInstructor());
     ui.setTable(sortedInstructorList);
-    ui.revalidate();
-  }
+    ui.revalidate(); }
   
   public void sortByName(String name) {
     ArrayList<Instructor> temp = new ArrayList<>();
@@ -71,7 +70,7 @@ public class InstructorViewerPresenter {
     public void mousePressed(MouseEvent e) {
       selectedRow = ui.getTable().rowAtPoint(e.getPoint());
       Instructor i = instructorList.get(selectedRow);
-      String description = i.getStreet() + " " + i.getStreetNum() + ", " + i.getZipCode()
+      String description = i.getStreet() + ", " + i.getZipCode()
           + " " + i.getCity() + "\nPhone: " + i.getTelephone();
       ui.setDescriptionArea(description);
     }

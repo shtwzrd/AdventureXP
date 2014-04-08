@@ -40,17 +40,14 @@ public class InstructorTest {
     // create an instructor...
     Session session = this.sessionFactory.openSession();
     session.beginTransaction();
-    List<String> phones = new ArrayList<>();
-    phones.add("+45 55 55 55 55"); 
     session.save( new Instructor(
           "Bob",
           "Bobsen",
-          "42",
           "Kartoffel Vej",
           "2200",
           "Copenhagen",
           "Denmark",
-          phones,
+          "2222222",
           "bob@kartoffel.dk")
         );
     session.getTransaction().commit();
@@ -72,28 +69,24 @@ public class InstructorTest {
   public void populateInstructorTableTest() {
     Session session = this.sessionFactory.openSession();
     session.beginTransaction();
-    List<String> phones = new ArrayList<>();
-    phones.add("+45 55 55 55 55"); 
     session.save( new Instructor(
           "Bob",
           "Bobsen",
-          "42",
           "Kartoffel Vej",
           "2200",
           "Copenhagen",
           "Denmark",
-          phones,
+          "45454545",
           "bob@kartoffel.dk")
         );
     session.save( new Instructor(
           "Karin",
           "L",
-          "192",
           "Blomkål Vej",
           "2200",
           "Copenhagen",
           "Denmark",
-          phones,
+          "45474352",
           "karin@kartoffel.dk")
         ); 
     session.getTransaction().commit();
