@@ -8,10 +8,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import edu.kea.adventureXP.presenter.ActivityViewerPresenter;
+import edu.kea.adventureXP.presenter.InstructorViewerPresenter;
 
 /**
- * 
- *
+ * Main User Interface for administrators. It have tabs for Activities &
+ * Instructors (more to come).
  */
 public class AdministratorUI extends JFrame {
   
@@ -22,7 +23,7 @@ public class AdministratorUI extends JFrame {
   }
   
   /**
-   * Builds the main frame and adds the tabs to it.
+   * Builds the main frame and adds the various tabs to it.
    */
   public void buildUI() {
     setTitle("Administrator");
@@ -35,6 +36,8 @@ public class AdministratorUI extends JFrame {
     tabPane.setOpaque(true);
     tabPane
         .add("Activities", new ActivityViewerPresenter(new ActivityViewerUI()).getUI());
+    tabPane.add("Instructors",
+        new InstructorViewerPresenter(new InstructorViewerUI()).getUI());
     
     contentPane.add(tabPane);
     add(contentPane);
