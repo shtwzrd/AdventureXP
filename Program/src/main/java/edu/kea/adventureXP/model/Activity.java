@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "ACTIVITY")
-public class Activity {
+public class Activity implements Comparable{
 	
 	@Id
 	@GeneratedValue(generator="increment")
@@ -57,7 +57,7 @@ public class Activity {
 		return this.id;
 	}
 	
-	private void setId(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -83,6 +83,12 @@ public class Activity {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+
+	@Override
+	public int compareTo(Object activity) {
+		return -1;
 	}
 
 }

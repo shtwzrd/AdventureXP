@@ -5,8 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
+
+//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
+import java.util.List;
 
 import edu.kea.adventureXP.model.Activity;
+import edu.kea.adventureXP.model.ActivityController;
 import edu.kea.adventureXP.view.ActivityViewerUI;
 import edu.kea.adventureXP.view.ManageActivityUI;
 
@@ -14,7 +20,7 @@ public class ActivityViewerPresenter {
   
   ActivityViewerUI    ui;
   ArrayList<Activity> activityList       = new ArrayList<Activity>();
-  ArrayList<Activity> sortedActivityList = new ArrayList<Activity>();
+  List<Activity> sortedActivityList = new ArrayList<Activity>();
   int                 selectedRow        = -1;
   
   /**
@@ -30,19 +36,25 @@ public class ActivityViewerPresenter {
     ui.setDeleteButtonListener(new DeleteListener());
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
+    setActivityList();
     updateUI();
   }
   
   public void setActivityList(ArrayList<Activity> list) {
-    activityList = list;
+	activityList = list;
     sortedActivityList = new ArrayList<Activity>(list);
   }
+  
+  public void setActivityList() {
+		activityList = (ArrayList<Activity>) ActivityController.selectAllFromActivity();
+		
+	  }
   
   /**
    * Updates the UI
    */
   public void updateUI() {
-    ui.setTable(sortedActivityList);
+    ui.setTable(activityList);
     ui.revalidate();
   }
   
@@ -114,9 +126,10 @@ public class ActivityViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      if (selectedRow != -1)
-        new ManageActivityPresenter(new ManageActivityUI(),
-            sortedActivityList.get(selectedRow));
+      if (selectedRow != -1){
+    	  Activity toEdit = ActivityController.selectFromActivity((long)ui.getTable().getValueAt(selectedRow, 0));
+          new ManageActivityPresenter(new ManageActivityUI(),toEdit);
+      }
       
     }
     

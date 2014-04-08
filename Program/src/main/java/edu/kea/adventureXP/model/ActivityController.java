@@ -65,11 +65,12 @@ public final class ActivityController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      Activity retrieved = (Activity) session.load(Activity.class, activity.getId());
+      //Activity retrieved = (Activity) session.load(Activity.class, activity.getId());
+      Activity retrieved = selectFromActivity(activity.getId());
       retrieved.setName(activity.getName());
       retrieved.setDescription(activity.getDescription());
       retrieved.setPrice(activity.getPrice());
-      session.save(retrieved); 
+      session.update(retrieved); 
       session.getTransaction().commit();
     } catch (HibernateException e) {
       e.printStackTrace();
@@ -81,6 +82,36 @@ public final class ActivityController {
       }
     }
   }
+  
+  /**
+   * Gets an Activity from the database
+   * @param id The id on the Activity to get.
+   * @return the Activity with that name.
+   */
+  public static Activity selectFromActivity(long id) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      Activity result = (Activity) session.createQuery(
+          "select new Activity(name, description, price) " +
+          "from Activity " +
+          "where id = " + "'" + id + "'").list().get(0);
+      session.getTransaction().commit();
+      result.setId(id);
+      return result;
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+    return new Activity();
+  }
+  
 
   /**
    * Gets an Activity from the database

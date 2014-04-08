@@ -14,7 +14,8 @@ import edu.kea.adventureXP.view.ManageActivityUI;
 public class ManageActivityPresenter {
   
   private ManageActivityUI ui;
-  private ActivityController controller;
+  private Activity  activity = null;  
+  private boolean edit = false;
   
   /**
    * Constructor when wanting to open 'Manage Activity' with pre-filled fields.
@@ -28,6 +29,8 @@ public class ManageActivityPresenter {
     ui.setNameField(activity.getName());
     ui.setPriceField(activity.getPrice());
     ui.setDescriptionArea(activity.getDescription());
+    this.activity = activity;
+    this.edit = true;
   }
   
   /**
@@ -37,6 +40,8 @@ public class ManageActivityPresenter {
    */
   public ManageActivityPresenter(ManageActivityUI ui) {
     this.ui = ui;
+    ui.setSaveListener(new SaveButtonListener());
+    ui.setDiscardListener(new DiscardButtonListener());
   }
 
   /** The class Constructor. It sets the button listeners for the buttons
@@ -45,7 +50,6 @@ public class ManageActivityPresenter {
    *	@param controller The ActivityController*/
   public ManageActivityPresenter(ManageActivityUI ui, ActivityController controller) {
     this.ui = ui;
-	this.controller = controller;
     ui.setSaveListener(new SaveButtonListener());
     ui.setDiscardListener(new DiscardButtonListener());
   }
@@ -97,8 +101,20 @@ public class ManageActivityPresenter {
       
       if (flag) {
         // Call the Controller
-    	  Activity activity = new Activity(ui.getNameField(), ui.getDescriptionField(), ui.getPriceField());
-    	  controller.addActivity(activity);
+    	 if(edit){
+    		 activity.setDescription(ui.getDescriptionField());
+    		 activity.setName(ui.getNameField());
+    		 activity.setPrice(ui.getPriceField());
+    		 System.out.println(activity.getDescription());
+    		 System.out.println(activity.getName());
+    		 System.out.println(activity.getId());
+    		 System.out.println(activity.getPrice());
+    		 ActivityController.updateActivity(activity);
+    	 }
+    	else{
+      	  Activity activity = new Activity(ui.getNameField(), ui.getDescriptionField(), ui.getPriceField());
+      	  ActivityController.addActivity(activity);
+    	}
       }
       else
         ui.displayError(errorMessage);
