@@ -4,6 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import edu.kea.adventureXP.model.ActivityController;
+import edu.kea.adventureXP.view.ManageActivityUI;
+
 public class ManageActivityPresenterTest {
   
   @Test
@@ -23,4 +26,5 @@ public class ManageActivityPresenterTest {
     assertTrue(!map.validatePrice(-48));
     assertTrue(map.validatePrice(0));
   }
+  
 }

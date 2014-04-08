@@ -8,8 +8,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+/**
+ *  Class which is responsible for creating a frame for
+ *  adding an instructor in the system.
+ *
+ */
 
 public class ManageInstructorUI extends JFrame {
 	
@@ -25,10 +32,14 @@ public class ManageInstructorUI extends JFrame {
 		createUI();
 	}
 	
+	/**
+	 * Method which is called in the constructor to put
+	 * everything in the extended JFrame.
+	 */
 	public void createUI() {
 		setTitle("Add Instructor");
 		setSize(400, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		setResizable(false);
@@ -71,6 +82,7 @@ public class ManageInstructorUI extends JFrame {
 		add(center, BorderLayout.CENTER);
 		
 		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		south.setBackground(UIColors.DARKBLUE);
 		discardButton = new JButton("Discard");
 		discardButton.setSize(15, 15);
 		
@@ -93,6 +105,10 @@ public class ManageInstructorUI extends JFrame {
 		discardButton.addActionListener(listener);
 	}
 	
+	/**
+	 * 
+	 * @return The information from the fields in the frame.
+	 */
 	public String getFNameField() {
 		return fNameTF.getText();
 	}
@@ -105,23 +121,27 @@ public class ManageInstructorUI extends JFrame {
 		return streetTF.getText();
 	}
 	
-	public int getStreetNumField() {
-		return Integer.parseInt(streetNumTF.getText());
+	public String getStreetNumField() {
+		return streetNumTF.getText();
 	}
 	
 	public String getCityField() {
 		return cityTF.getText();
 	}
 	
-	public int getZipField() {
-		return Integer.parseInt(zipTF.getText());
+	public String getZipField() {
+		return zipTF.getText();
 	}
 	
-	public int getPhoneField() {
-		return Integer.parseInt(fNameTF.getText());
+	public String getPhoneField() {
+		return phoneTF.getText();
 	}
 	
 	public String getEmailField() {
 		return emailTF.getText();
+	}
+	
+	public void displayError(String error) {
+		JOptionPane.showMessageDialog(null, error, "Error Message!", JOptionPane.ERROR_MESSAGE);
 	}
 }
