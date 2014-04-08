@@ -119,8 +119,6 @@ public class InstructorViewerUI extends JPanel {
       model.isCellEditable(row, 2);
       model.setValueAt(i.getEmail(), row, 3);
       model.isCellEditable(row, 3);
-      model.setValueAt(i.getTelephone(), row, 4);
-      model.isCellEditable(row, 4);
       row++;
     }
     

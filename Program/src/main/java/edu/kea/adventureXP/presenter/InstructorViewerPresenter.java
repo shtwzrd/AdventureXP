@@ -5,8 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.InstructorController;
 import edu.kea.adventureXP.view.InstructorViewerUI;
 import edu.kea.adventureXP.view.ManageActivityUI;
 import edu.kea.adventureXP.view.ManageInstructorUI;
@@ -14,7 +16,7 @@ import edu.kea.adventureXP.view.ManageInstructorUI;
 public class InstructorViewerPresenter {
   
   InstructorViewerUI    ui;
-  ArrayList<Instructor> instructorList       = new ArrayList<>();
+  List<Instructor> instructorList;
   ArrayList<Instructor> sortedInstructorList = new ArrayList<>();
   int                   selectedRow          = -1;
   
@@ -35,7 +37,7 @@ public class InstructorViewerPresenter {
     return ui;
   }
   
-  public void setInstructorList(ArrayList<Instructor> list) {
+  public void setInstructorList(List<Instructor> list) {
     instructorList = list;
     sortedInstructorList = new ArrayList<Instructor>(list);
   }
@@ -44,6 +46,7 @@ public class InstructorViewerPresenter {
    * Updates the UI
    */
   public void updateUI() {
+	setInstructorList(InstructorController.selectAllFromInstructor());
     ui.setTable(sortedInstructorList);
     ui.revalidate();
   }
@@ -127,7 +130,7 @@ public class InstructorViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      new ManageActivityPresenter(new ManageActivityUI());
+      new ManageInstructorPresenter(new ManageInstructorUI());
     }
   }
   

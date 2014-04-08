@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import edu.kea.adventureXP.view.ManageInstructorUI;
 import edu.kea.adventureXP.view.InstructorViewerUI;
+import edu.kea.adventureXP.presenter.InstructorViewerPresenter;
 import edu.kea.adventureXP.model.InstructorController;
 import edu.kea.adventureXP.model.Instructor;
 
@@ -14,6 +15,7 @@ public class ManageInstructorPresenter {
 
   ManageInstructorUI iui;
   Instructor instructorToEdit;
+  InstructorViewerPresenter ivp;
   private boolean isEdit;
 
 
@@ -29,9 +31,10 @@ public class ManageInstructorPresenter {
     iui.setDiscardListener(new DiscardButtonListener());
   }
 
-  public ManageInstructorPresenter(ManageInstructorUI iui,
+  public ManageInstructorPresenter(ManageInstructorUI iui, InstructorViewerPresenter ivp,
       Instructor instructorToEdit) {
     this.iui = new ManageInstructorUI();
+    this.ivp = ivp;
     this.instructorToEdit = instructorToEdit;
     this.isEdit = true;
   }
@@ -126,6 +129,8 @@ public class ManageInstructorPresenter {
       if (flag) {
         if(isEdit) {
           InstructorController.updateInstructor(instructorToEdit);
+          ivp.updateUI();
+          iui.dispose();
         } else {
           List<String> phones = new ArrayList<>();
           phones.add(iui.getPhoneField() + "");
@@ -141,6 +146,8 @@ public class ManageInstructorPresenter {
               iui.getEmailField());
 
           InstructorController.addInstructor(instructor);  
+          ivp.updateUI();
+          iui.dispose();
         }
       } else {
         iui.displayError(errorMessage);
