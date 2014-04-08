@@ -52,7 +52,7 @@ public class InstructorViewerPresenter {
     ArrayList<Instructor> temp = new ArrayList<>();
     
     for (Instructor i : instructorList) {
-      String iName = i.getFName() + " " + i.getLName();
+      String iName = i.getFirstName() + " " + i.getLastName();
       if (iName.contains(name))
         temp.add(i);
     }
