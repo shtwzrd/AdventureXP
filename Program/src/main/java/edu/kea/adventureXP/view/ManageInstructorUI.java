@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import edu.kea.adventureXP.model.Instructor;
+
 /**
  * Class which is responsible for creating a frame for adding an instructor in
  * the system.
@@ -22,10 +24,9 @@ public class ManageInstructorUI extends JFrame {
   private static final long serialVersionUID = 880010111213141516L;
   
   private JButton           saveButton, discardButton;
-  private JLabel            fNameLabel, lNameLabel, streetLabel, 
-      cityLabel, zipLabel, phoneLabel, emailLabel;
-  private JTextField        fNameTF, lNameTF, streetTF, cityTF, zipTF,
-      phoneTF, emailTF;
+  private JLabel            fNameLabel, lNameLabel, streetLabel, cityLabel, zipLabel,
+      phoneLabel, emailLabel;
+  private JTextField        fNameTF, lNameTF, streetTF, cityTF, zipTF, phoneTF, emailTF;
   
   public ManageInstructorUI() {
     createUI();
@@ -42,7 +43,7 @@ public class ManageInstructorUI extends JFrame {
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
     
-    JPanel center = new JPanel(new GridLayout(8, 2));
+    JPanel center = new JPanel(new GridLayout(7, 2));
     center.setBackground(UIColors.LIGHTGREEN);
     
     fNameLabel = new JLabel("  First Name:");
@@ -159,6 +160,10 @@ public void setFNameField(String name) {
   
   public void setEmailField(String email) {
     emailTF.setText(email);
+  }
+  
+  public void setFields(Instructor i) {
+    
   }
   
   public void displayError(String error) {
