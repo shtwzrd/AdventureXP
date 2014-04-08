@@ -7,15 +7,18 @@ import edu.kea.adventureXP.model.Activity;
 import edu.kea.adventureXP.model.ActivityController;
 import edu.kea.adventureXP.view.ManageActivityUI;
 
-/** Presenter class for the ManageActivityUI.java It gets  and saves
- * 	information about activities for the view.
+/**
+ * Presenter class for the ManageActivityUI.java It gets and saves information
+ * about activities for the view.
  * 
- * 	@see ManageActivityUI.java. */
+ * @see ManageActivityUI.java.
+ */
 public class ManageActivityPresenter {
   
-  private ManageActivityUI ui;
-  private Activity  activity = null;  
-  private boolean edit = false;
+  private ManageActivityUI        ui;
+  private ActivityViewerPresenter avp;
+  private Activity                activity = null;
+  private boolean                 edit     = false;
   
   /**
    * Constructor when wanting to open 'Manage Activity' with pre-filled fields.
@@ -24,13 +27,14 @@ public class ManageActivityPresenter {
    * @param activity Object of Activity, which delivers information to the
    *          fields.
    */
-  public ManageActivityPresenter(ManageActivityUI ui, Activity activity) {
-    this(ui);
+  public ManageActivityPresenter(ManageActivityUI ui, Activity activity,
+      ActivityViewerPresenter avp) {
+    this(ui, avp);
     ui.setNameField(activity.getName());
     ui.setPriceField(activity.getPrice());
     ui.setDescriptionArea(activity.getDescription());
     this.activity = activity;
-    this.edit = true;
+    edit = true;
   }
   
   /**
@@ -38,16 +42,20 @@ public class ManageActivityPresenter {
    * 
    * @param ui UI for 'Manage Activity'.
    */
-  public ManageActivityPresenter(ManageActivityUI ui) {
+  public ManageActivityPresenter(ManageActivityUI ui, ActivityViewerPresenter avp) {
     this.ui = ui;
+    this.avp = avp;
     ui.setSaveListener(new SaveButtonListener());
     ui.setDiscardListener(new DiscardButtonListener());
   }
-
-  /** The class Constructor. It sets the button listeners for the buttons
-   * 	in ManageActivityUI.
-   *	@param ui The ManageActivityUI
-   *	@param controller The ActivityController*/
+  
+  /**
+   * The class Constructor. It sets the button listeners for the buttons in
+   * ManageActivityUI.
+   *
+   * @param ui The ManageActivityUI
+   * @param controller The ActivityController
+   */
   public ManageActivityPresenter(ManageActivityUI ui, ActivityController controller) {
     this.ui = ui;
     ui.setSaveListener(new SaveButtonListener());
@@ -60,9 +68,9 @@ public class ManageActivityPresenter {
   public ManageActivityPresenter() {
   }
   
-  // METHODS >> VALIDATE THE INPUT FROM THE USER INTERFACE
   /**
-   *  Validates the name field in ManageActivityUI. 
+   * Validates the name field in ManageActivityUI.
+   * 
    * @param name The String in the text field.
    * @return true if the field is not empty
    */
@@ -70,9 +78,12 @@ public class ManageActivityPresenter {
     return !name.isEmpty();
   }
   
-  /** Validates the price field in ManageActivityUI.
+  /**
+   * Validates the price field in ManageActivityUI.
+   * 
    * @param price The price as double.
-   * @return true if price is not negative.*/
+   * @return true if price is not negative.
+   */
   public boolean validatePrice(double price) {
     return price >= 0;
   }
@@ -84,7 +95,7 @@ public class ManageActivityPresenter {
   private class SaveButtonListener implements ActionListener {
     
     @SuppressWarnings("static-access")
-	@Override
+    @Override
     public void actionPerformed(ActionEvent e) {
       String errorMessage = "";
       boolean flag = true;
@@ -101,20 +112,23 @@ public class ManageActivityPresenter {
       
       if (flag) {
         // Call the Controller
-    	 if(edit){
-    		 activity.setDescription(ui.getDescriptionField());
-    		 activity.setName(ui.getNameField());
-    		 activity.setPrice(ui.getPriceField());
-    		 System.out.println(activity.getDescription());
-    		 System.out.println(activity.getName());
-    		 System.out.println(activity.getId());
-    		 System.out.println(activity.getPrice());
-    		 ActivityController.updateActivity(activity);
-    	 }
-    	else{
-      	  Activity activity = new Activity(ui.getNameField(), ui.getDescriptionField(), ui.getPriceField());
-      	  ActivityController.addActivity(activity);
-    	}
+        if (edit) {
+          activity.setDescription(ui.getDescriptionField());
+          activity.setName(ui.getNameField());
+          activity.setPrice(ui.getPriceField());
+          System.out.println(activity.getDescription());
+          System.out.println(activity.getName());
+          System.out.println(activity.getId());
+          System.out.println(activity.getPrice());
+          ActivityController.updateActivity(activity);
+        }
+        else {
+          Activity activity = new Activity(ui.getNameField(), ui.getDescriptionField(),
+              ui.getPriceField());
+          ActivityController.addActivity(activity);
+        }
+        avp.updateTable();
+        ui.dispose();
       }
       else
         ui.displayError(errorMessage);

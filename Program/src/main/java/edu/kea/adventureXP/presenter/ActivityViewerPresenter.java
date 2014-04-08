@@ -5,10 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collections;
-
-//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
+// import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import java.util.List;
 
 import edu.kea.adventureXP.model.Activity;
@@ -20,7 +17,7 @@ public class ActivityViewerPresenter {
   
   ActivityViewerUI    ui;
   ArrayList<Activity> activityList       = new ArrayList<Activity>();
-  List<Activity> sortedActivityList = new ArrayList<Activity>();
+  List<Activity>      sortedActivityList = new ArrayList<Activity>();
   int                 selectedRow        = -1;
   
   /**
@@ -36,13 +33,10 @@ public class ActivityViewerPresenter {
     ui.setDeleteButtonListener(new DeleteListener());
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
-<<<<<<< HEAD
     setActivityList();
-=======
     
     String[] dropDownChoices = { "ID", "Name", "Price" };
     ui.setDropDownOptions(dropDownChoices);
->>>>>>> f830af1dacec891af88cc70e30a3e8ae0df1c062
     updateUI();
   }
   
@@ -51,14 +45,18 @@ public class ActivityViewerPresenter {
   }
   
   public void setActivityList(ArrayList<Activity> list) {
-	activityList = list;
+    activityList = list;
     sortedActivityList = new ArrayList<Activity>(list);
   }
   
   public void setActivityList() {
-		activityList = (ArrayList<Activity>) ActivityController.selectAllFromActivity();
-		
-	  }
+    activityList = (ArrayList<Activity>) ActivityController.selectAllFromActivity();
+  }
+  
+  public void updateTable() {
+    setActivityList();
+    updateUI();
+  }
   
   /**
    * Updates the UI
@@ -136,19 +134,14 @@ public class ActivityViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-      if (selectedRow != -1){
-    	  Activity toEdit = ActivityController.selectFromActivity((long)ui.getTable().getValueAt(selectedRow, 0));
-          new ManageActivityPresenter(new ManageActivityUI(),toEdit);
+      if (selectedRow != -1) {
+        Activity toEdit = ActivityController.selectFromActivity((long) ui.getTable()
+            .getValueAt(selectedRow, 0));
+        new ManageActivityPresenter(new ManageActivityUI(), toEdit,
+            ActivityViewerPresenter.this);
       }
       
-=======
-      if (selectedRow != -1)
-        new ManageActivityPresenter(new ManageActivityUI(),
-            sortedActivityList.get(selectedRow));
->>>>>>> f830af1dacec891af88cc70e30a3e8ae0df1c062
     }
-    
   }
   
   /**
@@ -158,7 +151,7 @@ public class ActivityViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      new ManageActivityPresenter(new ManageActivityUI());
+      new ManageActivityPresenter(new ManageActivityUI(), ActivityViewerPresenter.this);
     }
   }
   
