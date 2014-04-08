@@ -133,8 +133,8 @@ public class ManageInstructorUI extends JFrame {
   public String getEmailField() {
     return emailTF.getText();
   }
-
-public void setFNameField(String name) {
+  
+  public void setFNameField(String name) {
     fNameTF.setText(name);
   }
   
@@ -163,7 +163,13 @@ public void setFNameField(String name) {
   }
   
   public void setFields(Instructor i) {
-    
+    setFNameField(i.getFirstName());
+    setLNameField(i.getLastName());
+    setStreetField(i.getStreet());
+    setCityField(i.getCity());
+    setZipField(i.getZipCode());
+    setPhoneField(i.getTelephone());
+    setEmailField(i.getEmail());
   }
   
   public void displayError(String error) {

@@ -29,11 +29,14 @@ public class ManageInstructorPresenter {
   
   public ManageInstructorPresenter(ManageInstructorUI iui, InstructorViewerPresenter ivp,
       Instructor instructorToEdit) {
+    isEdit = true;
     this.iui = iui;
     this.ivp = ivp;
-    iui.setFields(instructorToEdit);
+    iui.setSaveListener(new SaveButtonListener());
+    iui.setDiscardListener(new DiscardButtonListener());
+    
     this.instructorToEdit = instructorToEdit;
-    isEdit = true;
+    iui.setFields(instructorToEdit);
   }
   
   public boolean validateFirstName(String name) {
@@ -122,24 +125,14 @@ public class ManageInstructorPresenter {
         
       }
       if (flag) {
-        if (isEdit) {
-          iui.setFNameField(instructorToEdit.getFirstName());
-          iui.setLNameField(instructorToEdit.getLastName());
-          iui.setStreetField(instructorToEdit.getStreet());
-          iui.setCityField(instructorToEdit.getCity());
-          iui.setZipField(instructorToEdit.getZipCode());
-          iui.setPhoneField(instructorToEdit.getTelephone());
-          iui.setEmailField(instructorToEdit.getEmail());
+        Instructor instructor = new Instructor(iui.getFNameField(), iui.getLNameField(),
+            iui.getStreetField(), iui.getZipField(), iui.getCityField(), "Denmark",
+            iui.getPhoneField(), iui.getEmailField());
+        if (isEdit)
           InstructorController.updateInstructor(instructorToEdit);
-        }
-        else {
-          Instructor instructor = new Instructor(iui.getFNameField(),
-              iui.getLNameField(), iui.getStreetField(), iui.getZipField(),
-              iui.getCityField(), "Denmark", iui.getPhoneField(), iui.getEmailField());
-          
+        else
           InstructorController.addInstructor(instructor);
-          
-        }
+        
         ivp.updateTable();
         iui.dispose();
       }
