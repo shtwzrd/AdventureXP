@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import edu.kea.adventureXP.model.Instructor;
+
 /**
  * Class which is responsible for creating a frame for adding an instructor in
  * the system.
@@ -22,10 +24,9 @@ public class ManageInstructorUI extends JFrame {
   private static final long serialVersionUID = 880010111213141516L;
   
   private JButton           saveButton, discardButton;
-  private JLabel            fNameLabel, lNameLabel, streetLabel, streetNumLabel,
-      cityLabel, zipLabel, phoneLabel, emailLabel;
-  private JTextField        fNameTF, lNameTF, streetTF, streetNumTF, cityTF, zipTF,
-      phoneTF, emailTF;
+  private JLabel            fNameLabel, lNameLabel, streetLabel, cityLabel, zipLabel,
+      phoneLabel, emailLabel;
+  private JTextField        fNameTF, lNameTF, streetTF, cityTF, zipTF, phoneTF, emailTF;
   
   public ManageInstructorUI() {
     createUI();
@@ -42,7 +43,7 @@ public class ManageInstructorUI extends JFrame {
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
     
-    JPanel center = new JPanel(new GridLayout(8, 2));
+    JPanel center = new JPanel(new GridLayout(7, 2));
     center.setBackground(UIColors.LIGHTGREEN);
     
     fNameLabel = new JLabel("  First Name:");
@@ -51,8 +52,6 @@ public class ManageInstructorUI extends JFrame {
     lNameTF = new JTextField(10);
     streetLabel = new JLabel("  Street:");
     streetTF = new JTextField(15);
-    streetNumLabel = new JLabel("  Street #:");
-    streetNumTF = new JTextField(5);
     cityLabel = new JLabel("  City:");
     cityTF = new JTextField(10);
     zipLabel = new JLabel("  Zip Code:");
@@ -68,8 +67,6 @@ public class ManageInstructorUI extends JFrame {
     center.add(lNameTF);
     center.add(streetLabel);
     center.add(streetTF);
-    center.add(streetNumLabel);
-    center.add(streetNumTF);
     center.add(cityLabel);
     center.add(cityTF);
     center.add(zipLabel);
@@ -121,10 +118,6 @@ public class ManageInstructorUI extends JFrame {
     return streetTF.getText();
   }
   
-  public String getStreetNumField() {
-    return streetNumTF.getText();
-  }
-  
   public String getCityField() {
     return cityTF.getText();
   }
@@ -139,6 +132,10 @@ public class ManageInstructorUI extends JFrame {
   
   public String getEmailField() {
     return emailTF.getText();
+  }
+  
+  public void setFields(Instructor i) {
+    
   }
   
   public void displayError(String error) {

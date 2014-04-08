@@ -10,13 +10,12 @@ import java.util.List;
 import edu.kea.adventureXP.model.Instructor;
 import edu.kea.adventureXP.model.InstructorController;
 import edu.kea.adventureXP.view.InstructorViewerUI;
-import edu.kea.adventureXP.view.ManageActivityUI;
 import edu.kea.adventureXP.view.ManageInstructorUI;
 
 public class InstructorViewerPresenter {
   
   InstructorViewerUI    ui;
-  List<Instructor> instructorList;
+  List<Instructor>      instructorList;
   ArrayList<Instructor> sortedInstructorList = new ArrayList<>();
   int                   selectedRow          = -1;
   
@@ -30,7 +29,7 @@ public class InstructorViewerPresenter {
     
     String[] dropDownChoices = { "Name" };
     ui.setDropDownOptions(dropDownChoices);
-    updateUI();
+    updateTable();
   }
   
   public InstructorViewerUI getUI() {
@@ -42,11 +41,15 @@ public class InstructorViewerPresenter {
     sortedInstructorList = new ArrayList<Instructor>(list);
   }
   
+  public void updateTable() {
+    setInstructorList(InstructorController.selectAllFromInstructor());
+    updateUI();
+  }
+  
   /**
    * Updates the UI
    */
   public void updateUI() {
-	setInstructorList(InstructorController.selectAllFromInstructor());
     ui.setTable(sortedInstructorList);
     ui.revalidate();
   }
@@ -71,8 +74,8 @@ public class InstructorViewerPresenter {
     public void mousePressed(MouseEvent e) {
       selectedRow = ui.getTable().rowAtPoint(e.getPoint());
       Instructor i = instructorList.get(selectedRow);
-      String description = i.getStreet() + " " + i.getStreetNum() + ", " + i.getZipCode()
-          + " " + i.getCity() + "\nPhone: " + i.getTelephone();
+      String description = i.getStreet() + ", " + i.getZipCode() + " " + i.getCity()
+          + "\nPhone: " + i.getTelephone();
       ui.setDescriptionArea(description);
     }
     
@@ -103,6 +106,7 @@ public class InstructorViewerPresenter {
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
         instructorList.remove(selectedRow);
+        
         ui.setDescriptionArea("");
         updateUI();
       }
@@ -110,11 +114,11 @@ public class InstructorViewerPresenter {
   }
   
   private class UpdateListener implements ActionListener {
-	  
-	  @Override
-	  public void actionPerformed(ActionEvent e) {
-		  updateUI();
-	  }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      updateUI();
+    }
   }
   
   /**
@@ -125,8 +129,8 @@ public class InstructorViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1)
-        new ManageInstructorPresenter(new ManageInstructorUI(),  InstructorViewerPresenter.this,
-            sortedInstructorList.get(selectedRow));
+        new ManageInstructorPresenter(new ManageInstructorUI(),
+            InstructorViewerPresenter.this, sortedInstructorList.get(selectedRow));
     }
   }
   
@@ -137,7 +141,8 @@ public class InstructorViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      new ManageInstructorPresenter(new ManageInstructorUI(), InstructorViewerPresenter.this);
+      new ManageInstructorPresenter(new ManageInstructorUI(),
+          InstructorViewerPresenter.this);
     }
   }
   
