@@ -32,7 +32,7 @@ public class AdministratorUI extends JFrame {
     JPanel contentPane = new JPanel(new BorderLayout());
     
     tabPane = new JTabbedPane(SwingConstants.TOP);
-    tabPane.setBackground(UIColors.LIGHTBLUE);
+    tabPane.setBackground(UIColors.LIGHTGREEN);
     tabPane.setOpaque(true);
     tabPane
         .add("Activities", new ActivityViewerPresenter(new ActivityViewerUI()).getUI());

@@ -51,7 +51,7 @@ public class InstructorViewerUI extends JPanel {
    */
   public void buildNorthPanel() {
     JPanel northPanel = new JPanel();
-    northPanel.setBackground(UIColors.DARKBLUE);
+    northPanel.setBackground(UIColors.DARKGREEN);
     
     dropDown = new JComboBox<String>();
     searchField = new JTextField(15);
@@ -132,7 +132,7 @@ public class InstructorViewerUI extends JPanel {
    */
   public void buildSouthPanel() {
     JPanel southPanel = new JPanel();
-    southPanel.setBackground(UIColors.DARKBLUE);
+    southPanel.setBackground(UIColors.DARKGREEN);
     
     deleteButton = new JButton("Delete");
     editButton = new JButton("Edit");

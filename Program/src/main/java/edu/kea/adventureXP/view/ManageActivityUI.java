@@ -60,7 +60,7 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildNorthPanel() {
     JPanel northPanel = new JPanel();
-    northPanel.setBackground(UIColors.DARKBLUE);
+    northPanel.setBackground(UIColors.DARKGREEN);
     
     JLabel name = new JLabel("Name:");
     name.setForeground(UIColors.WHITE);
@@ -101,7 +101,7 @@ public class ManageActivityUI extends JFrame {
    */
   public void buildSouthPanel() {
     JPanel southPanel = new JPanel();
-    southPanel.setBackground(UIColors.DARKBLUE);
+    southPanel.setBackground(UIColors.DARKGREEN);
     
     saveButton = new JButton("Save");
     discardButton = new JButton("Discard");

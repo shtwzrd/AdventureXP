@@ -43,7 +43,7 @@ public class ManageInstructorUI extends JFrame {
     setLayout(new BorderLayout());
     
     JPanel center = new JPanel(new GridLayout(8, 2));
-    center.setBackground(UIColors.LIGHTBLUE);
+    center.setBackground(UIColors.LIGHTGREEN);
     
     fNameLabel = new JLabel("  First Name:");
     fNameTF = new JTextField(10);
@@ -82,7 +82,7 @@ public class ManageInstructorUI extends JFrame {
     add(center, BorderLayout.CENTER);
     
     JPanel south = new JPanel(new FlowLayout());
-    south.setBackground(UIColors.DARKBLUE);
+    south.setBackground(UIColors.DARKGREEN);
     discardButton = new JButton("Discard");
     discardButton.setSize(15, 15);
     
