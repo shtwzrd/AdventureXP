@@ -3,14 +3,14 @@ package edu.kea.adventureXP.presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.kea.adventureXP.model.Instructor;
-import edu.kea.adventureXP.model.InstructorController;
+import edu.kea.adventureXP.model.Member;
+import edu.kea.adventureXP.model.MemberController;
 import edu.kea.adventureXP.view.ManageInstructorUI;
 
 public class ManageInstructorPresenter {
   
   ManageInstructorUI        iui;
-  Instructor                instructorToEdit;
+  Member                instructorToEdit;
   InstructorViewerPresenter ivp;
   private boolean           isEdit;
   
@@ -28,7 +28,7 @@ public class ManageInstructorPresenter {
   }
   
   public ManageInstructorPresenter(ManageInstructorUI iui, InstructorViewerPresenter ivp,
-      Instructor instructorToEdit) {
+      Member instructorToEdit) {
     isEdit = true;
     this.iui = iui;
     this.ivp = ivp;
@@ -125,13 +125,13 @@ public class ManageInstructorPresenter {
         
       }
       if (flag) {
-        Instructor instructor = new Instructor(iui.getFNameField(), iui.getLNameField(),
+        Member instructor = new Member(iui.getFNameField(), iui.getLNameField(),
             iui.getStreetField(), iui.getZipField(), iui.getCityField(), "Denmark",
-            iui.getPhoneField(), iui.getEmailField());
+            iui.getPhoneField(), iui.getEmailField(), true);
         if (isEdit)
-          InstructorController.updateInstructor(instructorToEdit);
+          MemberController.updateMember(instructorToEdit);
         else
-          InstructorController.addInstructor(instructor);
+          MemberController.addMember(instructor);
         
         ivp.updateTable();
         iui.dispose();

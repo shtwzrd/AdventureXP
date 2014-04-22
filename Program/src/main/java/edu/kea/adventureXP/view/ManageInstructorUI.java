@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.Member;
 
 /**
  * Class which is responsible for creating a frame for adding an instructor in
@@ -162,7 +162,7 @@ public class ManageInstructorUI extends JFrame {
     emailTF.setText(email);
   }
   
-  public void setFields(Instructor i) {
+  public void setFields(Member i) {
     setFNameField(i.getFirstName());
     setLNameField(i.getLastName());
     setStreetField(i.getStreet());

@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.Member;
 
 public class InstructorViewerUI extends JPanel {
   
@@ -101,7 +101,7 @@ public class InstructorViewerUI extends JPanel {
    * 
    * @param activityList The list of activities to add
    */
-  public void setTable(List<Instructor> instructorList) {
+  public void setTable(List<Member> instructorList) {
     String[] heads = { "ID", "First name", "Last name", "Email" };
     
     DefaultTableModel model = new DefaultTableModel();
@@ -111,7 +111,7 @@ public class InstructorViewerUI extends JPanel {
     
     int row = 0;
     
-    for (Instructor i : instructorList) {
+    for (Member i : instructorList) {
       model.setValueAt(i.getId(), row, 0);
       model.isCellEditable(row, 0);
       model.setValueAt(i.getFirstName(), row, 1);

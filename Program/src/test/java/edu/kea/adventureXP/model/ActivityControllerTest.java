@@ -27,6 +27,26 @@ public class ActivityControllerTest {
     assertEquals(activity.getName(), returned.getName());
 
   }
+  
+  @Test
+  public void scheduledActivityControllerBasicUsageTest() {
+    Activity ScheduledActivity = new Activity(1, );
+    ActivityController.addActivity(activity);
+
+     List<Activity> list = ActivityController.selectAllFromActivity();
+    for(Activity a : list) {
+      System.out.println(a.getName());
+    } 
+
+    Activity returned =
+      ActivityController.selectFromActivity(activity.getName());
+
+
+
+    assertEquals(activity.getName(), returned.getName());
+
+  }
+
 
 	@Test
 	public void removeActivityControllerTest() {

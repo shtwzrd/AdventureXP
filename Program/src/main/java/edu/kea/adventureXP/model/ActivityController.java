@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
+import java.sql.Date;
 import java.util.List;
 
 /** Controller class for saving, retrieving, updating and deleting Activity objects. 
@@ -33,6 +34,30 @@ public final class ActivityController {
       }
     }
   }
+  
+  /**
+   * Adds scheduled activity entity in the database.	
+   * @param scheduledActivity The ScheduledActivity to save.
+   */
+  public static void addSceduleActivity(ScheduledActivity scheduledActivity) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      session.save(scheduledActivity); 
+      session.getTransaction().commit();
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  
 
   /**
    * Removes an Activity from the database
@@ -44,6 +69,28 @@ public final class ActivityController {
     try {
       session.beginTransaction();
       session.delete(activity);
+      session.getTransaction().commit();
+    } catch (HibernateException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        session.close();
+      } catch (HibernateException e) {
+        e.printStackTrace();
+      }
+    } 
+  }
+  
+  /**
+   * Removes an ScheduledActivity from the database
+   * @param scheduledActivity The ScheduledActivity to remove.
+   */
+  public static void removeScheduledActivity(ScheduledActivity scheduledActivity) {
+    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+    Session session = sessionFactory.openSession();
+    try {
+      session.beginTransaction();
+      session.delete(scheduledActivity);
       session.getTransaction().commit();
     } catch (HibernateException e) {
       e.printStackTrace();
