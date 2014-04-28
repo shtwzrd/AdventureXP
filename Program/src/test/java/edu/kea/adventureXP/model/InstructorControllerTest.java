@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.Member;
 
 public class InstructorControllerTest {
 
   @Test
   public void instructorControllerBasicUsageTest() {
-    Instructor instructor = new Instructor("John", "Jacob", "Sesame Street",
-        "12345-3456", "City", "Country", "2222222", "bigbird43@s.se");  
-    InstructorController.addInstructor(instructor);
+    Member instructor = new Member("John", "Jacob", "Sesame Street",
+        "12345-3456", "City", "Country", "2222222", "bigbird43@s.se", true);  
+    MemberController.addMember(instructor);
 
-     List<Instructor> list = InstructorController.selectAllFromInstructor();
-    for(Instructor i : list) {
+     List<Member> list = MemberController.getAllInstructors();
+    for(Member i : list) {
       System.out.println(i.getFirstName() + " " + i.getLastName());
     } 
 
-    List<Instructor> returned =
-      InstructorController.selectAllFromInstructor(
-          "from Instructor "+
+    List<Member> returned =
+      MemberController.selectAllFromMember(
+          "from Member "+
           "where firstName = " + "'" + "John" + "'");
 
     assertEquals(instructor.getId(), returned.get(0).getId());
