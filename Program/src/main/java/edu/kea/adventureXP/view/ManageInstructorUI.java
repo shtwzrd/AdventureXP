@@ -12,11 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.kea.adventureXP.model.Instructor;
+import org.jdesktop.xswingx.PromptSupport;
+
+import edu.kea.adventureXP.model.Member;
 
 /**
- * Class which is responsible for creating a frame for adding an instructor in
- * the system.
+ * UI class responsible for creating a frame for adding an instructor to the
+ * system.
  */
 
 public class ManageInstructorUI extends JFrame {
@@ -43,23 +45,31 @@ public class ManageInstructorUI extends JFrame {
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
     
+    // Center panel with all data fields
     JPanel center = new JPanel(new GridLayout(7, 2));
     center.setBackground(UIColors.LIGHTGREEN);
     
     fNameLabel = new JLabel("  First Name:");
     fNameTF = new JTextField(10);
+    PromptSupport.setPrompt("Ex: John B.", fNameTF);
     lNameLabel = new JLabel("  Last Name:");
     lNameTF = new JTextField(10);
+    PromptSupport.setPrompt("Ex: Smith", lNameTF);
     streetLabel = new JLabel("  Street:");
     streetTF = new JTextField(15);
+    PromptSupport.setPrompt("Ex Classensgade 22", streetTF);
     cityLabel = new JLabel("  City:");
     cityTF = new JTextField(10);
+    PromptSupport.setPrompt("Ex: Copenhagen S", cityTF);
     zipLabel = new JLabel("  Zip Code:");
     zipTF = new JTextField(6);
+    PromptSupport.setPrompt("Ex: 2300", zipTF);
     phoneLabel = new JLabel("  Phone:");
     phoneTF = new JTextField(10);
+    PromptSupport.setPrompt("Ex: +45 50 40 90 20", phoneTF);
     emailLabel = new JLabel("  Email:");
     emailTF = new JTextField(20);
+    PromptSupport.setPrompt("Ex: mail@example.com", emailTF);
     
     center.add(fNameLabel);
     center.add(fNameTF);
@@ -78,6 +88,7 @@ public class ManageInstructorUI extends JFrame {
     
     add(center, BorderLayout.CENTER);
     
+    // South panel with buttons for saving and discarding
     JPanel south = new JPanel(new FlowLayout());
     south.setBackground(UIColors.DARKGREEN);
     discardButton = new JButton("Discard");
@@ -102,10 +113,6 @@ public class ManageInstructorUI extends JFrame {
     discardButton.addActionListener(listener);
   }
   
-  /**
-   * 
-   * @return The information from the fields in the frame.
-   */
   public String getFNameField() {
     return fNameTF.getText();
   }
@@ -162,7 +169,7 @@ public class ManageInstructorUI extends JFrame {
     emailTF.setText(email);
   }
   
-  public void setFields(Instructor i) {
+  public void setFields(Member i) {
     setFNameField(i.getFirstName());
     setLNameField(i.getLastName());
     setStreetField(i.getStreet());

@@ -2,21 +2,21 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.kea.adventureXP.model.Instructor;
-import edu.kea.adventureXP.model.InstructorController;
+import edu.kea.adventureXP.model.Member;
+import edu.kea.adventureXP.model.MemberController;
 import edu.kea.adventureXP.view.InstructorViewerUI;
 import edu.kea.adventureXP.view.ManageInstructorUI;
 
 public class InstructorViewerPresenter {
   
   InstructorViewerUI    ui;
-  List<Instructor>      instructorList;
-  ArrayList<Instructor> sortedInstructorList = new ArrayList<>();
+  List<Member>      instructorList;
+  ArrayList<Member> sortedInstructorList = new ArrayList<>();
   int                   selectedRow          = -1;
   
   public InstructorViewerPresenter(InstructorViewerUI ui) {
@@ -36,13 +36,13 @@ public class InstructorViewerPresenter {
     return ui;
   }
   
-  public void setInstructorList(List<Instructor> list) {
+  public void setInstructorList(List<Member> list) {
     instructorList = list;
-    sortedInstructorList = new ArrayList<Instructor>(list);
+    sortedInstructorList = new ArrayList<Member>(list);
   }
   
   public void updateTable() {
-    setInstructorList(InstructorController.selectAllFromInstructor());
+    setInstructorList(MemberController.getAllInstructors());
     updateUI();
   }
   
@@ -55,44 +55,28 @@ public class InstructorViewerPresenter {
   }
   
   public void sortByName(String name) {
-    ArrayList<Instructor> temp = new ArrayList<>();
+    ArrayList<Member> temp = new ArrayList<>();
     
-    for (Instructor i : instructorList) {
+    for (Member i : instructorList) {
       String iName = i.getFirstName() + " " + i.getLastName();
       if (iName.contains(name))
         temp.add(i);
     }
-    sortedInstructorList = new ArrayList<Instructor>(temp);
+    sortedInstructorList = new ArrayList<Member>(temp);
   }
   
   /**
    * MouseListener class used to listen for clicks happening within a JTable.
    */
-  private class TableListener implements MouseListener {
-    
-    @Override
-    public void mousePressed(MouseEvent e) {
-      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
-      Instructor i = instructorList.get(selectedRow);
-      String description = i.getStreet() + ", " + i.getZipCode() + " " + i.getCity()
-          + "\nPhone: " + i.getTelephone();
-      ui.setDescriptionArea(description);
-    }
+  private class TableListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseExited(MouseEvent e) {
+      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
+      Member i = instructorList.get(selectedRow);
+      String description = i.getStreet() + ", " + i.getZipCode() + " " + i.getCity()
+          + "\nPhone: " + i.getTelephone();
+      ui.setDescriptionArea(description);
     }
     
   }

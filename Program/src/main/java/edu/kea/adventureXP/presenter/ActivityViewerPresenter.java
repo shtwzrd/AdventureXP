@@ -2,8 +2,8 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 // import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import java.util.List;
@@ -13,6 +13,9 @@ import edu.kea.adventureXP.model.ActivityController;
 import edu.kea.adventureXP.view.ActivityViewerUI;
 import edu.kea.adventureXP.view.ManageActivityUI;
 
+/**
+ * Presenter class
+ */
 public class ActivityViewerPresenter {
   
   ActivityViewerUI    ui;
@@ -35,7 +38,7 @@ public class ActivityViewerPresenter {
     ui.setSearchButtonListener(new SearchListener());
     setActivityList();
     
-    String[] dropDownChoices = { "ID", "Name", "Price" };
+    String[] dropDownChoices = { "Name", "ID", "Price" };
     ui.setDropDownOptions(dropDownChoices);
     updateUI();
   }
@@ -51,6 +54,7 @@ public class ActivityViewerPresenter {
   
   public void setActivityList() {
     activityList = (ArrayList<Activity>) ActivityController.selectAllFromActivity();
+    sortedActivityList = new ArrayList<Activity>(activityList);
   }
   
   public void updateTable() {
@@ -62,7 +66,9 @@ public class ActivityViewerPresenter {
    * Updates the UI
    */
   public void updateUI() {
-    ui.setTable(activityList);
+    setActivityList();
+    ui.setTable(sortedActivityList);
+    ui.setDescriptionArea("");
     ui.revalidate();
   }
   
@@ -70,9 +76,10 @@ public class ActivityViewerPresenter {
     ArrayList<Activity> temp = new ArrayList<>();
     
     for (Activity a : activityList)
-      if (a.getName().contains(name))
+      if (a.getName().toLowerCase().contains(name.toLowerCase()))
         temp.add(a);
     sortedActivityList = new ArrayList<Activity>(temp);
+    updateUI();
   }
   
   public void sortByID(String ID) {
@@ -86,28 +93,12 @@ public class ActivityViewerPresenter {
   /**
    * MouseListener class used to listen for clicks happening within a JTable.
    */
-  private class TableListener implements MouseListener {
-    
-    @Override
-    public void mousePressed(MouseEvent e) {
-      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
-      ui.setDescriptionArea(activityList.get(selectedRow).getDescription());
-    }
+  private class TableListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseExited(MouseEvent e) {
+      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
+      ui.setDescriptionArea(activityList.get(selectedRow).getDescription());
     }
     
   }
@@ -121,7 +112,7 @@ public class ActivityViewerPresenter {
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
         activityList.remove(selectedRow);
-        ui.setDescriptionArea("");
+        ActivityController.removeActivity(sortedActivityList.get(selectedRow));
         updateUI();
       }
     }
