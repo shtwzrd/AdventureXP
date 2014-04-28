@@ -53,7 +53,8 @@
 
     <!-- Names the annotated entity class -->
     <mapping class="edu.kea.adventureXP.model.Activity"/> 
-    <mapping class="edu.kea.adventureXP.model.Instructor"/> 
+    <mapping class="edu.kea.adventureXP.model.Member"/> 
+    <mapping class="edu.kea.adventureXP.model.ScheduledActivity"/> 
 
   </session-factory>
 

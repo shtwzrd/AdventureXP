@@ -8,10 +8,10 @@ import edu.kea.adventureXP.model.ActivityController;
 import edu.kea.adventureXP.view.ManageActivityUI;
 
 /**
- * Presenter class for the ManageActivityUI.java It gets and saves information
- * about activities for the view.
+ * Presenter class for the ManageActivityUI. It gets and saves information about
+ * activities for the view.
  * 
- * @see ManageActivityUI.java.
+ * @see ManageActivityUI
  */
 public class ManageActivityPresenter {
   
@@ -21,11 +21,13 @@ public class ManageActivityPresenter {
   private boolean                 edit     = false;
   
   /**
-   * Constructor when wanting to open 'Manage Activity' with pre-filled fields.
+   * Constructor for wanting to open 'Manage Activity' with pre-filled fields.
    * 
-   * @param ui UI for 'Manage Activity'.
+   * @param ui UI for 'Manage Activity'
    * @param activity Object of Activity, which delivers information to the
-   *          fields.
+   *          fields
+   * @param avp The Viewer that should be updated after the activity has been
+   *          edited
    */
   public ManageActivityPresenter(ManageActivityUI ui, Activity activity,
       ActivityViewerPresenter avp) {
@@ -33,6 +35,7 @@ public class ManageActivityPresenter {
     ui.setNameField(activity.getName());
     ui.setPriceField(activity.getPrice());
     ui.setDescriptionArea(activity.getDescription());
+    ui.setIsActive(activity.getIsActive());
     this.activity = activity;
     edit = true;
   }
@@ -40,7 +43,9 @@ public class ManageActivityPresenter {
   /**
    * Constructor for 'Manage Activity', which adds listeners to the buttons.
    * 
-   * @param ui UI for 'Manage Activity'.
+   * @param ui UI for 'Manage Activity'
+   * @param avp The Viewer that should be updated after a Activity has been
+   *          saved
    */
   public ManageActivityPresenter(ManageActivityUI ui, ActivityViewerPresenter avp) {
     this.ui = ui;
@@ -94,7 +99,6 @@ public class ManageActivityPresenter {
    */
   private class SaveButtonListener implements ActionListener {
     
-    @SuppressWarnings("static-access")
     @Override
     public void actionPerformed(ActionEvent e) {
       String errorMessage = "";
@@ -116,15 +120,12 @@ public class ManageActivityPresenter {
           activity.setDescription(ui.getDescriptionField());
           activity.setName(ui.getNameField());
           activity.setPrice(ui.getPriceField());
-          System.out.println(activity.getDescription());
-          System.out.println(activity.getName());
-          System.out.println(activity.getId());
-          System.out.println(activity.getPrice());
+          activity.setIsActive(ui.getIsActive());
           ActivityController.updateActivity(activity);
         }
         else {
           Activity activity = new Activity(ui.getNameField(), ui.getDescriptionField(),
-              ui.getPriceField());
+              ui.getPriceField(), ui.getIsActive());
           ActivityController.addActivity(activity);
         }
         avp.updateTable();
