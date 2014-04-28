@@ -3,8 +3,10 @@ package edu.kea.adventureXP.view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -161,13 +163,16 @@ public class ManageEquipmentUI extends JFrame {
     noteArea.setText(note);
   }
   
-  public Date getDateField() throws ParseException {
+  public Calendar getDateField() throws ParseException {
     String string = dateField.getText();
-    Date date = new SimpleDateFormat("dd, MM, yyyy").parse(string);
-    return date;
+    DateFormat df = new SimpleDateFormat("dd, MM, yyyy");
+    Date date = df.parse(string);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    return cal;
   }
   
-  public void setDateField(Date date) {
+  public void setDateField(Calendar date) {
     String date1 = date.toString();
     noteArea.setText(date1);
   }

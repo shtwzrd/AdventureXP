@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "EQUIPMENT")
@@ -25,7 +26,7 @@ public class Equipment {
   @Column
   private String   brand;
   @Column
-  @Type(type = "date")
+  @Temporal(TemporalType.TIMESTAMP)
   private Calendar Date;
   @Column
   private String   note;

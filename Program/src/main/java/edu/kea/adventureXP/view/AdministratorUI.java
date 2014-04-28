@@ -8,8 +8,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import edu.kea.adventureXP.presenter.ActivityViewerPresenter;
-import edu.kea.adventureXP.presenter.EquipmentViewerPresenter;
 import edu.kea.adventureXP.presenter.CustomerViewerPresenter;
+import edu.kea.adventureXP.presenter.EquipmentViewerPresenter;
 import edu.kea.adventureXP.presenter.InstructorViewerPresenter;
 
 /**
@@ -44,9 +44,8 @@ public class AdministratorUI extends JFrame {
         new InstructorViewerPresenter(new InstructorViewerUI()).getUI());
     tabPane.add("Equipments",
         new EquipmentViewerPresenter(new EquipmentViewerUI()).getUI());
-        new InstructorViewerPresenter(new InstructorViewerUI()).getUI());    
-    tabPane
-        .add("Customers", new CustomerViewerPresenter(new CustomerViewerUI()).getUI());
+    new InstructorViewerPresenter(new InstructorViewerUI());
+    tabPane.add("Customers", new CustomerViewerPresenter(new CustomerViewerUI()).getUI());
     
     contentPane.add(tabPane);
     add(contentPane);

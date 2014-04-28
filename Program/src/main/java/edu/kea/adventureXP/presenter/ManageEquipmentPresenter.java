@@ -2,6 +2,7 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 import edu.kea.adventureXP.model.Equipment;
 import edu.kea.adventureXP.model.EquipmentController;
@@ -75,11 +76,12 @@ public class ManageEquipmentPresenter {
   /**
    * Validates the Brand field in ManageequipmentUI.
    * 
-   * @param Brand The Brand as double.
+   * @param string The Brand as double.
    * @return true if Brand is not negative.
    */
-  public boolean validateBrand(double Brand) {
-    return Brand >= 0;
+  public boolean validateBrand(String string) {
+    // return string >= 0;
+    return true;
   }
   
   /**
@@ -112,13 +114,13 @@ public class ManageEquipmentPresenter {
           equipment.setBrand(ui.getBrandField());
           System.out.println(equipment.getNote());
           System.out.println(equipment.getName());
-          System.out.println(equipment.getId());
+          System.out.println(equipment.getDate());
           System.out.println(equipment.getBrand());
           EquipmentController.updateEquipment(equipment);
         }
         else {
-          Equipment equipment = new Equipment(ui.getNameField(), ui.getNoteField(),
-              ui.getBrandField());
+          Equipment equipment = new Equipment(ui.getNameField(), ui.getBrandField(),
+              new GregorianCalendar(), ui.getNoteField());
           EquipmentController.addEquipment(equipment);
         }
         avp.updateTable();
