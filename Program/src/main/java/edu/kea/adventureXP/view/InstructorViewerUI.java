@@ -2,7 +2,6 @@ package edu.kea.adventureXP.view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -16,9 +15,17 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdesktop.xswingx.PromptSupport;
+
 import edu.kea.adventureXP.model.Instructor;
 
+/**
+ * User Interface class used to display all Instructors. The UI also has buttons
+ * for adding new, editing and deleting instructors.
+ */
 public class InstructorViewerUI extends JPanel {
+  
+  private static final long serialVersionUID = 7614661393039872592L;
   
   private JComboBox<String> dropDown;
   private JTextField        searchField;
@@ -55,7 +62,7 @@ public class InstructorViewerUI extends JPanel {
     
     dropDown = new JComboBox<String>();
     searchField = new JTextField(15);
-    // PromptSupport.setPrompt("Type in search...", searchField);
+    PromptSupport.setPrompt("Type in search...", searchField);
     
     searchButton = new JButton("Search");
     
@@ -89,7 +96,7 @@ public class InstructorViewerUI extends JPanel {
     descriptionArea.setWrapStyleWord(true);
     descriptionArea.setLineWrap(true);
     descriptionArea.setEditable(false);
-    // PromptSupport.setPrompt("Information", descriptionArea);
+    PromptSupport.setPrompt("Information", descriptionArea);
     
     southPanel.add(descriptionArea, BorderLayout.SOUTH);
     
@@ -180,5 +187,5 @@ public class InstructorViewerUI extends JPanel {
   public String getSearchField() {
     return searchField.getText();
   }
-
+  
 }

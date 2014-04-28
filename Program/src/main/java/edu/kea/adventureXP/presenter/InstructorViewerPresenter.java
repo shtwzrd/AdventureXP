@@ -2,8 +2,8 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,31 +68,15 @@ public class InstructorViewerPresenter {
   /**
    * MouseListener class used to listen for clicks happening within a JTable.
    */
-  private class TableListener implements MouseListener {
+  private class TableListener extends MouseAdapter {
     
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
       selectedRow = ui.getTable().rowAtPoint(e.getPoint());
       Instructor i = instructorList.get(selectedRow);
       String description = i.getStreet() + ", " + i.getZipCode() + " " + i.getCity()
           + "\nPhone: " + i.getTelephone();
       ui.setDescriptionArea(description);
-    }
-    
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-    
-    @Override
-    public void mouseExited(MouseEvent e) {
     }
     
   }

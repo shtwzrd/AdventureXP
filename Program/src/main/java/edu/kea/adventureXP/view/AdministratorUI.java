@@ -11,12 +11,14 @@ import edu.kea.adventureXP.presenter.ActivityViewerPresenter;
 import edu.kea.adventureXP.presenter.InstructorViewerPresenter;
 
 /**
- * Main User Interface for administrators. It have tabs for Activities &
+ * Main User Interface for administrators. It have tabs for Activities,
  * Instructors (more to come).
  */
 public class AdministratorUI extends JFrame {
   
-  private JTabbedPane tabPane;
+  private static final long serialVersionUID = -2853822743439953004L;
+  
+  private JTabbedPane       tabPane;
   
   public AdministratorUI() {
     buildUI();

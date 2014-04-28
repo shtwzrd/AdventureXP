@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.jdesktop.xswingx.PromptSupport;
 
 import edu.kea.adventureXP.model.Activity;
 
@@ -24,11 +27,15 @@ import edu.kea.adventureXP.model.Activity;
  */
 public class ManageActivityUI extends JFrame {
   
-  private JTextField nameField;
-  private JTextField priceField;
-  private JTextArea  descriptionArea;
-  private JButton    saveButton;
-  private JButton    discardButton;
+  private static final long serialVersionUID = 2989732749967452666L;
+  
+  private JTextField        nameField;
+  private JTextField        priceField;
+  private JTextArea         descriptionArea;
+  private JButton           saveButton;
+  private JButton           discardButton;
+  
+  private JCheckBox         activeCheck;
   
   /**
    * Constructor for building the User Interface. It calls the buildUI method
@@ -66,19 +73,27 @@ public class ManageActivityUI extends JFrame {
     name.setForeground(UIColors.WHITE);
     
     nameField = new JTextField(10);
-    // PromptSupport.setPrompt("Name (required)", nameField);
+    PromptSupport.setPrompt("Name (required)", nameField);
     
     JLabel price = new JLabel("Price:");
     price.setForeground(UIColors.WHITE);
     
     priceField = new JTextField(10);
-    // PromptSupport.setPrompt("Price", priceField);
+    PromptSupport.setPrompt("Price", priceField);
+    
+    JLabel active = new JLabel("Active:");
+    active.setForeground(UIColors.WHITE);
+    activeCheck = new JCheckBox();
+    activeCheck.setSelected(true);
     
     northPanel.add(name);
     northPanel.add(nameField);
     
     northPanel.add(price);
     northPanel.add(priceField);
+    
+    northPanel.add(active);
+    northPanel.add(activeCheck);
     
     add(northPanel, BorderLayout.NORTH);
   }
@@ -91,7 +106,7 @@ public class ManageActivityUI extends JFrame {
     descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     descriptionArea.setWrapStyleWord(true);
     descriptionArea.setLineWrap(true);
-    // PromptSupport.setPrompt("Description", descriptionArea);
+    PromptSupport.setPrompt("Description", descriptionArea);
     
     add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
   }
@@ -157,6 +172,17 @@ public class ManageActivityUI extends JFrame {
   
   public String getDescriptionField() {
     return descriptionArea.getText();
+  }
+  
+  public boolean getIsActive() {
+    return activeCheck.isSelected();
+  }
+  
+  public void setIsActive(boolean flag) {
+    if (flag)
+      activeCheck.setSelected(true);
+    else
+      activeCheck.setSelected(false);
   }
   
   public void setDescriptionArea(String desc) {
