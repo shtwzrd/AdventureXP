@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
-import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.Member;
 
 /**
  * UI class responsible for creating a frame for adding an instructor to the
@@ -169,7 +169,7 @@ public class ManageInstructorUI extends JFrame {
     emailTF.setText(email);
   }
   
-  public void setFields(Instructor i) {
+  public void setFields(Member i) {
     setFNameField(i.getFirstName());
     setLNameField(i.getLastName());
     setStreetField(i.getStreet());

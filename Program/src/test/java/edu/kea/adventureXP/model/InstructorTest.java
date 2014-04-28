@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 
-import edu.kea.adventureXP.model.Instructor;
+import edu.kea.adventureXP.model.Member;
 
 public class InstructorTest {
   private SessionFactory sessionFactory;
@@ -40,7 +40,7 @@ public class InstructorTest {
     // create an instructor...
     Session session = this.sessionFactory.openSession();
     session.beginTransaction();
-    session.save( new Instructor(
+    session.save( new Member(
           "Bob",
           "Bobsen",
           "Kartoffel Vej",
@@ -48,7 +48,8 @@ public class InstructorTest {
           "Copenhagen",
           "Denmark",
           "2222222",
-          "bob@kartoffel.dk")
+          "bob@kartoffel.dk",
+          true)
         );
     session.getTransaction().commit();
     session.close();
@@ -56,8 +57,8 @@ public class InstructorTest {
     // retrieve it 
     session = this.sessionFactory.openSession();
     session.beginTransaction();
-    List<Instructor> result = session.createQuery( "from Instructor" ).list();
-    for ( Instructor instructor : result ) {
+    List<Member> result = session.createQuery( "from Member" ).list();
+    for ( Member instructor : result ) {
       System.out.println( instructor.getFirstName() + " " + instructor.getLastName() +
           ", " + instructor.getEmail() );
     }
@@ -69,7 +70,7 @@ public class InstructorTest {
   public void populateInstructorTableTest() {
     Session session = this.sessionFactory.openSession();
     session.beginTransaction();
-    session.save( new Instructor(
+    session.save( new Member(
           "Bob",
           "Bobsen",
           "Kartoffel Vej",
@@ -77,9 +78,10 @@ public class InstructorTest {
           "Copenhagen",
           "Denmark",
           "45454545",
-          "bob@kartoffel.dk")
+          "bob@kartoffel.dk",
+          true)
         );
-    session.save( new Instructor(
+    session.save( new Member(
           "Karin",
           "L",
           "Blomkål Vej",
@@ -87,7 +89,8 @@ public class InstructorTest {
           "Copenhagen",
           "Denmark",
           "45474352",
-          "karin@kartoffel.dk")
+          "karin@kartoffel.dk",
+          true)
         ); 
     session.getTransaction().commit();
     session.close(); 

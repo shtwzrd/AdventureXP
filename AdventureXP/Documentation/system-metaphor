@@ -1,0 +1,20 @@
+Our system is a reservation and inventory system for AdventureXP,
+and as such, we communicate with the terms Reservation, Activity, Inventory
+and Items.
+
+A Reservation contains information about an Activity at a specific time, with
+a group of people with a specific name.
+
+An Activity is an event hosted by AdventureXP, like Go-Karting or Paintball.
+An Activity also has some collection of Items that must be available to make
+the Activity possible.
+
+Inventory is the collection of Items which are property of AdventureXP and must
+be available for some sort of Activity.
+
+Our system allows for the creation of reservations, as well as the management
+of the inventory required to enable the activities to fulfill those reservations.
+
+tl;dr
+The system manages reservations for a group activity organization, and also keeps
+track of the inventory of things needed for those activities.
