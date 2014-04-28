@@ -1,10 +1,16 @@
 package edu.kea.adventureXP.model;
 
-import java.sql.Date;
+
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Class representing a ScheduledActivity with an id and a date.
@@ -12,10 +18,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SCHEDULEDACTIVITY")
 public class ScheduledActivity {
-	@Column
+	@Id
 	private int id;
-	@Column
-	private Date date;
+	  @Column
+	  private Date date;
 	
 	public ScheduledActivity(){		
 	}
