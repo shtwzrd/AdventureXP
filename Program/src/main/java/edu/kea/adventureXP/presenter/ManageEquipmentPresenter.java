@@ -30,6 +30,7 @@ public class ManageEquipmentPresenter {
     ui.setNoteArea(equipment.getNote());
     ui.setDateField(equipment.getDate());
     this.equipment = equipment;
+    ui.setEditableToFalse();
     edit = true;
   }
   

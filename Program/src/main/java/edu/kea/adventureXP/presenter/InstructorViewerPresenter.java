@@ -14,10 +14,10 @@ import edu.kea.adventureXP.view.ManageInstructorUI;
 
 public class InstructorViewerPresenter {
   
-  InstructorViewerUI    ui;
-  List<Member>      instructorList;
-  ArrayList<Member> sortedInstructorList = new ArrayList<>();
-  int                   selectedRow          = -1;
+  InstructorViewerUI ui;
+  List<Member>       instructorList;
+  ArrayList<Member>  sortedInstructorList = new ArrayList<>();
+  int                selectedRow          = -1;
   
   public InstructorViewerPresenter(InstructorViewerUI ui) {
     this.ui = ui;
@@ -59,7 +59,7 @@ public class InstructorViewerPresenter {
     
     for (Member i : instructorList) {
       String iName = i.getFirstName() + " " + i.getLastName();
-      if (iName.contains(name))
+      if (iName.toLowerCase().contains(name.toLowerCase()))
         temp.add(i);
     }
     sortedInstructorList = new ArrayList<Member>(temp);

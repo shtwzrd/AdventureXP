@@ -11,6 +11,7 @@ import edu.kea.adventureXP.presenter.ActivityViewerPresenter;
 import edu.kea.adventureXP.presenter.CustomerViewerPresenter;
 import edu.kea.adventureXP.presenter.EquipmentViewerPresenter;
 import edu.kea.adventureXP.presenter.InstructorViewerPresenter;
+import edu.kea.adventureXP.presenter.EventPackageViewerPresenter;
 
 /**
  * Main User Interface for administrators. It have tabs for Activities,
@@ -40,10 +41,11 @@ public class AdministratorUI extends JFrame {
     tabPane.setOpaque(true);
     tabPane
         .add("Activities", new ActivityViewerPresenter(new ActivityViewerUI()).getUI());
-    tabPane.add("Instructors",
-        new InstructorViewerPresenter(new InstructorViewerUI()).getUI());
+    tabPane.add("Packages", new EventPackageViewerPresenter(new EventPackageViewerUI()).getUI());
     tabPane.add("Equipment",
         new EquipmentViewerPresenter(new EquipmentViewerUI()).getUI());
+    tabPane.add("Instructors",
+        new InstructorViewerPresenter(new InstructorViewerUI()).getUI());
     new InstructorViewerPresenter(new InstructorViewerUI());
     tabPane.add("Customers", new CustomerViewerPresenter(new CustomerViewerUI()).getUI());
     

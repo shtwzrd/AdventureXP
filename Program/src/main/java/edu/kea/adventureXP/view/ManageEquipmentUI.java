@@ -76,8 +76,7 @@ public class ManageEquipmentUI extends JFrame {
     date.setForeground(UIColors.WHITE);
     
     dateField = new JTextField(15);
-    dateField.setEditable(false);
-    PromptSupport.setPrompt("ex.: 12, 24, 2014", dateField);
+    PromptSupport.setPrompt("dd/mm/yyyy", dateField);
     
     northPanel.add(name);
     northPanel.add(nameField);
@@ -118,6 +117,10 @@ public class ManageEquipmentUI extends JFrame {
     southPanel.add(saveButton);
     
     add(southPanel, BorderLayout.SOUTH);
+  }
+  
+  public void setEditableToFalse() {
+    dateField.setEditable(false);
   }
   
   /**
