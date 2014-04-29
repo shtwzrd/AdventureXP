@@ -2,7 +2,9 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import edu.kea.adventureXP.model.Activity;
@@ -24,6 +26,7 @@ public class ManageEventPackagePresenter {
   private EventPackageViewerPresenter epvp;
   private EventPackage           event     = null;
   private boolean                 edit     = false;
+  private List<Activity>        selectedActivities;
   
   /**
    * Constructor for wanting to open 'Manage Activity' with pre-filled fields.
@@ -34,17 +37,19 @@ public class ManageEventPackagePresenter {
    * @param avp The Viewer that should be updated after the activity has been
    *          edited
    */
+  /*
   public ManageEventPackagePresenter(ManagePackageUI ui, EventPackage package,
       EventPackageViewerPresenter avp) {
     this(ui, avp);
     ui.setNameField(package.getName());
     ui.setPriceField(package.getPrice());
-    ui.setDurationField(package.getDuration);
+    ui.setDurationField(package.getDuration());
     ui.setArea(activity.getDescription());
     ui.setIsActive(activity.getIsActive());
     this.activity = activity;
     edit = true;
   }
+  */
   
   /**
    * Constructor for 'Manage Activity', which adds listeners to the buttons.
@@ -56,11 +61,12 @@ public class ManageEventPackagePresenter {
   public ManageEventPackagePresenter(ManagePackageUI ui, EventPackageViewerPresenter avp) {
     this.ui = ui;
     this.epvp = avp;
-    ui.setSaveListener(new SaveButtonListener());
-    ui.setDiscardListener(new DiscardButtonListener());
+    ui.setSavePackageListener(new SaveButtonListener());
+    ui.setDiscardPackageListener(new DiscardButtonListener());
     ui.setAddActivityListener(new AddActivityButtonListener());
     ui.setRemoveActivityListener(new RemoveActivityButtonListener());
     ui.setActivityTable(ActivityController.selectAllFromActivity());
+    this.selectedActivities = new ArrayList<>();
   }
   
   /**
@@ -121,16 +127,10 @@ public class ManageEventPackagePresenter {
      //   }
         
       //  else { 
-          int rows = ui.getActivityTable().getRowCount();
-          Set<Activity> set = new HashSet<>();
-          
-          for(int i = 0; i < rows; i++) {
-              long id = (long) ui.getActivityTable().getValueAt(i, 0);
-          }
-          EventPackage toAdd = new EventPackage(ui.getNameField(), ui.getActivities(),
+          EventPackage toAdd = new EventPackage(ui.getNameField(), new HashSet<>(selectedActivities),
               ui.getDurationField(), ui.getPriceField());
           EventPackageController.addEventPackage(toAdd);
-        epvp.updateTable();
+//        epvp.updateTable();
         ui.dispose();
       }
       //else
@@ -147,6 +147,32 @@ public class ManageEventPackagePresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+      ui.dispose();
+    }
+    
+  }
+        private class AddActivityButtonListener implements ActionListener {
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int row = ui.getActivityTable().getSelectedRow();
+       Activity toAdd = ActivityController.selectFromActivity((long) ui.getActivityTable()
+            .getValueAt(row, 0));
+       
+       ui.setSelectedTable(selectedActivities);
+    }
+    
+  }
+    private class RemoveActivityButtonListener implements ActionListener {
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int row = ui.getActivityTable().getSelectedRow();
+       Activity toRemove = ActivityController.selectFromActivity((long) ui.getSelectedTable()
+            .getValueAt(row, 0));
+       
+       selectedActivities.remove(toRemove);
+       ui.setSelectedTable(selectedActivities);
       ui.dispose();
     }
     

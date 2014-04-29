@@ -254,22 +254,11 @@ public Set<Activity> getActivities() {
 }
 
 public int getDurationField() {
-    // TODO Auto-generated method stub
-    return 0;
+    return Integer.parseInt(durationField.getText());
 }
 
 public double getPriceField() {
-    // TODO Auto-generated method stub
-    return 0;
-}
+    return Double.parseDouble(priceField.getText());
+    }
 
-public void setDiscardListener(DiscardButtonListener discardButtonListener) {
-    // TODO Auto-generated method stub
-    
-}
-
-public void setSaveListener(SaveButtonListener saveButtonListener) {
-    // TODO Auto-generated method stub
-    
-}
 }
