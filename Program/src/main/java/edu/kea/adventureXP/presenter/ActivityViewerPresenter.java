@@ -66,7 +66,7 @@ public class ActivityViewerPresenter {
    * Updates the UI
    */
   public void updateUI() {
-    setActivityList();
+    // setActivityList();
     ui.setTable(sortedActivityList);
     ui.setDescriptionArea("");
     ui.revalidate();
