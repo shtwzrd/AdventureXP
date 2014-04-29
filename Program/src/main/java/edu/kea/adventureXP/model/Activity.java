@@ -106,4 +106,8 @@ public class Activity implements Comparable<Activity> {
     return -1;
   }
   
+  public int hashCode() {
+      return (int) (this.name.hashCode() + this.id + this.description.hashCode());
+  }
+  
 }
