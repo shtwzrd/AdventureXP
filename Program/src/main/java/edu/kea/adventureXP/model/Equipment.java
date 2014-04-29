@@ -1,6 +1,6 @@
 package edu.kea.adventureXP.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,29 +19,29 @@ public class Equipment {
   @Id
   @GeneratedValue(generator = "increment")
   @GenericGenerator(name = "increment", strategy = "increment")
-  private long     id;
+  private long   id;
   
   @Column
-  private String   name;
+  private String name;
   @Column
-  private String   brand;
+  private String brand;
   @Column
   @Temporal(TemporalType.TIMESTAMP)
-  private Calendar Date;
+  private Date   date;
   @Column
-  private String   note;
+  private String note;
   
-  public Equipment(String name, String brand, Calendar Date) {
+  public Equipment(String name, String brand, Date date) {
     this.name = name;
     this.brand = brand;
-    this.Date = Date;
+    this.date = date;
     
   }
   
-  public Equipment(String name, String brand, Calendar Date, String note) {
+  public Equipment(String name, String brand, Date date, String note) {
     this.name = name;
     this.brand = brand;
-    this.Date = Date;
+    this.date = date;
     this.note = note;
     
   }
@@ -74,12 +74,12 @@ public class Equipment {
     this.brand = brand;
   }
   
-  public Calendar getDate() {
-    return Date;
+  public Date getDate() {
+    return date;
   }
   
-  public void setDate(Calendar Date) {
-    this.Date = Date;
+  public void setDate(Date date) {
+    this.date = date;
   }
   
   public String getNote() {

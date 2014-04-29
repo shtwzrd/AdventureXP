@@ -51,6 +51,7 @@ public class EquipmentViewerPresenter {
   
   public void setEquipmentList() {
     equipmentList = (ArrayList<Equipment>) EquipmentController.selectAllFromEquipment();
+    sortedEquipmentList = new ArrayList<Equipment>(equipmentList);
   }
   
   public void updateTable() {
@@ -62,7 +63,9 @@ public class EquipmentViewerPresenter {
    * Updates the UI
    */
   public void updateUI() {
+    setEquipmentList();
     ui.setTable(equipmentList);
+    ui.setNoteArea("");
     ui.revalidate();
   }
   
@@ -73,6 +76,7 @@ public class EquipmentViewerPresenter {
       if (a.getName().contains(name))
         temp.add(a);
     sortedEquipmentList = new ArrayList<Equipment>(temp);
+    updateUI();
   }
   
   public void sortByID(String ID) {
@@ -112,6 +116,7 @@ public class EquipmentViewerPresenter {
     
   }
   
+  // TODO
   /**
    * Listens to the delete button within the UI.
    */
@@ -121,7 +126,7 @@ public class EquipmentViewerPresenter {
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
         equipmentList.remove(selectedRow);
-        ui.setNoteArea("");
+        EquipmentController.removeEquipment(sortedEquipmentList.get(selectedRow));
         updateUI();
       }
     }
