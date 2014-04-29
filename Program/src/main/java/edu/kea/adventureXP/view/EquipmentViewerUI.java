@@ -14,35 +14,34 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import org.jdesktop.xswingx.PromptSupport;
 
-import edu.kea.adventureXP.model.Member;
+import edu.kea.adventureXP.model.Equipment;
 
-/**
- * User Interface class used to display all Instructors. The UI also has buttons
- * for adding new, editing and deleting instructors.
- */
-public class InstructorViewerUI extends JPanel {
+public class EquipmentViewerUI extends JPanel {
   
-  private static final long serialVersionUID = 7614661393039872592L;
-  
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JComboBox<String> dropDown;
   private JTextField        searchField;
   private JButton           searchButton;
-  private JTextArea         descriptionArea;
-  private JTable            instructorTable;
+  private JTextArea         noteArea;
+  private JTable            equipmentTable;
   private JButton           deleteButton;
   private JButton           addButton;
   private JButton           editButton;
   
-  public InstructorViewerUI() {
+  public EquipmentViewerUI() {
     buildUI();
   }
   
   /**
-   * Method for building the various panels within the InstructorViewerUI's
-   * panel as well as set the various properties of said panel.
+   * Method for building the various panels within the ActivityViewerUI's panel
+   * as well as set the various properties of said panel.
    */
   public void buildUI() {
     setLayout(new BorderLayout());
@@ -62,7 +61,7 @@ public class InstructorViewerUI extends JPanel {
     
     dropDown = new JComboBox<String>();
     searchField = new JTextField(15);
-    PromptSupport.setPrompt("Type in search...", searchField);
+    // PromptSupport.setPrompt("Type in search...", searchField);
     
     searchButton = new JButton("Search");
     
@@ -82,23 +81,23 @@ public class InstructorViewerUI extends JPanel {
   }
   
   /**
-   * Builds the center panel consisting of a JTable showing all instructors and
-   * a description box showing the description of the selected instructor.
+   * Builds the center panel consisting of a JTable showing all activities and a
+   * description box showing the description of the selected activity.
    */
   public void buildCenterPanel() {
     JPanel southPanel = new JPanel(new BorderLayout());
     
-    instructorTable = new JTable();
-    southPanel.add(new JScrollPane(instructorTable), BorderLayout.CENTER);
+    equipmentTable = new JTable();
+    southPanel.add(new JScrollPane(equipmentTable), BorderLayout.CENTER);
     
-    descriptionArea = new JTextArea(10, 20);
-    descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-    descriptionArea.setWrapStyleWord(true);
-    descriptionArea.setLineWrap(true);
-    descriptionArea.setEditable(false);
-    PromptSupport.setPrompt("Information", descriptionArea);
+    noteArea = new JTextArea(10, 20);
+    noteArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    noteArea.setWrapStyleWord(true);
+    noteArea.setLineWrap(true);
+    noteArea.setEditable(false);
+    PromptSupport.setPrompt("Note", noteArea);
     
-    southPanel.add(descriptionArea, BorderLayout.SOUTH);
+    southPanel.add(noteArea, BorderLayout.SOUTH);
     
     add(southPanel, BorderLayout.CENTER);
   }
@@ -108,29 +107,36 @@ public class InstructorViewerUI extends JPanel {
    * 
    * @param activityList The list of activities to add
    */
-  public void setTable(List<Member> instructorList) {
-    String[] heads = { "ID", "First name", "Last name", "Email" };
+  public void setTable(List<Equipment> equipmentList) {
+    String[] heads = { "Name", "Brand", "Date" };
     
     DefaultTableModel model = new DefaultTableModel();
     
-    model.setRowCount(instructorList.size());
+    model.setRowCount(equipmentList.size());
     model.setColumnIdentifiers(heads);
     
     int row = 0;
     
-    for (Member i : instructorList) {
-      model.setValueAt(i.getId(), row, 0);
+    for (Equipment a : equipmentList) {
+      model.setValueAt(a.getName(), row, 0);
       model.isCellEditable(row, 0);
-      model.setValueAt(i.getFirstName(), row, 1);
+      model.setValueAt(a.getBrand(), row, 1);
       model.isCellEditable(row, 1);
-      model.setValueAt(i.getLastName(), row, 2);
+      model.setValueAt(a.getDate(), row, 2);
       model.isCellEditable(row, 2);
-      model.setValueAt(i.getEmail(), row, 3);
-      model.isCellEditable(row, 3);
       row++;
     }
     
-    instructorTable.setModel(model);
+    equipmentTable.setModel(model);
+    
+    equipmentTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    TableColumnModel columnModel = equipmentTable.getColumnModel();
+    columnModel.getColumn(0).setPreferredWidth(30);
+    columnModel.getColumn(1).setPreferredWidth(400);
+    columnModel.getColumn(2).setPreferredWidth(40);
+    equipmentTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+    
+    model.fireTableDataChanged();
   }
   
   /**
@@ -153,11 +159,11 @@ public class InstructorViewerUI extends JPanel {
   }
   
   public JTable getTable() {
-    return instructorTable;
+    return equipmentTable;
   }
   
   public void setTableListener(MouseListener listener) {
-    instructorTable.addMouseListener(listener);
+    equipmentTable.addMouseListener(listener);
   }
   
   public void setDeleteButtonListener(ActionListener listener) {
@@ -176,8 +182,8 @@ public class InstructorViewerUI extends JPanel {
     searchButton.addActionListener(listener);
   }
   
-  public void setDescriptionArea(String description) {
-    descriptionArea.setText(description);
+  public void setNoteArea(String note) {
+    noteArea.setText(note);
   }
   
   public String getSelectedDropDown() {
@@ -187,5 +193,4 @@ public class InstructorViewerUI extends JPanel {
   public String getSearchField() {
     return searchField.getText();
   }
-  
 }

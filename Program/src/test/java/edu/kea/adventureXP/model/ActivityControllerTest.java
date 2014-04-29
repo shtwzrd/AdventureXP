@@ -1,10 +1,9 @@
 package edu.kea.adventureXP.model;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -40,28 +39,28 @@ public class ActivityControllerTest {
 	    }
 	  }
 
-
   @Test
   public void activityControllerBasicUsageTest() {
-    Activity activity = new Activity("Dwarf Toss", "Fun", 200.0);
+    Activity activity = new Activity("Dwarf Toss", "Fun", 200.0, true);
     ActivityController.addActivity(activity);
-
-     List<Activity> list = ActivityController.selectAllFromActivity();
-    for(Activity a : list) {
+    
+    List<Activity> list = ActivityController.selectAllFromActivity();
+    for (Activity a : list)
       System.out.println(a.getName());
-    } 
-
-    Activity returned =
-      ActivityController.selectFromActivity(activity.getName());
-
-
-
+    
+    Activity returned = ActivityController.selectFromActivity(activity.getName());
+    
     assertEquals(activity.getName(), returned.getName());
-
+    
   }
   
   @Test
+  public void removeActivityControllerTest() {
+    
+  }
+  
   public void scheduledActivityControllerBasicUsageTest() {
+
 	  Calendar cal = new GregorianCalendar();
 	  cal.set(2013, 2, 10, 14, 20);
 	  System.out.println(cal.getTime());
@@ -83,11 +82,7 @@ public class ActivityControllerTest {
     assertEquals(scheduledActivity.getDate(), returned.getDate());
     assertEquals(cal.getTime(), returned.getDate());
 
+
   }
-
-
-	@Test
-	public void removeActivityControllerTest() {
-  }
-
+  
 }

@@ -3,9 +3,13 @@ package edu.kea.adventureXP.view;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,32 +20,21 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
-import edu.kea.adventureXP.model.Activity;
-
-/**
- * User Interface class for creating a new activity as well as edit an old
- * activity. The interface have fields for the activity's name, description and
- * price as well as buttons for saving and discarding.
- * 
- * @see Activity
- */
-public class ManageActivityUI extends JFrame {
+public class ManageEquipmentUI extends JFrame {
   
-  private static final long serialVersionUID = 2989732749967452666L;
-  
+  private static final long serialVersionUID = 6253925559410375343L;
   private JTextField        nameField;
-  private JTextField        priceField;
-  private JTextArea         descriptionArea;
+  private JTextField        brandField;
+  private JTextField        dateField;
+  private JTextArea         noteArea;
   private JButton           saveButton;
   private JButton           discardButton;
-  
-  private JCheckBox         activeCheck;
   
   /**
    * Constructor for building the User Interface. It calls the buildUI method
    * which builds the frame and the panels within.
    */
-  public ManageActivityUI() {
+  public ManageEquipmentUI() {
     buildUI();
   }
   
@@ -49,8 +42,8 @@ public class ManageActivityUI extends JFrame {
    * Builds the frame and the panels within.
    */
   public void buildUI() {
-    setTitle("Manage Activity");
-    setSize(500, 500);
+    setTitle("Manage Equipment");
+    setSize(700, 500);
     setLayout(new BorderLayout());
     
     buildNorthPanel();
@@ -73,27 +66,27 @@ public class ManageActivityUI extends JFrame {
     name.setForeground(UIColors.WHITE);
     
     nameField = new JTextField(10);
-    PromptSupport.setPrompt("Name (required)", nameField);
+    // PromptSupport.setPrompt("Name (required)", nameField);
     
-    JLabel price = new JLabel("Price:");
-    price.setForeground(UIColors.WHITE);
+    JLabel brand = new JLabel("Brand:");
+    brand.setForeground(UIColors.WHITE);
     
-    priceField = new JTextField(10);
-    PromptSupport.setPrompt("Price", priceField);
+    brandField = new JTextField(10);
     
-    JLabel active = new JLabel("Active:");
-    active.setForeground(UIColors.WHITE);
-    activeCheck = new JCheckBox();
-    activeCheck.setSelected(true);
+    JLabel date = new JLabel("Date:");
+    date.setForeground(UIColors.WHITE);
+    
+    dateField = new JTextField(10);
+    PromptSupport.setPrompt("ex.: 12, 24, 2014", dateField);
     
     northPanel.add(name);
     northPanel.add(nameField);
     
-    northPanel.add(price);
-    northPanel.add(priceField);
+    northPanel.add(brand);
+    northPanel.add(brandField);
     
-    northPanel.add(active);
-    northPanel.add(activeCheck);
+    northPanel.add(date);
+    northPanel.add(dateField);
     
     add(northPanel, BorderLayout.NORTH);
   }
@@ -102,13 +95,13 @@ public class ManageActivityUI extends JFrame {
    * Builds the center panel with a description
    */
   public void buildCenterPanel() {
-    descriptionArea = new JTextArea();
-    descriptionArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-    descriptionArea.setWrapStyleWord(true);
-    descriptionArea.setLineWrap(true);
-    PromptSupport.setPrompt("Description", descriptionArea);
+    noteArea = new JTextArea();
+    noteArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+    noteArea.setWrapStyleWord(true);
+    noteArea.setLineWrap(true);
+    // PromptSupport.setPrompt("Description", noteArea);
     
-    add(new JScrollPane(descriptionArea), BorderLayout.CENTER);
+    add(new JScrollPane(noteArea), BorderLayout.CENTER);
   }
   
   /**
@@ -153,40 +146,35 @@ public class ManageActivityUI extends JFrame {
     nameField.setText(name);
   }
   
-  public double getPriceField() {
-    String priceText = priceField.getText();
-    if (priceText.equals(""))
-      return 0; // Nothing was added
-    else
-      try {
-        return Double.parseDouble(priceText);
-      }
-      catch (Exception e) {
-        return 0; // Illegal characters were added
-      }
+  public String getBrandField() {
+    String brandText = brandField.getText();
+    return brandText;
   }
   
-  public void setPriceField(double price) {
-    priceField.setText(price + "");
+  public void setBrandField(String brand) {
+    brandField.setText(brand + "");
   }
   
-  public String getDescriptionField() {
-    return descriptionArea.getText();
+  public String getNoteField() {
+    return noteArea.getText();
   }
   
-  public boolean getIsActive() {
-    return activeCheck.isSelected();
+  public void setNoteArea(String note) {
+    noteArea.setText(note);
   }
   
-  public void setIsActive(boolean flag) {
-    if (flag)
-      activeCheck.setSelected(true);
-    else
-      activeCheck.setSelected(false);
+  public Calendar getDateField() throws ParseException {
+    String string = dateField.getText();
+    DateFormat df = new SimpleDateFormat("dd, MM, yyyy");
+    Date date = df.parse(string);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    return cal;
   }
   
-  public void setDescriptionArea(String desc) {
-    descriptionArea.setText(desc);
+  public void setDateField(Calendar date) {
+    String date1 = date.toString();
+    noteArea.setText(date1);
   }
   
   /**

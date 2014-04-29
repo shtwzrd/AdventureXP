@@ -1,5 +1,6 @@
 package edu.kea.adventureXP.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ActivityTest {
+public class EquipmentTest {
   
   private SessionFactory  sessionFactory;
   private ServiceRegistry serviceRegistry;
@@ -33,39 +34,39 @@ public class ActivityTest {
   }
   
   @Test
-  public void basicActivityUsageTest() {
-    // create an activity...
+  public void basicEquipmentUsageTest() {
+    // create an equipment...
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    session.save(new Activity("Dwarf Tossing", "Throw Dwarves whole across the shire!",
-        400.0, true));
+    session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
+        "eowijfoe"));
     session.getTransaction().commit();
     session.close();
     
     // retrieve it
     session = sessionFactory.openSession();
     session.beginTransaction();
-    List<Activity> result = session.createQuery("from Activity").list();
-    for (Activity event : result)
-      System.out.println(event.getName() + ": " + event.getDescription() + ": "
-          + event.getPrice() + ": " + event.getIsActive());
+    List<Equipment> result = session.createQuery("from Equipment").list();
+    for (Equipment event : result)
+      System.out.println(event.getName() + ": " + event.getBrand() + ": "
+          + event.getDate() + ": " + event.getNote());
     session.getTransaction().commit();
     session.close();
   }
   
   @Test
-  public void populateActivityTableTest() {
+  public void populateEquipmentTableTest() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    session.save(new Activity("Dwarf Tossing", "Throw Dwarves whole across the shire!",
-        400.0, true));
-    session.save(new Activity("Paintball", "It's fun!", 200.0, true));
-    session.save(new Activity("Laser Tag", "also fun...", 400.0, true));
-    session.save(new Activity("Sumo Tossing",
-        "Throw Sumo Wrestlers out along with your back.", 800.0, true));
-    session.save(new Activity("Skeet Shooting", "Pew pew!", 400.0, true));
+    session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
+        "eowijfoe"));
+    session
+        .save(new Equipment("Cross Bow", "PB Factory", new Date(2014, 04, 03), "wefew"));
+    session.save(new Equipment("Test 1", "PB Factory", new Date(2014, 05, 03), "erg"));
+    session.save(new Equipment("Test 2", "AB Factory", new Date(2014, 06, 03), "j5yt"));
+    session.save(new Equipment("Test 3", "CT Factory", new Date(2014, 07, 03),
+        "iultjyrht"));
     session.getTransaction().commit();
     session.close();
   }
-  
 }

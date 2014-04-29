@@ -17,7 +17,7 @@ version = '1.0'
 jar {
   manifest {
     attributes 'adventureXP': 'AdventureXP', 'Implementation-Version': 0.1
-      //      attributes 'Main-Class' : 'edu.kea.tsp.Run' 
+            attributes 'Main-Class' : 'edu.kea.adventureXP.Run' 
   }
 }
 

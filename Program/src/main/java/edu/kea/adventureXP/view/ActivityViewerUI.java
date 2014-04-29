@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import org.jdesktop.xswingx.PromptSupport;
+
 import edu.kea.adventureXP.model.Activity;
 
 /**
@@ -24,6 +26,8 @@ import edu.kea.adventureXP.model.Activity;
  * buttons.
  */
 public class ActivityViewerUI extends JPanel {
+  
+  private static final long serialVersionUID = 3954424525672177736L;
   
   private JComboBox<String> dropDown;
   private JTextField        searchField;
@@ -60,7 +64,7 @@ public class ActivityViewerUI extends JPanel {
     
     dropDown = new JComboBox<String>();
     searchField = new JTextField(15);
-    // PromptSupport.setPrompt("Type in search...", searchField);
+    PromptSupport.setPrompt("Type in search...", searchField);
     
     searchButton = new JButton("Search");
     
@@ -94,7 +98,7 @@ public class ActivityViewerUI extends JPanel {
     descriptionArea.setWrapStyleWord(true);
     descriptionArea.setLineWrap(true);
     descriptionArea.setEditable(false);
-    // PromptSupport.setPrompt("Description", descriptionArea);
+    PromptSupport.setPrompt("Description", descriptionArea);
     
     southPanel.add(descriptionArea, BorderLayout.SOUTH);
     
@@ -107,7 +111,7 @@ public class ActivityViewerUI extends JPanel {
    * @param activityList The list of activities to add
    */
   public void setTable(List<Activity> activityList) {
-    String[] heads = { "ID", "Name", "Price" };
+    String[] heads = { "ID", "Active", "Name", "Price (person/hour)" };
     
     DefaultTableModel model = new DefaultTableModel();
     
@@ -118,11 +122,12 @@ public class ActivityViewerUI extends JPanel {
     
     for (Activity a : activityList) {
       model.setValueAt(a.getId(), row, 0);
-      model.isCellEditable(row, 0);
-      model.setValueAt(a.getName(), row, 1);
-      model.isCellEditable(row, 1);
-      model.setValueAt(a.getPrice(), row, 2);
-      model.isCellEditable(row, 2);
+      if (a.getIsActive())
+        model.setValueAt("Y", row, 1);
+      else
+        model.setValueAt("N", row, 1);
+      model.setValueAt(a.getName(), row, 2);
+      model.setValueAt(String.format("%.2f DKK", a.getPrice()), row, 3);
       row++;
     }
     
@@ -131,8 +136,9 @@ public class ActivityViewerUI extends JPanel {
     activityTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     TableColumnModel columnModel = activityTable.getColumnModel();
     columnModel.getColumn(0).setPreferredWidth(30);
-    columnModel.getColumn(1).setPreferredWidth(400);
-    columnModel.getColumn(2).setPreferredWidth(40);
+    columnModel.getColumn(1).setPreferredWidth(50);
+    columnModel.getColumn(2).setPreferredWidth(350);
+    columnModel.getColumn(3).setPreferredWidth(150);
     activityTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
     
     model.fireTableDataChanged();

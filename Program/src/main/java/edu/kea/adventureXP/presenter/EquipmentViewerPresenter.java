@@ -2,26 +2,22 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
-// import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import java.util.List;
 
-import edu.kea.adventureXP.model.Activity;
-import edu.kea.adventureXP.model.ActivityController;
-import edu.kea.adventureXP.view.ActivityViewerUI;
-import edu.kea.adventureXP.view.ManageActivityUI;
+import edu.kea.adventureXP.model.Equipment;
+import edu.kea.adventureXP.model.EquipmentController;
+import edu.kea.adventureXP.view.EquipmentViewerUI;
+import edu.kea.adventureXP.view.ManageEquipmentUI;
 
-/**
- * Presenter class
- */
-public class ActivityViewerPresenter {
+public class EquipmentViewerPresenter {
   
-  ActivityViewerUI    ui;
-  ArrayList<Activity> activityList       = new ArrayList<Activity>();
-  List<Activity>      sortedActivityList = new ArrayList<Activity>();
-  int                 selectedRow        = -1;
+  EquipmentViewerUI    ui;
+  ArrayList<Equipment> equipmentList       = new ArrayList<Equipment>();
+  List<Equipment>      sortedEquipmentList = new ArrayList<Equipment>();
+  int                  selectedRow         = -1;
   
   /**
    * Constructor associating the ui with the presenter and setting listeners on
@@ -29,36 +25,36 @@ public class ActivityViewerPresenter {
    * 
    * @param ui The UI to listen to input from.
    */
-  public ActivityViewerPresenter(ActivityViewerUI ui) {
+  
+  public EquipmentViewerPresenter(EquipmentViewerUI ui) {
     this.ui = ui;
     ui.setTableListener(new TableListener());
     ui.setAddButtonListener(new AddListener());
     ui.setDeleteButtonListener(new DeleteListener());
     ui.setEditButtonListener(new EditListener());
     ui.setSearchButtonListener(new SearchListener());
-    setActivityList();
+    setEquipmentList();
     
-    String[] dropDownChoices = { "Name", "ID", "Price" };
+    String[] dropDownChoices = { "ID", "Name", "Brand" };
     ui.setDropDownOptions(dropDownChoices);
     updateUI();
   }
   
-  public ActivityViewerUI getUI() {
+  public EquipmentViewerUI getUI() {
     return ui;
   }
   
-  public void setActivityList(ArrayList<Activity> list) {
-    activityList = list;
-    sortedActivityList = new ArrayList<Activity>(list);
+  public void setEquipmentList(ArrayList<Equipment> list) {
+    equipmentList = list;
+    sortedEquipmentList = new ArrayList<Equipment>(list);
   }
   
-  public void setActivityList() {
-    activityList = (ArrayList<Activity>) ActivityController.selectAllFromActivity();
-    sortedActivityList = new ArrayList<Activity>(activityList);
+  public void setEquipmentList() {
+    equipmentList = (ArrayList<Equipment>) EquipmentController.selectAllFromEquipment();
   }
   
   public void updateTable() {
-    setActivityList();
+    setEquipmentList();
     updateUI();
   }
   
@@ -66,20 +62,17 @@ public class ActivityViewerPresenter {
    * Updates the UI
    */
   public void updateUI() {
-    setActivityList();
-    ui.setTable(sortedActivityList);
-    ui.setDescriptionArea("");
+    ui.setTable(equipmentList);
     ui.revalidate();
   }
   
   public void sortByName(String name) {
-    ArrayList<Activity> temp = new ArrayList<>();
+    ArrayList<Equipment> temp = new ArrayList<>();
     
-    for (Activity a : activityList)
-      if (a.getName().toLowerCase().contains(name.toLowerCase()))
+    for (Equipment a : equipmentList)
+      if (a.getName().contains(name))
         temp.add(a);
-    sortedActivityList = new ArrayList<Activity>(temp);
-    updateUI();
+    sortedEquipmentList = new ArrayList<Equipment>(temp);
   }
   
   public void sortByID(String ID) {
@@ -93,12 +86,28 @@ public class ActivityViewerPresenter {
   /**
    * MouseListener class used to listen for clicks happening within a JTable.
    */
-  private class TableListener extends MouseAdapter {
+  private class TableListener implements MouseListener {
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
+      ui.setNoteArea(equipmentList.get(selectedRow).getNote());
+    }
     
     @Override
     public void mouseClicked(MouseEvent e) {
-      selectedRow = ui.getTable().rowAtPoint(e.getPoint());
-      ui.setDescriptionArea(activityList.get(selectedRow).getDescription());
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
     
   }
@@ -111,8 +120,8 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
-        activityList.remove(selectedRow);
-        ActivityController.removeActivity(sortedActivityList.get(selectedRow));
+        equipmentList.remove(selectedRow);
+        ui.setNoteArea("");
         updateUI();
       }
     }
@@ -126,12 +135,11 @@ public class ActivityViewerPresenter {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (selectedRow != -1) {
-        Activity toEdit = ActivityController.selectFromActivity((long) ui.getTable()
+        Equipment toEdit = EquipmentController.selectFromEquipment((long) ui.getTable()
             .getValueAt(selectedRow, 0));
-        new ManageActivityPresenter(new ManageActivityUI(), toEdit,
-            ActivityViewerPresenter.this);
+        new ManageEquipmentPresenter(new ManageEquipmentUI(), toEdit,
+            EquipmentViewerPresenter.this);
       }
-      
     }
   }
   
@@ -142,7 +150,7 @@ public class ActivityViewerPresenter {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      new ManageActivityPresenter(new ManageActivityUI(), ActivityViewerPresenter.this);
+      new ManageEquipmentPresenter(new ManageEquipmentUI(), EquipmentViewerPresenter.this);
     }
   }
   
