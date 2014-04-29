@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -241,4 +242,34 @@ public class ManagePackageUI extends JFrame {
   public void setSavePackageListener(ActionListener listener) {
     savePackageButton.addActionListener(listener);
   }
+
+public String getNameField() {
+    // TODO Auto-generated method stub
+    return null;
+}
+
+public Set<Activity> getActivities() {
+    // TODO Auto-generated method stub
+    return null;
+}
+
+public int getDurationField() {
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+public double getPriceField() {
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+public void setDiscardListener(DiscardButtonListener discardButtonListener) {
+    // TODO Auto-generated method stub
+    
+}
+
+public void setSaveListener(SaveButtonListener saveButtonListener) {
+    // TODO Auto-generated method stub
+    
+}
 }
