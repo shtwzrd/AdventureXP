@@ -2,7 +2,7 @@ package edu.kea.adventureXP.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.GregorianCalendar;
+import java.text.ParseException;
 
 import edu.kea.adventureXP.model.Equipment;
 import edu.kea.adventureXP.model.EquipmentController;
@@ -28,6 +28,7 @@ public class ManageEquipmentPresenter {
     ui.setNameField(equipment.getName());
     ui.setBrandField(equipment.getBrand());
     ui.setNoteArea(equipment.getNote());
+    ui.setDateField(equipment.getDate());
     this.equipment = equipment;
     edit = true;
   }
@@ -79,9 +80,8 @@ public class ManageEquipmentPresenter {
    * @param string The Brand as double.
    * @return true if Brand is not negative.
    */
-  public boolean validateBrand(String string) {
-    // return string >= 0;
-    return true;
+  public boolean validateBrand(String brand) {
+    return !brand.isEmpty();
   }
   
   /**
@@ -90,7 +90,6 @@ public class ManageEquipmentPresenter {
    */
   private class SaveButtonListener implements ActionListener {
     
-    @SuppressWarnings("static-access")
     @Override
     public void actionPerformed(ActionEvent e) {
       String errorMessage = "";
@@ -112,15 +111,19 @@ public class ManageEquipmentPresenter {
           equipment.setNote(ui.getNoteField());
           equipment.setName(ui.getNameField());
           equipment.setBrand(ui.getBrandField());
-          System.out.println(equipment.getNote());
-          System.out.println(equipment.getName());
-          System.out.println(equipment.getDate());
-          System.out.println(equipment.getBrand());
+          // equipment.setDate(ui.getDateField());
           EquipmentController.updateEquipment(equipment);
         }
         else {
-          Equipment equipment = new Equipment(ui.getNameField(), ui.getBrandField(),
-              new GregorianCalendar(), ui.getNoteField());
+          Equipment equipment = null;
+          try {
+            equipment = new Equipment(ui.getNameField(), ui.getBrandField(),
+                ui.getDateField(), ui.getNoteField());
+          }
+          catch (ParseException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+          }
           EquipmentController.addEquipment(equipment);
         }
         avp.updateTable();

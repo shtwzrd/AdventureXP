@@ -71,10 +71,11 @@ public class EquipmentController {
     try {
       session.beginTransaction();
       // Equipment retrieved = (Equipment) session.load(Equipment.class,
-      // equipment.getId());
+      // equipment.getID());
       Equipment retrieved = selectFromEquipment(equipment.getID());
       retrieved.setName(equipment.getName());
       retrieved.setBrand(equipment.getBrand());
+      retrieved.setNote(equipment.getNote());
       retrieved.setDate(equipment.getDate());
       session.update(retrieved);
       session.getTransaction().commit();
@@ -103,10 +104,7 @@ public class EquipmentController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      Equipment result = (Equipment) session
-          .createQuery(
-              "select new Equipment(name, brand, date) " + "from Equipment "
-                  + "where id = " + "'" + id + "'").list().get(0);
+      Equipment result = (Equipment) session.get(Equipment.class, id);
       session.getTransaction().commit();
       result.setID(id);
       return result;

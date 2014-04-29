@@ -42,7 +42,7 @@ public class AdministratorUI extends JFrame {
         .add("Activities", new ActivityViewerPresenter(new ActivityViewerUI()).getUI());
     tabPane.add("Instructors",
         new InstructorViewerPresenter(new InstructorViewerUI()).getUI());
-    tabPane.add("Equipments",
+    tabPane.add("Equipment",
         new EquipmentViewerPresenter(new EquipmentViewerUI()).getUI());
     new InstructorViewerPresenter(new InstructorViewerUI());
     tabPane.add("Customers", new CustomerViewerPresenter(new CustomerViewerUI()).getUI());

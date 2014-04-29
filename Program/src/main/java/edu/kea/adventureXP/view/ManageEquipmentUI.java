@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -76,7 +75,8 @@ public class ManageEquipmentUI extends JFrame {
     JLabel date = new JLabel("Date:");
     date.setForeground(UIColors.WHITE);
     
-    dateField = new JTextField(10);
+    dateField = new JTextField(15);
+    dateField.setEditable(false);
     PromptSupport.setPrompt("ex.: 12, 24, 2014", dateField);
     
     northPanel.add(name);
@@ -163,18 +163,26 @@ public class ManageEquipmentUI extends JFrame {
     noteArea.setText(note);
   }
   
-  public Calendar getDateField() throws ParseException {
+  public Date getDateField() throws ParseException {
     String string = dateField.getText();
-    DateFormat df = new SimpleDateFormat("dd, MM, yyyy");
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     Date date = df.parse(string);
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(date);
-    return cal;
+    return date;
   }
   
-  public void setDateField(Calendar date) {
+  // TODO
+  public void setDateField(Date date) {
+    // String strDate = date.getDay() + "/" + date.getMonth() + "/" +
+    // date.getYear();
     String date1 = date.toString();
-    noteArea.setText(date1);
+    dateField.setText(date1);
+  }
+  
+  public void setDateField(String date) {
+    // String strDate = date.getDay() + "/" + date.getMonth() + "/" +
+    // date.getYear();
+    String date1 = date.toString();
+    dateField.setText(date1);
   }
   
   /**

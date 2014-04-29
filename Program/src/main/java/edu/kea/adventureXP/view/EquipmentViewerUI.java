@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -108,7 +109,7 @@ public class EquipmentViewerUI extends JPanel {
    * @param activityList The list of activities to add
    */
   public void setTable(List<Equipment> equipmentList) {
-    String[] heads = { "Name", "Brand", "Date" };
+    String[] heads = { "ID", "Name", "Brand", "Date" };
     
     DefaultTableModel model = new DefaultTableModel();
     
@@ -118,12 +119,13 @@ public class EquipmentViewerUI extends JPanel {
     int row = 0;
     
     for (Equipment a : equipmentList) {
-      model.setValueAt(a.getName(), row, 0);
-      model.isCellEditable(row, 0);
-      model.setValueAt(a.getBrand(), row, 1);
-      model.isCellEditable(row, 1);
-      model.setValueAt(a.getDate(), row, 2);
-      model.isCellEditable(row, 2);
+      model.setValueAt(a.getID(), row, 0);
+      model.setValueAt(a.getName(), row, 1);
+      model.setValueAt(a.getBrand(), row, 2);
+      Date date = a.getDate();
+      // String strDate = date.getDay() + "/" + date.getMonth() + "/" +
+      // date.getYear();
+      model.setValueAt(date, row, 3);
       row++;
     }
     
@@ -131,9 +133,10 @@ public class EquipmentViewerUI extends JPanel {
     
     equipmentTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     TableColumnModel columnModel = equipmentTable.getColumnModel();
-    columnModel.getColumn(0).setPreferredWidth(30);
-    columnModel.getColumn(1).setPreferredWidth(400);
-    columnModel.getColumn(2).setPreferredWidth(40);
+    columnModel.getColumn(0).setPreferredWidth(50);
+    columnModel.getColumn(1).setPreferredWidth(200);
+    columnModel.getColumn(2).setPreferredWidth(200);
+    columnModel.getColumn(3).setPreferredWidth(100);
     equipmentTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
     
     model.fireTableDataChanged();
