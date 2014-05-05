@@ -18,6 +18,9 @@ import edu.kea.adventureXP.model.Activity;
 public class EventPackageControllerTest {
     private SessionFactory sessionFactory;
     private ServiceRegistry serviceRegistry;
+    private Activity activityForTest;
+    private Activity activityForTest2;
+
 
     @Before
     public void setUp() throws Exception {
@@ -29,11 +32,11 @@ public class EventPackageControllerTest {
         this.sessionFactory = configuration
                         .buildSessionFactory(this.serviceRegistry);
 
-        Activity activityForTest = new Activity("Mud Rastlin'", "More fun",
+        activityForTest = new Activity("Mud Rastlin'", "More fun",
                         200.0, true);
         ActivityController.addActivity(activityForTest);
 
-        Activity activityForTest2 = new Activity("Dwarf Toss'", "More fun",
+        activityForTest2 = new Activity("Dwarf Toss'", "More fun",
                         200.0, true);
         ActivityController.addActivity(activityForTest2);
     }
@@ -51,14 +54,16 @@ public class EventPackageControllerTest {
         double price = 4000;
         int duration = 7;
         Set<Activity> activities = new HashSet<>();
+        activities.add(activityForTest);
+        activities.add(activityForTest2);
         EventPackage eventPackage = new EventPackage(name, activities,
                         duration, price);
         EventPackageController.addEventPackage(eventPackage);
 
-        List<EventPackage> list = EventPackageController
-                        .selectAllFromEventPackage();
+        EventPackage out = EventPackageController.selectEventPackageByName("Test Package");
+                        
         String originaloutput = eventPackage.toString();
-        String retrievedoutput = list.get(0).toString();
+        String retrievedoutput = out.toString();
 
         assertEquals(originaloutput, retrievedoutput);
 

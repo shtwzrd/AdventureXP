@@ -71,4 +71,69 @@ public final class EventPackageController {
         }
         return null;
     }
+
+    public static EventPackage selectEventPackageByName(String name) {
+        SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            @SuppressWarnings("unchecked")
+            EventPackage result = (EventPackage) session
+            .createQuery("from EventPackage where name = '" + name + "'").list().get(0);
+            session.getTransaction().commit();
+            return result;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                session.close();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
+    }
+
+    public static EventPackage selectEventPackageById(long id) {
+        SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            @SuppressWarnings("unchecked")
+            EventPackage result = (EventPackage) session.get(EventPackage.class, id);
+            session.getTransaction().commit();
+            return result;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                session.close();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
+    }
+
+    public static void removeEventPackage(long id) {
+        SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            @SuppressWarnings("unchecked")
+            EventPackage result = (EventPackage) session.get(EventPackage.class, id);
+            session.delete(result);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                session.close();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

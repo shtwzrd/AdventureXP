@@ -243,16 +243,6 @@ public class ManagePackageUI extends JFrame {
     savePackageButton.addActionListener(listener);
   }
 
-public String getNameField() {
-    // TODO Auto-generated method stub
-    return null;
-}
-
-public Set<Activity> getActivities() {
-    // TODO Auto-generated method stub
-    return null;
-}
-
 public int getDurationField() {
     return Integer.parseInt(durationField.getText());
 }

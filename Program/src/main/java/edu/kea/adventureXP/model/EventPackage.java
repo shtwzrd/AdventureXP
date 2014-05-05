@@ -137,4 +137,12 @@ public class EventPackage implements Comparable<EventPackage> {
         }
         return b.toString();
     }
+
+    public double getPrice() {
+        return this.price;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

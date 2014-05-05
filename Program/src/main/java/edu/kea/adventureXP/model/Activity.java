@@ -62,15 +62,15 @@ public class Activity implements Comparable<Activity> {
   }
   
   public boolean getIsActive() {
-    return isActive;
+    return this.isActive;
   }
   
   public void setIsActive(boolean active) {
-    isActive = active;
+    this.isActive = active;
   }
   
   public long getId() {
-    return id;
+    return this.id;
   }
   
   public void setId(long id) {
@@ -78,7 +78,7 @@ public class Activity implements Comparable<Activity> {
   }
   
   public String getName() {
-    return name;
+    return this.name;
   }
   
   public void setName(String name) {
@@ -86,7 +86,7 @@ public class Activity implements Comparable<Activity> {
   }
   
   public String getDescription() {
-    return description;
+    return this.description;
   }
   
   public void setDescription(String description) {
@@ -94,7 +94,7 @@ public class Activity implements Comparable<Activity> {
   }
   
   public double getPrice() {
-    return price;
+    return this.price;
   }
   
   public void setPrice(double price) {

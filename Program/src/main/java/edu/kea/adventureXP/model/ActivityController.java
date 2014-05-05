@@ -166,12 +166,10 @@ public final class ActivityController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      Activity result = (Activity) session
-          .createQuery(
-              "select new Activity(name, description, price, isActive) "
-                  + "from Activity " + "where id = " + "'" + id + "'").list().get(0);
+      Activity result = (Activity) session.get(Activity.class, id);
+      System.out.println(result.getName());
       session.getTransaction().commit();
-      result.setId(id);
+  //    result.setId(id);
       return result;
     }
     catch (HibernateException e) {

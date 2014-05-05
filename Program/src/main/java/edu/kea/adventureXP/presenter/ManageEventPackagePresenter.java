@@ -68,6 +68,16 @@ public class ManageEventPackagePresenter {
     ui.setActivityTable(ActivityController.selectAllFromActivity());
     this.selectedActivities = new ArrayList<>();
   }
+
+  public ManageEventPackagePresenter(ManagePackageUI ui) {
+    this.ui = ui;
+    ui.setSavePackageListener(new SaveButtonListener());
+    ui.setDiscardPackageListener(new DiscardButtonListener());
+    ui.setAddActivityListener(new AddActivityButtonListener());
+    ui.setRemoveActivityListener(new RemoveActivityButtonListener());
+    ui.setActivityTable(ActivityController.selectAllFromActivity());
+    this.selectedActivities = new ArrayList<>();
+  }
   
   /**
    * Default constructor
@@ -82,6 +92,9 @@ public class ManageEventPackagePresenter {
    * @return true if the field is not empty
    */
   public boolean validateName(String name) {
+      if(name == null) {
+          return false;
+      }
     return !name.isEmpty();
   }
   
@@ -106,7 +119,7 @@ public class ManageEventPackagePresenter {
       String errorMessage = "";
       boolean flag = true;
       
-      if (!validateName(ui.getNameField())) {
+      if (!validateName(ui.getName())) {
         errorMessage += "- Name field cannot be empty.\n";
         flag = false;
       }
@@ -127,13 +140,16 @@ public class ManageEventPackagePresenter {
      //   }
         
       //  else { 
-          EventPackage toAdd = new EventPackage(ui.getNameField(), new HashSet<>(selectedActivities),
+          EventPackage toAdd = new EventPackage(ui.getName(), new HashSet<>(selectedActivities),
               ui.getDurationField(), ui.getPriceField());
           EventPackageController.addEventPackage(toAdd);
+          List<EventPackage> p = EventPackageController.selectAllFromEventPackage();
+          System.out.println(p);
+          System.out.println(p.get(0).getActivities());
 //        epvp.updateTable();
         ui.dispose();
       }
-      //else
+          System.err.println(errorMessage);
         //ui.displayError(errorMessage);
     }
     
@@ -158,6 +174,9 @@ public class ManageEventPackagePresenter {
         int row = ui.getActivityTable().getSelectedRow();
        Activity toAdd = ActivityController.selectFromActivity((long) ui.getActivityTable()
             .getValueAt(row, 0));
+       
+       selectedActivities.add(toAdd);
+       System.out.println(ui.getActivityTable().getValueAt(row, 0));
        
        ui.setSelectedTable(selectedActivities);
     }
