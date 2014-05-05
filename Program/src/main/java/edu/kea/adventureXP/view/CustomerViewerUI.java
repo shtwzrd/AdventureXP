@@ -2,7 +2,6 @@ package edu.kea.adventureXP.view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -28,6 +27,7 @@ public class CustomerViewerUI extends JPanel {
   private JButton           deleteButton;
   private JButton           addButton;
   private JButton           editButton;
+  private JButton           createBookingButton;
   
   public CustomerViewerUI() {
     buildUI();
@@ -137,16 +137,27 @@ public class CustomerViewerUI extends JPanel {
     deleteButton = new JButton("Delete");
     editButton = new JButton("Edit");
     addButton = new JButton("Add New");
+    createBookingButton = new JButton("Create Booking");
+    createBookingButton.setEnabled(false);
     
     southPanel.add(deleteButton);
     southPanel.add(editButton);
     southPanel.add(addButton);
+    southPanel.add(createBookingButton);
     
     add(southPanel, BorderLayout.SOUTH);
   }
   
+  public void setBookingButtonEnabled(boolean flag) {
+    createBookingButton.setEnabled(flag);
+  }
+  
   public JTable getTable() {
     return instructorTable;
+  }
+  
+  public void setBookingButtonListener(ActionListener listener) {
+    createBookingButton.addActionListener(listener);
   }
   
   public void setTableListener(MouseListener listener) {
@@ -180,6 +191,5 @@ public class CustomerViewerUI extends JPanel {
   public String getSearchField() {
     return searchField.getText();
   }
-
+  
 }
-

@@ -45,13 +45,12 @@ public class ActivityControllerTest {
     ActivityController.addActivity(activity);
     
     List<Activity> list = ActivityController.selectAllFromActivity();
-    for (Activity a : list)
+    for (Activity a : list) {
       System.out.println(a.getName());
-    
-    Activity returned = ActivityController.selectFromActivity(activity.getName());
-    
-    assertEquals(activity.getName(), returned.getName());
-    
+      Activity temp = ActivityController.selectFromActivity(a.getId());
+      assertEquals(a.getId(), temp.getId());
+          
+    }
   }
   
   @Test

@@ -13,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "BOOKING")
 public class Booking {
 
+
 	 @Id
 	  @GeneratedValue(generator = "increment")
 	  @GenericGenerator(name = "increment", strategy = "increment")
@@ -34,12 +35,6 @@ public class Booking {
 		 this.customer = customer;
 	 }
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
 
 	/**
 	 * @param id the id to set
@@ -75,4 +70,10 @@ public class Booking {
 	public void setCustomer(Member customer) {
 		this.customer = customer;
 	}
+ 
+  
+  public long getId() {
+    return id;
+  }
+  
 }
