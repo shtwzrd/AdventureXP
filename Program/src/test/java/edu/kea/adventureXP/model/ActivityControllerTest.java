@@ -59,30 +59,4 @@ public class ActivityControllerTest {
     
   }
   
-  public void scheduledActivityControllerBasicUsageTest() {
-
-	  Calendar cal = new GregorianCalendar();
-	  cal.set(2013, 2, 10, 14, 20);
-	  System.out.println(cal.getTime());
-	  ScheduledActivity scheduledActivity = new ScheduledActivity(1, cal.getTime());
-	  System.out.println(scheduledActivity.getDate());
-    ActivityController.addSceduleActivity(scheduledActivity);
-
-     List<ScheduledActivity> list = ActivityController.selectAllFromScheduledActivity();
-    for(ScheduledActivity a : list) {
-      System.out.println(a.getId());
-    } 
-
-    ScheduledActivity returned =
-      ActivityController.selectFromScheduledActivity(scheduledActivity.getId());
-
-
-
-    assertEquals(scheduledActivity.getId(), returned.getId());
-    assertEquals(scheduledActivity.getDate(), returned.getDate());
-    assertEquals(cal.getTime(), returned.getDate());
-
-
-  }
-  
 }

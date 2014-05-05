@@ -43,32 +43,7 @@ public final class ActivityController {
       }
     }
   }
-  
-  /**
-   * Adds scheduled activity entity in the database.
-   * 
-   * @param scheduledActivity The ScheduledActivity to save.
-   */
-  public static void addSceduleActivity(ScheduledActivity scheduledActivity) {
-    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-    Session session = sessionFactory.openSession();
-    try {
-      session.beginTransaction();
-      session.save(scheduledActivity);
-      session.getTransaction().commit();
-    }
-    catch (HibernateException e) {
-      e.printStackTrace();
-    }
-    finally {
-      try {
-        session.close();
-      }
-      catch (HibernateException e) {
-        e.printStackTrace();
-      }
-    }
-  }
+ 
   
   /**
    * Removes an Activity from the database
@@ -95,33 +70,7 @@ public final class ActivityController {
       }
     }
   }
-  
-  /**
-   * Removes an ScheduledActivity from the database
-   * 
-   * @param scheduledActivity The ScheduledActivity to remove.
-   */
-  public static void removeScheduledActivity(ScheduledActivity scheduledActivity) {
-    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-    Session session = sessionFactory.openSession();
-    try {
-      session.beginTransaction();
-      session.delete(scheduledActivity);
-      session.getTransaction().commit();
-    }
-    catch (HibernateException e) {
-      e.printStackTrace();
-    }
-    finally {
-      try {
-        session.close();
-      }
-      catch (HibernateException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-  
+ 
   /**
    * Updates an Activity in the database
    * 
@@ -273,49 +222,5 @@ public final class ActivityController {
     return null;
   }
 
-
-public static ScheduledActivity selectFromScheduledActivity(long id) {
-    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-    Session session = sessionFactory.openSession();
-    try {
-      session.beginTransaction();
-      ScheduledActivity result = (ScheduledActivity) session.createQuery(
-          "select new ScheduledActivity(id, date) " +
-          "from ScheduledActivity " +
-          "where id = " + "'" + id + "'").list().get(0);
-      session.getTransaction().commit();
-      return result;
-    } catch (HibernateException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        session.close();
-      } catch (HibernateException e) {
-        e.printStackTrace();
-      }
-    }
-    return new ScheduledActivity();
-}
-
-public static List<ScheduledActivity> selectAllFromScheduledActivity() {
-    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-    Session session = sessionFactory.openSession();
-    try {
-      session.beginTransaction();
-      @SuppressWarnings("unchecked")
-	List<ScheduledActivity> result = session.createQuery("from ScheduledActivity").list();
-      session.getTransaction().commit();
-      return result;
-    } catch (HibernateException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        session.close();
-      } catch (HibernateException e) {
-        e.printStackTrace();
-      }
-    }
-    return null;
-}
 
 }

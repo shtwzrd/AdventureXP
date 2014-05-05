@@ -38,8 +38,8 @@ public class EquipmentTest {
     // create an equipment...
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
-        "eowijfoe"));
+    //session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
+ //       "eowijfoe"));
     session.getTransaction().commit();
     session.close();
     
@@ -58,14 +58,14 @@ public class EquipmentTest {
   public void populateEquipmentTableTest() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
-        "eowijfoe"));
-    session
-        .save(new Equipment("Cross Bow", "PB Factory", new Date(2014, 04, 03), "wefew"));
-    session.save(new Equipment("Test 1", "PB Factory", new Date(2014, 05, 03), "erg"));
-    session.save(new Equipment("Test 2", "AB Factory", new Date(2014, 06, 03), "j5yt"));
-    session.save(new Equipment("Test 3", "CT Factory", new Date(2014, 07, 03),
-        "iultjyrht"));
+//    session.save(new Equipment("Paintball Gun", "PB Factory", new Date(2014, 03, 03),
+//        "eowijfoe"));
+//    session
+//        .save(new Equipment("Cross Bow", "PB Factory", new Date(2014, 04, 03), "wefew"));
+//    session.save(new Equipment("Test 1", "PB Factory", new Date(2014, 05, 03), "erg"));
+//    session.save(new Equipment("Test 2", "AB Factory", new Date(2014, 06, 03), "j5yt"));
+//    session.save(new Equipment("Test 3", "CT Factory", new Date(2014, 07, 03),
+ //       "iultjyrht"));
     session.getTransaction().commit();
     session.close();
   }
