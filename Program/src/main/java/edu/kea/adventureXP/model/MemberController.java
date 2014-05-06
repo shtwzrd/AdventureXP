@@ -14,7 +14,7 @@ public final class MemberController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.save(member);
+      session.saveOrUpdate(member);
       session.getTransaction().commit();
     }
     catch (HibernateException e) {

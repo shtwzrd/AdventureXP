@@ -19,20 +19,22 @@ import org.jdesktop.xswingx.PromptSupport;
 
 import edu.kea.adventureXP.model.EventPackage;
 
-// TODO UPDATE CLASS
-// TODO ONLY USED FOR SHOWING ADD BUTTON RIGHT NOW
+/*
+ * This UI is responsible for giving an overview of all existing Event Packages, and allows for
+ * removing specific Event Packages
+ */
 public class EventPackageViewerUI extends JPanel {
 
     private static final long serialVersionUID = 3954424525672177736L;
 
     private JComboBox<String> dropDown;
-    private JTextField        searchField;
-    private JButton           searchButton;
-    private JTextArea         packageContentsArea;
-    private JTable            packageTable;
-    private JButton           deleteButton;
-    private JButton           addButton;
-    private JButton           editButton;
+    private JTextField searchField;
+    private JButton searchButton;
+    private JTextArea packageContentsArea;
+    private JTable packageTable;
+    private JButton deleteButton;
+    private JButton addButton;
+    private JButton editButton;
 
     public EventPackageViewerUI() {
         buildUI();
@@ -51,7 +53,8 @@ public class EventPackageViewerUI extends JPanel {
     }
 
     /**
-     * TODO
+     * Builds the North Panel
+     * TODO: Implement search function 
      */
     public void buildNorthPanel() {
         JPanel northPanel = new JPanel();
@@ -79,8 +82,8 @@ public class EventPackageViewerUI extends JPanel {
     }
 
     /**
-     * Builds the center panel consisting of a JTable showing all activities and a
-     * description box showing the description of the selected activity.
+     * Builds the center panel consisting of a JTable showing all activities and
+     * a description box showing the description of the selected activity.
      */
     public void buildCenterPanel() {
         JPanel southPanel = new JPanel(new BorderLayout());
@@ -89,11 +92,11 @@ public class EventPackageViewerUI extends JPanel {
         southPanel.add(new JScrollPane(packageTable), BorderLayout.CENTER);
 
         packageContentsArea = new JTextArea(10, 20);
-        packageContentsArea .setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        packageContentsArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
         packageContentsArea.setWrapStyleWord(true);
         packageContentsArea.setLineWrap(true);
         packageContentsArea.setEditable(false);
-        PromptSupport.setPrompt("Description", packageContentsArea);
+        PromptSupport.setPrompt("Package Contents", packageContentsArea);
 
         southPanel.add(packageContentsArea, BorderLayout.SOUTH);
 
@@ -101,7 +104,7 @@ public class EventPackageViewerUI extends JPanel {
     }
 
     /**
-     * TODO
+     * Takes a list of Event Packages and places them into the Table 
      */
     public void setTable(List<EventPackage> packageList) {
         String[] heads = { "ID", "Package Name", "Price", "Duration" };

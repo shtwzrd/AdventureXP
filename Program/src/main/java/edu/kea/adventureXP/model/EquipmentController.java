@@ -18,7 +18,7 @@ public class EquipmentController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.save(equipment);
+      session.saveOrUpdate(equipment);
       session.getTransaction().commit();
     }
     catch (HibernateException e) {

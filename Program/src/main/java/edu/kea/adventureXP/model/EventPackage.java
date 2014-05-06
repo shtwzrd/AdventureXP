@@ -16,7 +16,8 @@ import javax.persistence.JoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * Class representing an Activity with a name, description and price.
+ * Class representing an EventPackage with a name, duration, price and an
+ * associated set of Activities.
  */
 @Entity
 @Table(name = "EVENTPACKAGE")
@@ -31,7 +32,10 @@ public class EventPackage implements Comparable<EventPackage> {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "ACTIVITY_PACKAGE_RELATION", joinColumns = { @JoinColumn(name = "activity_id") }, inverseJoinColumns = { @JoinColumn(name = "package_id") })
+    @JoinTable(
+                    name = "ACTIVITY_PACKAGE_RELATION",
+                    joinColumns = { @JoinColumn(name = "activity_id") },
+                    inverseJoinColumns = { @JoinColumn(name = "package_id") })
     private Set<Activity> activities;
 
     @Column
@@ -141,7 +145,7 @@ public class EventPackage implements Comparable<EventPackage> {
     public double getPrice() {
         return this.price;
     }
-    
+
     public void setPrice(double price) {
         this.price = price;
     }

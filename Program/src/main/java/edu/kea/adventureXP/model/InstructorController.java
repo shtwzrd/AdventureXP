@@ -13,7 +13,7 @@ public final class InstructorController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.save(instructor);
+      session.saveOrUpdate(instructor);
       session.getTransaction().commit();
     }
     catch (HibernateException e) {

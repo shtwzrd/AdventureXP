@@ -110,4 +110,18 @@ public class Activity implements Comparable<Activity> {
       return (int) (this.name.hashCode() + this.id + this.description.hashCode());
   }
   
+  public String toString() {
+      StringBuilder b = new StringBuilder();
+      b.append(this.id);
+      b.append(" : ");
+      b.append(this.name);
+      b.append(" : ");
+      if(this.isActive) {
+          b.append("active");
+      } else {
+          b.append("inactive");
+      }
+      return b.toString();
+  }
+  
 }

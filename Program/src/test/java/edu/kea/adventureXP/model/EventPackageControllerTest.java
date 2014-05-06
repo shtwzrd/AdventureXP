@@ -18,9 +18,6 @@ import edu.kea.adventureXP.model.Activity;
 public class EventPackageControllerTest {
     private SessionFactory sessionFactory;
     private ServiceRegistry serviceRegistry;
-    private Activity activityForTest;
-    private Activity activityForTest2;
-
 
     @Before
     public void setUp() throws Exception {
@@ -31,14 +28,6 @@ public class EventPackageControllerTest {
         // A SessionFactory is set up once for an application
         this.sessionFactory = configuration
                         .buildSessionFactory(this.serviceRegistry);
-
-        activityForTest = new Activity("Mud Rastlin'", "More fun",
-                        200.0, true);
-        ActivityController.addActivity(activityForTest);
-
-        activityForTest2 = new Activity("Dwarf Toss'", "More fun",
-                        200.0, true);
-        ActivityController.addActivity(activityForTest2);
     }
 
     @After
@@ -53,20 +42,27 @@ public class EventPackageControllerTest {
         String name = "Test Package";
         double price = 4000;
         int duration = 7;
-        Set<Activity> activities = new HashSet<>();
-        activities.add(activityForTest);
-        activities.add(activityForTest2);
-        EventPackage eventPackage = new EventPackage(name, activities,
-                        duration, price);
+        Activity activityForTest = new Activity("Mud Rastlin'", "More fun", 200.0, true);
+        ActivityController.addActivity(activityForTest);
+
+        Activity activityForTest2 = new Activity("Dwarf Toss'", "More fun", 200.0, true);
+        ActivityController.addActivity(activityForTest2);
+
+        List<Activity> list = ActivityController.selectAllFromActivity();
+        Set<Activity> activities = new HashSet(list);
+        EventPackage eventPackage = new EventPackage(name,
+                        new HashSet<Activity>(list), duration, price);
         EventPackageController.addEventPackage(eventPackage);
 
-        EventPackage out = EventPackageController.selectEventPackageByName("Test Package");
-                        
+        EventPackage out = EventPackageController
+                        .selectEventPackageByName("Test Package");
+
         String originaloutput = eventPackage.toString();
         String retrievedoutput = out.toString();
 
+        System.out.println(originaloutput);
+        System.out.println(retrievedoutput);
         assertEquals(originaloutput, retrievedoutput);
-
     }
 
 }

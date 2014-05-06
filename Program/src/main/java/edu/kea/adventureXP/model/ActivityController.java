@@ -28,7 +28,7 @@ public final class ActivityController {
     Session session = sessionFactory.openSession();
     try {
       session.beginTransaction();
-      session.save(activity);
+      session.saveOrUpdate(activity);
       session.getTransaction().commit();
     }
     catch (HibernateException e) {
