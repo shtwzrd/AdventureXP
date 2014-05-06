@@ -43,7 +43,7 @@ public class ActivityControllerTest {
   public void activityControllerBasicUsageTest() {
     Activity activity = new Activity("Dwarf Toss", "Fun", 200.0, true);
     ActivityController.addActivity(activity);
-    
+    activity = ActivityController.selectFromActivity("Dwarf Toss");
     List<Activity> list = ActivityController.selectAllFromActivity();
     for (Activity a : list) {
       System.out.println(a.getName());

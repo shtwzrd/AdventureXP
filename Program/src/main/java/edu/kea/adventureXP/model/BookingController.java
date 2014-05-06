@@ -2,17 +2,38 @@ package edu.kea.adventureXP.model;
 
 import java.util.List;
 
+
+
+
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
+import org.hibernate.persister.entity.Queryable;
+/**
+ * 
+ * Controller for saving, retrieving updating and deleting Booking objects.
+ * 
+ * @see Booking
+ * @see ManageBookingPresenter
+ *
+ */
 public class BookingController {
 	
+	/**
+	 * Adds a booking to the database
+	 * 
+	 * @param booking The booking to be saved
+	 */
 	 public static void saveBooking(Booking booking) {
 		    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
 		    Session session = sessionFactory.openSession();
 		    try {
 		      session.beginTransaction();
+		      session.update(booking.getScheduledActivity().getActivity());
+		      session.update(booking.getScheduledActivity());
+		      session.update(booking.getCustomer());
 		      session.save(booking);
 		      session.getTransaction().commit();
 		    }
@@ -85,38 +106,14 @@ public class BookingController {
 	  return new Booking();
 	}
 	
-	
-	/**
-	 * Updates an Booking in the database
-	 * 
-	 * @param Booking The Booking with altered fields.
-	 */
-	public static void updateBooking(Booking booking) {
-	  SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
-	  Session session = sessionFactory.openSession();
-	  try {
-	    session.beginTransaction();
-	    Booking retrieved = selectFromBooking(booking.getId());
-	    retrieved.setScheduledActivity(booking.getScheduledActivity());
-	    retrieved.setCustomer(booking.getCustomer());;
-	    session.update(retrieved);
-	    session.getTransaction().commit();
-	  }
-	  catch (HibernateException e) {
-	    e.printStackTrace();
-	  }
-	  finally {
-	    try {
-	      session.close();
-	    }
-	    catch (HibernateException e) {
-	      e.printStackTrace();
-	    }
-	  }
-	}
+
 	
 
-		  
+	/**
+	 * Gets all Bookings saved in the database
+	 * 	  
+	 * @return a list containing all Booking objects
+	 */
 	public static List<Booking> selectAllFromBooking() {
 	    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
 	    Session session = sessionFactory.openSession();
@@ -138,6 +135,12 @@ public class BookingController {
 	    return null;
 	}
 	
+	/**
+	 * Gets all Bookings that fulfills the requirements in the sql query
+	 * 
+	 * @param query the sql query
+	 * @return a list with the Booking objects
+	 */
 	public static List<Booking> selectAllFromBooking(String query) {
 	  SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
 	  Session session = sessionFactory.openSession();
@@ -163,6 +166,38 @@ public class BookingController {
 	}
 
 
+	/**
+	 * Gets all the Bookings with a customer in
+	 * 
+	 * @param customer the customer
+	 * @return all Booking objects containing that Member object
+	 */
+	public static List<Booking> selectAllBookingsFromCustomer(Member customer){
+	    SessionFactory sessionFactory = SessionFactoryInstance.getInstance();
+	    Session session = sessionFactory.openSession();
+		String hql = "FROM Booking B WHERE B.customer = '" + customer +"'";
+		Query query = session.createQuery(hql);
+		  try {
+			    session.beginTransaction();
+			    @SuppressWarnings("unchecked")
+				List<Booking> result = query.list();
+			    session.getTransaction().commit();
+			    return result;
+			  }
+			  catch (HibernateException e) {
+			    e.printStackTrace();
+			  }
+			  finally {
+			    try {
+			      session.close();
+			    }
+			    catch (HibernateException e) {
+			      e.printStackTrace();
+			    }
+			  }
+
+		return null;
+	}
 
 }
 

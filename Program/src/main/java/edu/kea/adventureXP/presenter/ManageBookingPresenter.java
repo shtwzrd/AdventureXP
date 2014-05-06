@@ -14,6 +14,12 @@ import edu.kea.adventureXP.model.ScheduledActivityController;
 import edu.kea.adventureXP.view.CustomerViewerUI;
 import edu.kea.adventureXP.view.ManageBookingUI;
 
+/**
+ * 
+ * Presenter class for Booking UI that manages all events and handles 
+ * the information the UI shall present
+ *
+ */
 public class ManageBookingPresenter {
 	ManageBookingUI bui;
 	Member customer;
@@ -21,11 +27,17 @@ public class ManageBookingPresenter {
 	List<ScheduledActivity> activityList;
 	List<Booking> bookingList;
 	
+	/**
+	 * Controller for creating a ManageBookingPresenter parsing its customer and  ui and
+	 * to set all listeners in the Booking Ui
+	 * @param customer 
+	 * @param bui
+	 */
 	public ManageBookingPresenter(Member customer, ManageBookingUI bui){
 		this.bui = bui;
 		this.customer = customer;
 		activityList = ScheduledActivityController.selectAllFromScheduledActivity();
-		bookingList = BookingController.selectAllFromBooking("from Booking where customer = '" + customer + "'");
+		bookingList = BookingController.selectAllBookingsFromCustomer(customer);
 		bui.setCancelListener(new CancelBookinListener());
 		bui.setEditListener(new EditListener());
 		bui.setBookListener(new BookingListener());
@@ -37,7 +49,7 @@ public class ManageBookingPresenter {
 	public ManageBookingPresenter(ManageBookingUI bui){
 		this.bui = bui;
 		activityList = ScheduledActivityController.selectAllFromScheduledActivity();
-		//bookingList = BookingController.selectAllFromBooking("from Booking where customer = '" + customer + "'");
+		bookingList = BookingController.selectAllBookingsFromCustomer(customer);
 		bui.setCancelListener(new CancelBookinListener());
 		bui.setEditListener(new EditListener());
 		bui.setBookListener(new BookingListener());

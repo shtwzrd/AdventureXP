@@ -51,29 +51,46 @@ public class BookingControllerTest {
 		          "berta@kartoffel.dk",
 		          false);
 		 MemberController.addMember(customer);
+		 customer = MemberController.getAllCustomers().get(0);
 		 // put a scheduledActivity into the database
 		 Activity activity = new Activity("Dwarf Toss", "Fun", 200.0, true);
-		 ActivityController.addActivity(activity);	
+		 ActivityController.addActivity(activity);
+		 Activity activity2 = new Activity("Bows", "Boring", 140.0, true);
+		 ActivityController.addActivity(activity);
+	
+		 List<Activity> activities = ActivityController.selectAllFromActivity();
 
 		 // create a date for the activity
 		 Calendar cal = new GregorianCalendar();
 		 cal.set(2013, 4, 10, 45, 0);
 		 Date time = cal.getTime();
 		 // the scheduledActivity to save
-		 ScheduledActivity scheduledActivity = new ScheduledActivity(activity, time);
-	
+		 ScheduledActivity scheduledActivity = new ScheduledActivity(activities.get(0), time);
 		 ScheduledActivityController.addSceduleActivity(scheduledActivity);
-		 ScheduledActivity activityToBook = ScheduledActivityController.selectAllFromScheduledActivity().get(0);
+			
+		 cal.set(2013, 5, 10, 45, 0);
+		 time = cal.getTime();
+		 ScheduledActivity scheduledActivity2 = new ScheduledActivity(activities.get(0), time);
+		 ScheduledActivityController.addSceduleActivity(scheduledActivity2);
+		 
+
+		 cal.set(2013, 6, 10, 45, 0);
+		 time = cal.getTime();
+		 ScheduledActivity scheduledActivity3 = new ScheduledActivity(activities.get(0), time);
+		 ScheduledActivityController.addSceduleActivity(scheduledActivity3);
+		 
+		 List<ScheduledActivity> activityList= ScheduledActivityController.selectAllFromScheduledActivity();
+		 System.out.println("activitylist size " + activityList.size());
 		 Member bookingMember = MemberController.getAllCustomers().get(0);
-		 BookingController.saveBooking(new Booking(activityToBook, bookingMember));
+		 for(ScheduledActivity a: activityList)
+			 BookingController.saveBooking(new Booking(a, bookingMember));
 		 @SuppressWarnings("unused")
-		 Booking booking = null;
 		 List <Booking> list = BookingController.selectAllFromBooking();
-		 for(Booking b: list){
-			 booking = b;
-		 }
-		 Booking bkng = BookingController.selectFromBooking(booking.getId());
-		 assertEquals(booking.getId(), bkng.getId());
+		 List<Booking> guestsBookings = BookingController.selectAllBookingsFromCustomer(bookingMember);
+		 System.out.println("List size " + list.size());
+		 System.out.println(list.get(0).getScheduledActivity().getActivity().getId());
+		 System.out.println("guest booking size " + guestsBookings.size());
+		 assertEquals(list.get(0).getId(), guestsBookings.get(0).getId());
 	}
 	
 	@Test

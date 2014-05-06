@@ -42,7 +42,7 @@ public class ScheduledActivityControllerTest {
 		// add an activity to schedule
 		Activity activity = new Activity("Dwarf Toss", "Fun", 200.0, true);
 		ActivityController.addActivity(activity);
-		
+		activity = ActivityController.selectFromActivity("Dwarf Toss");
 		// create a date for the activity
 		Calendar cal = new GregorianCalendar();
 		cal.set(2013, 3, 10, 14, 20);

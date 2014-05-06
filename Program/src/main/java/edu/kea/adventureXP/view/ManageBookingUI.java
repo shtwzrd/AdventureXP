@@ -44,15 +44,9 @@ public class ManageBookingUI extends JPanel {
    */
   public void buildUI() {
     setLayout(new BorderLayout());
-    //setSize(900, 600);
-    
     buildNorthPanel();
     buildCenterPanel();
     buildSouthPanel();
-    
-    //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    //setLocationRelativeTo(null);
-    //setVisible(true);
   }
   
   // ------- North Panel -------
