@@ -133,8 +133,9 @@ public class ManageEventPackagePresenter {
                 System.out.println(p.get(0).getActivities());
                 epvp.refreshTable();
                 ui.dispose();
+            } else {
+                ui.displayError(errorMessage);
             }
-            ui.displayError(errorMessage);
         }
 
     }
