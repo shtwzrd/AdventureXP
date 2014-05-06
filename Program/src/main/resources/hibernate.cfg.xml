@@ -56,8 +56,8 @@
     <mapping class="edu.kea.adventureXP.model.Member"/> 
     <mapping class="edu.kea.adventureXP.model.ScheduledActivity" />
     <mapping class="edu.kea.adventureXP.model.Equipment"/> 
+    <mapping class="edu.kea.adventureXP.model.Booking"/> 
     <mapping class="edu.kea.adventureXP.model.EventPackage"/> 
-    <!--<mapping class="edu.kea.adventureXP.model.ScheduledActivity" />-->
 
   </session-factory>
 

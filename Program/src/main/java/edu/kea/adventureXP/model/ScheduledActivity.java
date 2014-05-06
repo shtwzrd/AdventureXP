@@ -4,6 +4,7 @@ package edu.kea.adventureXP.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -26,53 +29,44 @@ public class ScheduledActivity {
 	 @Id
 	  @GeneratedValue(generator = "increment")
 	  @GenericGenerator(name = "increment", strategy = "increment")
-	  private long    id;
-	 @ManyToOne(fetch=FetchType.LAZY, targetEntity=Activity.class)
-	 @JoinColumn(name="Id", updatable=false, insertable=false)
-	  private long activityId;
-	  @Column
-	  private Date date;
+	  private long    sceduledActivity_id;
+	 
+	 
+	 @ManyToOne(fetch=FetchType.LAZY)
+	 @JoinColumn(name="id")
+	 private Activity activity;
+	 @Column
+	 private Date date;
 
-	public ScheduledActivity(){		
-	}
+	 public ScheduledActivity(){		
+		 
+	 }
 	
 
 	  /**
-	   * Controller for creating a ScheduledActivity parsing its activityId and date
+	   * Controller for creating a ScheduledActivity parsing its activity and date
 	   * 
-	   * @param id
+	   * @param activity
 	   * @param date
 	   */
-	  public ScheduledActivity(long activityId, Date date) {
-	    this.activityId = activityId;
+	  public ScheduledActivity(Activity activity, Date date) {
+	    this.activity = activity;
 	    this.date = date;
 	  }
-	  
-	  /**
-	   * Controller for creating a ScheduledActivity parsing its id, activityId and date
-	   * 
-	   * @param id
-	   * @param activityId
-	   * @param date
-	   */
-	  public ScheduledActivity(long id, long activityId, Date date) {
-		    this.activityId = activityId;
-		    this.date = date;
-		  }
-	
+	  	
 
 	/**
 	 * @return the id
 	 */
 	public long getId() {
-		return id;
+		return sceduledActivity_id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(long id) {
-		this.id = id;
+		this.sceduledActivity_id = id;
 	}
 
 	/**
@@ -93,16 +87,16 @@ public class ScheduledActivity {
 	/**
 	 * @return the activityId
 	 */
-	public long getActivityId() {
-		return activityId;
+	public Activity getActivity() {
+		return activity;
 	}
 
 
 	/**
 	 * @param activityId the activityId to set
 	 */
-	public void setActivityId(long activityId) {
-		this.activityId = activityId;
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}	
 
  

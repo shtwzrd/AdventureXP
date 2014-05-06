@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +19,12 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.kea.adventureXP.model.Activity;
 import edu.kea.adventureXP.model.Booking;
+import edu.kea.adventureXP.model.ScheduledActivity;
 
 /**
  * User interface which take care of managing bookings
  */
-public class ManageBookingUI extends JFrame {
+public class ManageBookingUI extends JPanel {
   
   private JLabel  customerLabel;
   private JButton cancelButton;
@@ -30,17 +32,7 @@ public class ManageBookingUI extends JFrame {
   private JButton bookButton;
   private JTable  activityTable;
   private JTable  bookedTable;
-  
-  public static void main(String[] args) {
-    ManageBookingUI ui1 = new ManageBookingUI();
-    ui1.setCustomerName("Tester");
-    ui1.setActivityTable(new ArrayList<Activity>());
-    ui1.setBookedTable(new ArrayList<Booking>());
-    new DateSelecterUI();
-    ManagePackageUI ui2 = new ManagePackageUI();
-    ui2.setActivityTable(new ArrayList<Activity>());
-    ui2.setSelectedTable(new ArrayList<Activity>());
-  }
+ 
   
   public ManageBookingUI() {
     buildUI();
@@ -52,15 +44,15 @@ public class ManageBookingUI extends JFrame {
    */
   public void buildUI() {
     setLayout(new BorderLayout());
-    setSize(900, 600);
+    //setSize(900, 600);
     
     buildNorthPanel();
     buildCenterPanel();
     buildSouthPanel();
     
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    setLocationRelativeTo(null);
-    setVisible(true);
+    //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    //setLocationRelativeTo(null);
+    //setVisible(true);
   }
   
   // ------- North Panel -------
@@ -105,7 +97,7 @@ public class ManageBookingUI extends JFrame {
     add(centerPanel, BorderLayout.CENTER);
   }
   
-  public void setActivityTable(List<Activity> activityList) {
+  public void setActivityTable(List<ScheduledActivity> activityList) {
     String[] heads = { "ID", "Name" };
     
     DefaultTableModel model = new DefaultTableModel();
@@ -115,9 +107,9 @@ public class ManageBookingUI extends JFrame {
     
     int row = 0;
     
-    for (Activity activity : activityList) {
+    for (ScheduledActivity activity : activityList) {
       model.setValueAt(activity.getId(), row, 0);
-      model.setValueAt(activity.getName(), row, 1);
+      model.setValueAt(activity.getActivity().getName(), row, 1);
       row++;
     }
     
@@ -136,8 +128,8 @@ public class ManageBookingUI extends JFrame {
     
     for (Booking booking : bookedList) {
       model.setValueAt(booking.getId(), row, 0);
-      model.setValueAt(booking.getName(), row, 1);
-      model.setValueAt(booking.getDate(), row, 2);
+      model.setValueAt(booking.getScheduledActivity().getActivity().getName(), row, 1);
+      model.setValueAt(booking.getScheduledActivity().getDate(), row, 2);
       row++;
     }
     
@@ -180,6 +172,14 @@ public class ManageBookingUI extends JFrame {
   
   public void setBookListener(ActionListener listener) {
     bookButton.addActionListener(listener);
+  }
+  
+  public void setActivityTableListener(MouseListener listener){
+	  activityTable.addMouseListener(listener);
+  }
+  
+  public void setBookingTableListener(MouseListener listener){
+	  bookedTable.addMouseListener(listener);
   }
   
 }
